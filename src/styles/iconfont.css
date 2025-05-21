@@ -1,0 +1,118 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'next-iconfont';
+  /* Project id 2254282 */
+  src:
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff2?t=1740994274224') format('woff2'),
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff?t=1740994274224') format('woff'),
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.ttf?t=1740994274224') format('truetype');
+}
+
+.next-icons {
+  font-family: 'next-iconfont';
+  font-style: normal;
+}
+
+.icon-qrbelt::before {
+  content: '\e654';
+}
+
+.icon-amount::before {
+  content: '\e6ce';
+}
+
+.icon-address::before {
+  content: '\e680';
+}
+
+.icon-kf::before {
+  content: '\e60a';
+}
+
+.icon-setting::before {
+  content: '\e67f';
+}
+
+.icon-selected::before {
+  content: '\e62f';
+}
+
+.icon-notselected::before {
+  content: '\e657';
+}
+
+.icon-countdown::before {
+  content: '\e6a4';
+}
+
+.icon-edit:before {
+  content: '\e61e';
+}
+
+.icon-checkMark::before {
+  content: '\e6a9';
+}
+
+.icon-pen:before {
+  content: '\e6b8';
+}
+
+/* 箭头 */
+.icon-arrow-left::before {
+  content: '\e662';
+}
+
+.icon-arrow-right::before {
+  content: '\e683';
+}
+
+.icon-arrow-up::before {
+  content: '\e665';
+}
+
+.icon-arrow-down::before {
+  content: '\e664';
+}
+
+/* 查看更多 */
+.icon-more:before {
+  content: '\e614';
+}
+
+/* 升序 */
+.icon-asc::before {
+  content: '\e6c4';
+}
+
+/* 降序 */
+.icon-desc::before {
+  content: '\e6c5';
+}
+
+/* 筛选 */
+.icon-filter::before {
+  content: '\e6c6';
+}
+
+/*  我的模块 */
+
+/* meun list */
+.icon-goodsreceived:before {
+  content: '\e69c';
+}
+
+.icon-file::before {
+  content: '\e687';
+}
+
+.icon-jianding::before {
+  content: '\e6a8';
+}
+
+.icon-buckle:before {
+  content: '\e6a8';
+}
+
+.icon-user:before {
+  content: '\e6aa';
+}

@@ -1,0 +1,273 @@
+{
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/tabbar/main",
+      "style": {
+        "navigationBarTitleText": "鉴别",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/tabbar/user",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages/login",
+      "pages": [
+        {
+          "path": "oauth",
+          "style": {
+            "navigationBarTitleText": "登录",
+            "navigationStyle": "custom",
+            "mp-alipay": {
+              "transparentTitle": "always",
+              "titlePenetrate": "YES"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/user",
+      "pages": [
+        {
+          "path": "address/address",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "地址"
+          }
+        },
+        {
+          "path": "address/addressManage",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "编辑地址"
+          }
+        },
+        {
+          "path": "setting/index",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        },
+        {
+          "path": "assetList",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "回收明细"
+          }
+        },
+        {
+          "path": "bindpay",
+          "style": {
+            "navigationBarTitleText": "绑定账号"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/common",
+      "pages": [
+        {
+          "path": "cms",
+          "style": {
+            "enablePullDownRefresh": true,
+            "navigationBarTitleText": "cms"
+          }
+        },
+        {
+          "path": "webview",
+          "style": {
+            "navigationBarTitleText": "webview"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/examPaper",
+      "pages": [
+        {
+          "path": "examPaperList",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "试卷列表",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
+          "path": "examPaperDetail",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "试卷详情",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "answer",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "答题",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/appraise",
+      "pages": [
+        {
+          "path": "appraiser",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴定师列表",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
+          "path": "appraiserDetail",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴定详情",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "appraiseCheck",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴别",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "selectReason",
+          "style": {
+            "navigationBarTitleText": "原因选择"
+          }
+        },
+        {
+          "path": "selectImage",
+          "style": {
+            "navigationBarTitleText": "部位图选择"
+          }
+        },
+        {
+          "path": "selectBrand",
+          "style": {
+            "navigationBarTitleText": "品牌选择"
+          }
+        },
+        {
+          "path": "identify",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴别信息"
+          }
+        },
+        {
+          "path": "supplement",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "补图"
+          }
+        },
+        {
+          "path": "onlineEditing",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴定师状态"
+          }
+        },
+        {
+          "path": "codePurchase",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴别扣购买"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/order",
+      "pages": [
+        {
+          "path": "orderList",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴别订单列表"
+          }
+        },
+        {
+          "path": "orderDetail",
+          "needLogin": false,
+          "style": {
+            "navigationBarTitleText": "鉴别订单详情"
+          }
+        },
+        {
+          "path": "codeOrderList",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "鉴别扣订单列表"
+          }
+        }
+      ]
+    }
+  ],
+  //定义预加载
+  "preloadRule": {
+    //当访问到该路由的页面时，会顺带预加载对应的包(可以是主包，也可以是子包)
+    "pages/tabbar/main": {
+      "network": "all",
+      "packages": ["pages/order", "pages/appraise"]
+    },
+    "pages/tabbar/user": {
+      "network": "all",
+      "packages": ["pages/login", "pages/user", "pages/appraise"]
+    }
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "第二回合回收",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F8F8F8"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^u--(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+      "^up-(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+      "^u-([^-].*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+      "^snake-(.*)": "@/components/snake-$1/snake-$1.vue"
+    }
+  },
+  "tabBar": {
+    "color": "#A8AAB0",
+    "selectedColor": "#404155",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "height": "50px",
+    "fontSize": "10px",
+    "iconWidth": "24px",
+    "spacing": "3px",
+    "list": [
+      {
+        "pagePath": "pages/tabbar/main",
+        "text": "回收",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-on.png"
+      },
+      {
+        "pagePath": "pages/tabbar/user",
+        "text": "我的",
+        "iconPath": "static/tabbar/my.png",
+        "selectedIconPath": "static/tabbar/my-on.png"
+      }
+    ]
+  }
+}

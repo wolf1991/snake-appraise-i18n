@@ -1,0 +1,113 @@
+<template>
+  <view class="snake-bg-white">
+    <view class="snake-columns snake-flex-allcenter snake-py-50">
+      <image src="@/static/logo.png" style="width: 144rpx; height: 144rpx; border-radius: 50%" mode="widthFix"></image>
+      <view class="snake-fs-32 snake-mt-40" v-if="version">当前版本 V{{ version }}</view>
+      <!-- #ifndef H5  -->
+      <!-- <view class="snake-mt-16">
+				<u-button
+					plain
+					shape="circle"
+					customStyle="width: 168rpx; color: #000; border: 2rpx solid #E7E7E7;"
+					@click="checkForUpdate">
+					检查更新
+				</u-button>
+			</view> -->
+      <!-- #endif -->
+    </view>
+    <u-cell-group :border="false">
+      <u-cell title="用户服务协议" isLink @click="$u.navTo('/pages/common/cms?pageId=866')"></u-cell>
+      <u-cell title="隐私协议" isLink :border="false" @click="$u.navTo('/pages/common/cms?pageId=865')"></u-cell>
+    </u-cell-group>
+    <view class="snake-fixed-bottom snake-px-24">
+      <view class="snake-py-12">
+        <u-button type="primary" plain customStyle="height: 88rpx;" @click="logout">退出登录</u-button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import { postLogout } from '@/api/user';
+import { useUserStore } from '@/stores/modules/user';
+export default {
+  data() {
+    return {
+      version: '',
+    };
+  },
+  onLoad() {
+    const systemInfo = uni.getSystemInfoSync();
+    const appVersion = +systemInfo.appVersionCode;
+    // #ifdef MP
+    const accountInfo = uni.getAccountInfoSync();
+    this.version = accountInfo.miniProgram.version; // 小程序 版本号
+    // #endif
+    // #ifndef MP
+    this.version = appVersion;
+    // #endif
+  },
+  methods: {
+    async logout() {
+      const response = await postLogout();
+      if (response.success) {
+        const userStore = useUserStore();
+        userStore.clearUserInfo();
+        uni.$u.toast('退出登录成功');
+        await uni.$u.sleep(500);
+        uni.navigateBack();
+      } else {
+        uni.$u.toast(response.msg);
+      }
+    },
+    // 检测是否更新
+    checkForUpdate() {
+      // #ifdef MP
+      this.mpUpdate();
+      // #endif
+    },
+    mpUpdate() {
+      // #ifdef MP
+      if (uni.canIUse('getUpdateManager')) {
+        // 检查小程序是否有新版本发布
+        const updateManager = uni.getUpdateManager();
+
+        // 请求完新版本信息的回调
+        updateManager.onCheckForUpdate((res) => {
+          // 请求完新版本信息的回调
+          if (!res.hasUpdate) {
+            uni.$u.toast('当前暂无新版本!');
+          }
+        });
+        updateManager.onUpdateReady(() => {
+          uni.showModal({
+            title: '更新提示',
+            content: '新版本已经准备好，是否马上重启小程序？',
+            success(res) {
+              if (res.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                updateManager.applyUpdate();
+              }
+            },
+          });
+        });
+        updateManager.onUpdateFailed(() => {
+          // 新的版本下载失败
+          uni.showModal({
+            title: '检测到新版本',
+            content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开',
+            showCancel: false,
+          });
+        });
+      }
+      // #endif
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+::v-deep .u-cell__body {
+  padding: 28rpx 24rpx;
+}
+</style>

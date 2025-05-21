@@ -1,0 +1,63 @@
+@font-face {
+  font-family: 'ALPHANUM';
+  src: local('ArialMT');
+  unicode-range: U+0-2ff;
+}
+
+@font-face {
+  font-family: 'DIN';
+  src: url('~@/styles/fonts/DIN-Regular.otf');
+  unicode-range: U+0-2ff;
+}
+
+@font-face {
+  font-family: 'DIN-Bold';
+  src: url('~@/styles/fonts/DIN-Bold.otf');
+  unicode-range: U+0-2ff;
+}
+
+@font-face {
+  font-family: 'DIN-Medium';
+  src: url('~@/styles/fonts/DIN-Medium.otf');
+  unicode-range: U+0-2ff;
+}
+
+@font-face {
+  font-family: 'DINPro-Bold';
+  src: url('~@/styles/fonts/DINPro-Bold.otf');
+  unicode-range: U+0-2ff;
+}
+
+body {
+  color: #0f1113;
+}
+
+view {
+  font-family:
+    'ALPHANUM', 'PingFangSC-Regular', 'Helvetica Neue', 'Roboto', Helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', Arial,
+    sans-serif;
+}
+
+text {
+  font-family: 'PingFangSC-Regular';
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+form {
+  width: 100%;
+}
+
+input {
+  background-color: transparent;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+button::after {
+  border: none !important;
+}

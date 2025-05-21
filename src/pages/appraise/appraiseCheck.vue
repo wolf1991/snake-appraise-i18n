@@ -1,0 +1,278 @@
+<template>
+  <view class="bg-white px-24rpx">
+    <view class="py-16rpx flex-items-center justify-between" style="border-bottom: 1px solid #eaeaeb">
+      <text class="text">是否需要补图</text>
+      <switch class="" color="#06D290" @change="switchChange" style="transform: scale(0.8)" />
+    </view>
+    <view class="status-select" style="border-bottom: 1px solid #eaeaeb" v-if="!needImgSwtich">
+      <view class="text-28rpx font-600 flex-center">鉴别师根据相关信息选择鉴别结果！</view>
+      <view class="status-group">
+        <view class="status" :class="[{ 'active active_finish': selectStatus === 'finish' }]" @click="setStatusHandle('finish')">
+          <text>鉴别为真</text>
+          <view class="next-icons icon-selected"></view>
+        </view>
+        <view class="status" :class="[{ active: selectStatus === 'fake' }]" @click="setStatusHandle('fake')">
+          <text>鉴别为假</text>
+          <view class="next-icons icon-selected"></view>
+        </view>
+        <view class="status" :class="[{ active: selectStatus === 'fail' }]" @click="setStatusHandle('fail')">
+          <text>无法鉴别</text>
+          <view class="next-icons icon-selected"></view>
+        </view>
+        <view class="status" :class="[{ active: selectStatus === 'outrange' }]" @click="setStatusHandle('outrange')">
+          <text>不在鉴别范围</text>
+          <view class="next-icons icon-selected"></view>
+        </view>
+      </view>
+    </view>
+
+    <template v-if="selectStatus == '' || selectStatus == 'finish' || selectStatus == 'outrange'">
+      <view class="py-16rpx pos-relative" style="border-bottom: 1px solid #eaeaeb">
+        <textarea
+          class="py-24rpx px-20rpx bg-#f6f6f6 w-100% h-160rpx text-28rpx box-border"
+          type="text"
+          placeholder="在这里输入鉴别师意见，用户不可见（选填）"
+          :maxlength="80"
+          v-model="suggestion"
+          :disabled="needImgSwtich && fromOrigin === 'tb_yj'"
+          placeholder-class="text-#999999; text-28rpx" />
+        <text class="pos-absolute right-10rpx bottom-25rpx text-22rpx text-#8f8f9b" v-if="suggestion.length > 0">
+          {{ suggestion.length }} / 80
+        </text>
+      </view>
+      <view class="py-16rpx" style="border-bottom: 1px solid #eaeaeb">
+        <view class="text-28rpx text-#999999">快捷意见</view>
+        <view class="flex flex-wrap items-center">
+          <text
+            class="p-15rpx rounded-8rpx mt-24rpx mr-12rpx"
+            style="border: 1px solid rgb(199, 199, 204)"
+            v-for="(value, index) in reasonList"
+            :key="index"
+            @click="suggestion = value">
+            {{ value }}
+          </text>
+        </view>
+      </view>
+    </template>
+
+    <view class="py-16rpx pos-relative" style="border-bottom: 1px solid #eaeaeb">
+      <textarea
+        class="py-24rpx px-20rpx bg-#f6f6f6 w-100% h-160rpx text-28rpx box-border"
+        placeholder="在这里输入备注信息，用户可见（选填）"
+        :maxlength="80"
+        v-model="remark"
+        type="text"
+        placeholder-class="text-#999999; text-28rpx" />
+      <text class="pos-absolute right-10rpx bottom-25rpx text-22rpx text-#8f8f9b" v-if="remark.length > 0">
+        {{ remark.length }} / 80
+      </text>
+    </view>
+  </view>
+  <u-modal
+    :show="modalShow"
+    showCancelButton
+    content="请注意，鉴定图片已更新，请返回重新查看图片后再给出鉴定结果！"
+    @confirm="modalConfirmHandle"
+    @cancel="modalShow = false"></u-modal>
+
+  <view class="h-104rpx pb-safe"></view>
+  <view class="snake-fixed-bottom">
+    <view class="py-12rpx px-24rpx">
+      <u-button
+        type="primary"
+        :disabled="submitDisabled"
+        :loading="btnLoading"
+        customStyle="border-radius: 16rpx; height: 88rpx; font-size: 28rpx"
+        @click="confirmIdentify">
+        提交
+      </u-button>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
+import { getAppraiseRmdReasonListApi, postAppraiserDoAppraiseApi } from '@/api/appraise';
+import { Base64 } from '@/utils/js/base64';
+
+const requestId = ref('');
+
+const appraiseId = ref();
+const catId = ref();
+const fromOrigin = ref('');
+
+const selectStatus = ref('');
+const needImgSwtich = ref(false);
+
+const suggestion = ref('');
+const remark = ref('');
+
+const manySelectedStr = ref('');
+const oneSelectedStr = ref('');
+const hintImageList = ref([]);
+
+const reasonList = ref([]);
+const modalShow = ref(false);
+
+const btnLoading = ref(false);
+
+const submitDisabled = computed(() => {
+  if (needImgSwtich.value) {
+    return false;
+  } else if (selectStatus.value) {
+    return false;
+  }
+  return true;
+});
+
+onLoad((options) => {
+  requestId.value = options?.requestId;
+  appraiseId.value = options?.appraiseId;
+  catId.value = options.catId;
+  fromOrigin.value = options?.fromOrigin;
+  getAppraiseFastList();
+});
+
+const switchChange = (e) => {
+  selectStatus.value = '';
+  needImgSwtich.value = e.detail.value;
+};
+const setStatusHandle = (status) => {
+  selectStatus.value = status;
+  if (status === 'fake' || status === 'fail') {
+    const selectedStr = status === 'fake' ? manySelectedStr.value : oneSelectedStr.value;
+    const stringParams = uni.$u.queryParams({
+      status,
+      selectedStr,
+      orderId: appraiseId.value,
+      catId: catId.value,
+      fromOrigin: fromOrigin.value,
+    });
+    uni.$u.navTo(`/pages/appraise/selectReason${stringParams}`);
+  }
+};
+
+const getAppraiseFastList = async () => {
+  uni.showLoading({
+    mask: true,
+    title: '加载中...',
+  });
+  const response = await getAppraiseRmdReasonListApi({ id: appraiseId.value });
+  uni.hideLoading();
+  if (response.success) {
+    reasonList.value = Object.values(response.data);
+  } else {
+    uni.$u.toast(response.msg);
+  }
+};
+
+const modalConfirmHandle = async () => {
+  uni.$u.getHistoryPage(-1)?.getDetail?.();
+  await uni.$u.sleep(300);
+  uni.navigateBack();
+};
+const confirmIdentify = async () => {
+  const en = Base64.encode(requestId.value);
+  const params = {
+    requestId: en,
+    id: appraiseId.value,
+    suggestion: suggestion.value || '无',
+    remark: remark.value || null,
+    status: null,
+    hintImageList: null,
+  };
+
+  if (['fake', 'fail'].includes(selectStatus.value)) {
+    params.suggestion = selectStatus.value === 'fake' ? manySelectedStr.value : oneSelectedStr.value;
+    if (!params.suggestion) {
+      return uni.$u.toast('请选择原因');
+    }
+    if (selectStatus.value === 'fake' && !hintImageList.value.length) {
+      return uni.$u.toast('最少选择一张');
+    }
+    params.hintImageList = hintImageList.value;
+  }
+
+  params.status = needImgSwtich.value ? 'need_img' : selectStatus.value;
+
+  btnLoading.value = true;
+
+  try {
+    const response = await postAppraiserDoAppraiseApi(params);
+    if (response.success) {
+      uni.$u.toast('鉴别完成');
+      if (['fake', 'fail'].includes(selectStatus.value)) {
+        // 清掉缓存
+        uni.removeStorageSync(`fake_${catId.value}_reason_list`);
+        uni.removeStorageSync(`fail_${catId.value}_reason_list`);
+      }
+      uni.removeStorageSync('image_select_list');
+      uni.$u.getHistoryPage(-1).isReplace = true;
+      await uni.$u.sleep(1000);
+      btnLoading.value = false;
+      uni.navigateBack();
+    } else if (response.status === 10086) {
+      modalShow.value = true;
+    } else {
+      uni.$u.toast(response.msg);
+      btnLoading.value = false;
+    }
+  } catch (error) {
+    // TODO handle the exception
+    btnLoading.value = false;
+  }
+};
+
+defineExpose({
+  oneSelectedStr,
+  manySelectedStr,
+  hintImageList,
+});
+</script>
+
+<style lang="scss" scoped>
+.status-select {
+  padding: 16px 0;
+  border-bottom: 1px #f5f5f9 solid;
+
+  .status-group {
+    margin-top: 40rpx;
+
+    .status {
+      width: 100%;
+      height: 96rpx;
+      font-size: 32rpx;
+      padding: 0 20rpx;
+      color: #888891;
+      background: #f6f6f6;
+      border-radius: 4rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+
+      + .status {
+        margin-top: 10rpx;
+      }
+
+      text {
+        font-family: PingFangSC-Medium;
+        font-weight: 600;
+      }
+
+      &.active_finish {
+        color: #06d290 !important;
+        background: #06d2901a !important;
+        border: 1px solid #06d290 !important;
+      }
+
+      &.active {
+        color: #ff525d;
+        background: #ff525d1a;
+        border: 1px solid #ff525d;
+      }
+    }
+  }
+}
+</style>
