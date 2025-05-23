@@ -11,8 +11,12 @@ let config = {
   ossCdnUrl: 'https://s.qiuxietang.com',
   a: '01C01F01F01C01H01J01D01K',
   b: '02P01G01G01L01I01I01J02T02Q01H02Q02P01G01G01H01C02P02P01G02R01L01J02Q02P01F02T02S02Q02P01H01K02S',
+  miniProgramOrgId: 'gh_306a46eb6181', // 微信小程序原始id
+  // #ifdef MP-WEIXIN
+  appId: 999212,
+  // #endif
   // #ifdef MP-ALIPAY
-  appId: 999231, // 后端维护的应用appId，可对应查找小程序appid
+  appId: 999217, // 后端维护的应用appId，可对应查找小程序appid
   // #endif
 };
 

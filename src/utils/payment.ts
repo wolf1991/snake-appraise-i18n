@@ -1,3 +1,5 @@
+import config from '@/config/config';
+
 const SUCCESS_TIP = '支付成功';
 const FAIL_TIP = '支付失败';
 
@@ -99,7 +101,7 @@ export function aliPay(paymentInfo) {
  *
  */
 export const requestPayment = (options) => {
-  const { type, payData } = options?.data || {};
+  const { type, payData, payDataType } = options?.data || {};
 
   console.log('支付渠道-type', type);
   console.log('支付参数-payData', payData);
@@ -113,7 +115,7 @@ export const requestPayment = (options) => {
 
   if (!type || (!payData && upperCaseType !== 'FREE')) {
     handlePaymentSuccess(options, {
-      msg: '支付类型或支付信息不存在',
+      errMsg: '支付类型或支付信息不存在',
     });
     return;
   }
@@ -129,6 +131,66 @@ export const requestPayment = (options) => {
       // 微信小程序支付参数示例：
       // payData:"{"appId":"","timeStamp":"","nonceStr":"","package":"","signType":"RSA","paySign":""}"
       const wxPayload = Object.assign({}, JSON.parse(payData));
+
+      if (payDataType && payDataType === 'yeepay') {
+        // #ifdef MP-WEIXIN
+        // 打开半屏小程序
+        uni.openEmbeddedMiniProgram({
+          appId: wxPayload.appId,
+          path: wxPayload.prePayTn,
+          success(res) {
+            // 打开成功
+            handlePaymentSuccess(options, {
+              isClick: true,
+            });
+          },
+          fail(res) {
+            console.log(res);
+          },
+        });
+        // #endif
+
+        // #ifdef APP-PLUS
+        plus.share.getServices(
+          (res) => {
+            let wxx = null;
+            wxx = res.find((item) => item.id === 'weixin');
+            if (wxx) {
+              const params = {
+                id: wxPayload.miniProgramOrgId, // 微信小程序原生id
+                path: wxPayload.prePayTn, // 打开小程序的页面路径，默认跳转首页
+              };
+
+              if (wxPayload?.payId) {
+                params.id = config.miniProgramOrgId;
+                params.path = `pages/common/cashier?payId=${wxPayload.payId}&price=${wxPayload.price}&requestUri=`;
+              }
+
+              wxx.launchMiniProgram({
+                id: params.id, // 微信小程序原生id
+                path: params.path, // 打开小程序的页面路径，默认跳转首页
+                type: 0, // 0-正式版； 1-测试版； 2-体验版。 默认值为0。
+              });
+              handlePaymentSuccess(options, {
+                isClick: true,
+              });
+            } else {
+              uni.showToast({
+                title: '请安装微信',
+                icon: 'none',
+              });
+            }
+          },
+          (err) => {
+            console.log(err);
+          },
+        );
+
+        // #endif
+
+        return;
+      }
+
       wxPay(wxPayload)
         .then((res) => {
           handlePaymentSuccess(options, res);
@@ -143,6 +205,46 @@ export const requestPayment = (options) => {
       // 支付小程序支付参数示例：
       // payData:{"alipayTradeNo":"2025021022001423161413291704"}
       const aliPayload = Object.assign({}, JSON.parse(payData));
+
+      if (payDataType && payDataType === 'yeepay') {
+        // #ifdef MP-ALIPAY
+        aliPay(aliPayload.prePayTn)
+          .then((res) => {
+            handlePaymentSuccess(options, res);
+          })
+          .catch((err) => {
+            handlePaymentFail(options, err);
+          });
+        // #endif
+
+        // #ifdef APP-PLUS
+        let alipayUrl = aliPayload.prePayTn;
+        const query = uni.$u.getQueryParams(aliPayload.prePayTn);
+        const isIOS = uni.getSystemInfoSync().platform === 'ios';
+
+        alipayUrl = `${isIOS ? 'alipay' : 'alipays'}://platformapi/startapp?appId=${query.appId}`;
+
+        // page=pages/index/index  跳转到支付宝小程序页面的页面路径
+        alipayUrl = `${alipayUrl}&page=${query.page}&thirdPartSchema=${encodeURIComponent('snake://')}`;
+        console.log(alipayUrl);
+        // 唤起支付宝
+        let error = null;
+        plus.runtime.openURL(alipayUrl, (res) => {
+          error = res;
+          uni.showToast({
+            icon: 'none',
+            title: '请先安装支付宝后再进行支付',
+          });
+        });
+        error != null
+          ? handlePaymentFail(options, error)
+          : handlePaymentSuccess(options, {
+              isClick: true,
+            });
+        // #endif
+        return;
+      }
+
       aliPay(aliPayload.alipayTradeNo)
         .then((res) => {
           handlePaymentSuccess(options, res);
@@ -154,7 +256,7 @@ export const requestPayment = (options) => {
     }
     default:
       handlePaymentFail(options, {
-        msg: `未知的支付方式: ${type}`,
+        errMsg: `未知的支付方式: ${type}`,
       });
       return null;
   }

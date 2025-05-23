@@ -3,13 +3,13 @@ import config from '@/config/config';
 import md5 from '@/utils/js/md5';
 
 // 设置全局配置
-export function setConfog() {
+export function setConfig() {
   uni.$u.http.setConfig((defaultConfig) => {
     /* defaultConfig 为默认全局配置 */
-    defaultConfig.baseURL = `${getBaseUrl()}/v3`; /* 根域名 */
+    defaultConfig.baseURL = `${getBaseUrl()}`; /* 根域名 */
     // #ifdef H5
     if (import.meta.env.VITE_USER_NODE_ENV === 'development') {
-      defaultConfig.baseURL = '/api/v3';
+      defaultConfig.baseURL = '/api';
     }
     // #endif
 
@@ -40,10 +40,14 @@ export const isProd = getIsProd();
  * @param {string} appSecret 应用密钥
  * @returns {string} 签名
  */
-export function generateSignature(params, appSecret) {
-  const sortedKeys = Object.keys(params).sort();
-  const encodedParams = sortedKeys.map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
-  return md5.md5(`${encodedParams}&appSecret=${appSecret}`).toUpperCase();
+export function generateSignature(params, appSecret, method) {
+  let sstemp = `appid=${params.appid}&timestamp=${params.timestamp}&body=${params.body}&appSecret=${appSecret}`;
+  if (method === 'GET') {
+    const sortedKeys = Object.keys(params).sort();
+    const encodedParams = sortedKeys.map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+    sstemp = `${encodedParams}&appSecret=${appSecret}`;
+  }
+  return md5.md5(sstemp).toUpperCase();
 }
 
 /**
@@ -72,10 +76,11 @@ export function processRequestParams(config, appid, appSecret) {
     signParams = {
       ...config.params,
       ...params,
+      body: JSON.stringify(config.data),
     };
   }
 
-  const sign = generateSignature(signParams, appSecret);
+  const sign = generateSignature(signParams, appSecret, config.method);
 
   if (config.method === 'GET') {
     config.data.sign = sign;

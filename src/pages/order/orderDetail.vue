@@ -32,7 +32,7 @@
       </view>
     </view>
 
-    <login-popup :show="loginShow" @close="loginShow = false" @refresh="getDetail"></login-popup>
+    <snake-login-popup :show="loginShow" @close="loginShow = false" @refresh="getDetail"></snake-login-popup>
   </view>
 
   <view class="pb-50rpx" v-else>

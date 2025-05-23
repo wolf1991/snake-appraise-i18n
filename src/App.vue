@@ -11,8 +11,31 @@ import { useUserStore } from '@/stores/modules/user';
 
 const userStore = useUserStore();
 
-onLaunch(() => {
+onLaunch((options) => {
   console.log('App Launch');
+
+  // 存储本地投放渠道
+  const { query, referrerInfo } = options;
+
+  if (query && query.sk_channel) {
+    uni.setStorageSync('__SK_CHANNEL', query.sk_channel);
+  }
+
+  /**
+   * 支付宝小程序带参数相互跳转
+   * @link https://opensupport.alipay.com/support/helpcenter/142/201602493601?ant_source=zsearch
+   * @param {Object} referrerInfo
+   */
+  if (referrerInfo) {
+    console.log(referrerInfo);
+    const { extraData } = referrerInfo;
+    if (extraData && extraData.sk_channel) {
+      uni.setStorage({
+        key: '__SK_CHANNEL',
+        data: extraData.sk_channel,
+      });
+    }
+  }
 });
 onShow(() => {
   console.log('App Show');
@@ -64,11 +87,17 @@ onShow(() => {
 
   // 唤起权限会触发onHide，所以listenerFunc须在onShow生命周期调用
   permissionListener && permissionListener.listenerFunc(permissionEnums);
+
   // #endif
 });
+
 onHide(() => {
   console.log('App Hide');
+  // #ifdef APP
+  permissionListener && permissionListener.stopFunc();
+  // #endif
 });
+
 // #ifdef MP
 const mpUpdate = () => {
   if (uni.canIUse('getUpdateManager')) {
@@ -103,7 +132,6 @@ const mpUpdate = () => {
 // #endif
 
 // #ifdef APP-PLUS
-
 // 检查app是否开启了通知权限 安卓苹果通用
 const checkNotificationAuthorized = () => {
   const notificationAuthorized = uni.getAppAuthorizeSetting().notificationAuthorized;

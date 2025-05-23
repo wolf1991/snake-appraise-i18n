@@ -54,18 +54,27 @@
           "style": {
             "navigationBarTitleText": "设置"
           }
-        },
+        }
+      ]
+    },
+    {
+      "root": "pages/custom",
+      "pages": [
         {
-          "path": "assetList",
-          "needLogin": true,
+          "path": "dydetail",
           "style": {
-            "navigationBarTitleText": "回收明细"
+            "navigationBarTitleText": "鉴别详情"
           }
-        },
+        }
+      ]
+    },
+    {
+      "root": "pages/identify",
+      "pages": [
         {
-          "path": "bindpay",
+          "path": "cashier",
           "style": {
-            "navigationBarTitleText": "绑定账号"
+            "navigationBarTitleText": "收银台"
           }
         }
       ]
@@ -85,38 +94,16 @@
           "style": {
             "navigationBarTitleText": "webview"
           }
-        }
-      ]
-    },
-    {
-      "root": "pages/examPaper",
-      "pages": [
-        {
-          "path": "examPaperList",
-          "needLogin": true,
-          "style": {
-            "navigationBarTitleText": "试卷列表",
-            "enablePullDownRefresh": true
-          }
         },
         {
-          "path": "examPaperDetail",
-          "needLogin": true,
+          "path": "cashier",
           "style": {
-            "navigationBarTitleText": "试卷详情",
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "answer",
-          "needLogin": true,
-          "style": {
-            "navigationBarTitleText": "答题",
-            "enablePullDownRefresh": false
+            "navigationBarTitleText": "收银台"
           }
         }
       ]
     },
+
     {
       "root": "pages/appraise",
       "pages": [
@@ -189,6 +176,41 @@
           "style": {
             "navigationBarTitleText": "鉴别扣购买"
           }
+        },
+        {
+          "path": "dyDetail",
+          "style": {
+            "navigationBarTitleText": "鉴别详情"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/examPaper",
+      "pages": [
+        {
+          "path": "examPaperList",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "试卷列表",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
+          "path": "examPaperDetail",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "试卷详情",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "answer",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "答题",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     },
@@ -233,7 +255,7 @@
   },
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "第二回合回收",
+    "navigationBarTitleText": "SNAKE鉴别",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
@@ -258,15 +280,15 @@
     "list": [
       {
         "pagePath": "pages/tabbar/main",
-        "text": "回收",
+        "text": "鉴别",
         "iconPath": "static/tabbar/home.png",
-        "selectedIconPath": "static/tabbar/home-on.png"
+        "selectedIconPath": "static/tabbar/home_on.png"
       },
       {
         "pagePath": "pages/tabbar/user",
         "text": "我的",
         "iconPath": "static/tabbar/my.png",
-        "selectedIconPath": "static/tabbar/my-on.png"
+        "selectedIconPath": "static/tabbar/my_on.png"
       }
     ]
   }

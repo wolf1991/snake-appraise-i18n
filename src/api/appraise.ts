@@ -56,6 +56,14 @@ export const getAppraiseOrderListApi = (params) =>
   });
 
 /**
+ * 获取抖音鉴别详情
+ */
+export const getAppraiseDyOrderDetailApi = (params) =>
+  http.get('/appraise/order/detail', {
+    data: params,
+  });
+
+/**
  * 订单详情
  */
 export const getAppraiseOrderDetailApi = (params) =>
@@ -67,6 +75,9 @@ export const getAppraiseOrderDetailApi = (params) =>
  * 补图
  */
 export const postMoreImageApi = (params) => http.post('/appraise/moreImage', params);
+
+// APP跳转支付宝小程序生成订单
+export const postAppraisePayDoPayApi = (params) => http.post('/appraise/pay/doPay', params);
 
 // ====
 

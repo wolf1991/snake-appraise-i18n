@@ -1,9 +1,9 @@
 {
-    "name" : "第二回合回收",
-    "appid" : "",
+    "name" : "SNAKE鉴别",
+    "appid" : "__UNI__0BF2711",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.23",
+    "versionCode" : "1023",
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx1ec429bacbbdae09",
         "setting" : {
             "urlCheck" : false
         },
@@ -61,7 +61,7 @@
         "usingComponents" : true,
         "mergeVirtualHostAttributes" : true,
         "component2" : true,
-        "appid" : "2021005123684705"
+        "appid" : "2021001181693966"
     },
     "mp-baidu" : {
         "usingComponents" : true

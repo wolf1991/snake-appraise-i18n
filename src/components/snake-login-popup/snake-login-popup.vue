@@ -60,7 +60,7 @@
 import config from '@/config/config';
 import { postLogin } from '@/api/user';
 export default {
-  name: 'login-popup',
+  name: 'snake-login-popup',
   props: {
     show: {
       type: Boolean,

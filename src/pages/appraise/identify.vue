@@ -127,7 +127,7 @@ const priceParts = computed(() => {
 });
 
 onLoad((options) => {
-  brandDetail.value = JSON.parse(options.item);
+  brandDetail.value = JSON.parse(decodeURIComponent(options.item));
 
   appraiseCode.value = options.appraiseCode;
 

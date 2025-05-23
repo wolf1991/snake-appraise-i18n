@@ -1,5 +1,5 @@
 <template>
-  <u-popup @close="cancelHandler" z-index="unset" :show="show" mode="bottom" bgColor="transparent" :safeAreaInsetBottom="true">
+  <u-popup @close="cancelHandler" :show="show" mode="bottom" bgColor="transparent" :safeAreaInsetBottom="true">
     <view class="imgage-editor" :style="[{ height: winHeight + 'px' }]">
       <view class="editor-header">
         <view class="editor-header__cancel" @click="cancelHandler">取消</view>

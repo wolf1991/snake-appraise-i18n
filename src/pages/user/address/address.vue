@@ -43,7 +43,6 @@
 </template>
 <script>
 import { getAddressList } from '@/api/user';
-import { postOrderAddressUpdate } from '@/api/order';
 export default {
   data() {
     return {
@@ -75,31 +74,14 @@ export default {
     },
     // 选择地址
     async checkAddress(item) {
-      if (this.source === 1) {
+      if (this.source === 0) {
+        this.addAddressClick('edit', item);
+      } else if (this.source === 1) {
         uni.showLoading();
         uni.$u.getHistoryPage(-1).addressData = item;
         await this.$u.sleep(200);
         uni.hideLoading();
         uni.navigateBack();
-      } else if (this.source === 2) {
-        this.$u.getHistoryPage(-1).addressData = item;
-        // 修改地址
-        await this.updateOrderAdress(item);
-      }
-    },
-    async updateOrderAdress(addressData) {
-      uni.showLoading();
-      const response = await postOrderAddressUpdate({
-        orderId: this.$u.getHistoryPage(-1).orderId,
-        ...addressData,
-      });
-      if (response.success) {
-        this.$u.toast(response.data || '修改成功');
-        await this.$u.sleep(200);
-        uni.hideLoading();
-        uni.navigateBack();
-      } else {
-        uni.$u.toast(response.msg);
       }
     },
   },

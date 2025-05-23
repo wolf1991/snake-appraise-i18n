@@ -12,6 +12,10 @@ export const requestInterceptors = () => {
       // 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
       config.data = config.data || {};
 
+      if (!config.url.includes('cms') && !config.url.includes('v3')) {
+        config.url = `/v3${config.url}`;
+      }
+
       // 获取全局store中的userStore
       const userStore = useUserStore();
 
@@ -25,22 +29,29 @@ export const requestInterceptors = () => {
       const appSecret = fromCode(appConfig.b);
       config = processRequestParams(config, appid, appSecret);
 
+      const skChannel = uni.getStorageSync('__SK_CHANNEL');
+
+      // if (store.getters?.inviter) {
+      //   config.header['snake-inviter'] = store.getters.inviter;
+      // }
+
       // #ifdef H5
-      config.header.appId = 'wx5f38e1a4185e261f';
+      config.header.appId = '202310111401';
       config.header.platform = 'h5';
-      config.header['snake-channel'] = '2ndrc_h5';
+      config.header['snake-channel'] = skChannel ? `h5_${skChannel}` : 'snake-h5';
       // #endif
 
       // #ifdef MP-WEIXIN
       config.header.appId = uni.getAccountInfoSync().miniProgram.appId;
       config.header.platform = 'wxma';
-      config.header['snake-channel'] = '2ndrc_wxma';
+      config.header['snake-version'] = uni.getAccountInfoSync().miniProgram.version;
+      config.header['snake-channel'] = skChannel ? `miniapp_${skChannel}` : 'miniapp';
       // #endif
 
       // #ifdef MP-ALIPAY
       config.header.appId = uni.getAccountInfoSync().miniProgram.appId;
       config.header.platform = 'alima';
-      config.header['snake-channel'] = '2ndrc_alima';
+      config.header['snake-channel'] = skChannel ? `alima_${skChannel}` : 'alima';
       // #endif
 
       // #ifdef APP-PLUS

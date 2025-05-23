@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { getAppraiseExamQuestionDetail } from '@/api/appraise';
+import { getAppraiseExamQuestionDetailApi } from '@/api/appraise';
 export default {
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     async getExamQuestionList() {
-      const response = await getAppraiseExamQuestionDetail({
+      const response = await getAppraiseExamQuestionDetailApi({
         examPaperId: this.examPaperId,
         type: 'viewCorrect',
       });

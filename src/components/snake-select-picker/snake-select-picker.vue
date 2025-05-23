@@ -1,8 +1,8 @@
 <template>
-  <u-popup :show="show" type="bottom">
+  <u-popup :show="show" type="bottom" @close="close">
     <view class="flex-center h-90rpx pos-relative">
       <text>请选择</text>
-      <view class="pos-absolute right-20rpx" @close="close">
+      <view class="pos-absolute right-20rpx" @click="close">
         <u-icon name="close" bold size="28rpx"></u-icon>
       </view>
     </view>

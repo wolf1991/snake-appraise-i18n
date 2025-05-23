@@ -96,7 +96,7 @@ declare module 'uview-plus' {
      * @param url 包含查询参数的URL字符串
      * @returns 返回包含查询参数的对象，如果URL中没有查询参数，则返回空对象
      */
-    getQueryParams: (url: string) => void;
+    getQueryParams: (url: string) => any;
     /**
      * 跳转页面
      *

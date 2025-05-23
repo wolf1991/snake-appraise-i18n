@@ -49,7 +49,7 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/modules/user';
 import { getMenuListApi } from '@/api/appraise';
 import config from '@/config/config';
-import { isProd, getBaseUrl, setConfog } from '@/utils/request/util';
+import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
 import { onLoad } from '@dcloudio/uni-app';
 const userStore = useUserStore();
 
@@ -172,7 +172,7 @@ const changeBaseUrl = () => {
 
             // 设置环境地址
             uni.setStorageSync('BASE_URL', baseUrl);
-            setConfog();
+            setConfig();
 
             // #ifdef H5
             uni.$u.toast('切换成功2秒后重启', 3000);
@@ -203,11 +203,7 @@ const changeBaseUrl = () => {
                 if (res.confirm) {
                   my.restartMiniProgram({
                     path: '/pages/tabbar/main',
-                    success: (res) => {
-                      console.log('success:', res);
-                    },
-                    fail: (err) => {
-                      console.log('fail:', err);
+                    fail: () => {
                       uni.reLaunch({
                         url: '/pages/tabbar/main',
                       });
@@ -218,7 +214,6 @@ const changeBaseUrl = () => {
                 }
               },
             });
-
             // #endif
           },
           fail(sheetErr) {

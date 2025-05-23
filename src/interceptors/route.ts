@@ -20,6 +20,7 @@ const isDev = import.meta.env.DEV;
 const navigateToInterceptor = {
   // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
   invoke(args: { url: string }) {
+    console.log('args', args);
     if (!args.url.includes('http')) {
       args.url = args.url.replace('custom', 'common');
 
@@ -40,6 +41,10 @@ const navigateToInterceptor = {
       }
       if (args.url.includes('pages/identifier/identifierorder')) {
         args.url = args.url.replace('pages/identifier/identifierorder', 'pages/appraise/appraiser');
+      }
+
+      if (args.url.includes('pages/custom/dydetail')) {
+        args.url = args.url.replace('pages/custom/dydetail', 'pages/appraise/dyDetail');
       }
     }
 

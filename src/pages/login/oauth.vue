@@ -1,12 +1,8 @@
 <template>
   <view class="flex-center flex-col">
-    <u-navbar fixed placeholder :title="title" bgColor="transparent">
-      <template v-slot:left>
-        <view></view>
-      </template>
-    </u-navbar>
+    <u-navbar fixed placeholder :title="title" bgColor="transparent" autoBack></u-navbar>
     <view class="mt-141rpx flex-center flex-col">
-      <image class="w-180rpx h180rpx mb-32rpx" src="/static/logo.png"></image>
+      <image class="w-180rpx h180rpx mb-32rpx" src="@/static/logo.png"></image>
       <text class="text-42rpx font-600" style="letter-spacing: 2rpx">欢迎登录</text>
     </view>
     <!-- #ifdef MP -->

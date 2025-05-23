@@ -245,7 +245,7 @@ const identifyHandle = async () => {
     const response = await getAppraiseCheckModifyApi({
       appraiseOrderId: orderId.value,
     });
-    if (response?.status === 10086) {
+    if (response.status === 10086) {
       modalShow.value = true;
       return;
     }

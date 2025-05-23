@@ -1,4 +1,4 @@
-import { setConfog } from './util';
+import { setConfig } from './util';
 
 // 引入拦截器配置
 import { requestInterceptors } from './requestInterceptors';
@@ -6,7 +6,7 @@ import { responseInterceptors } from './responseInterceptors';
 
 const initRequest = () => {
   // 初始化请求配置
-  setConfog();
+  setConfig();
 
   requestInterceptors();
   responseInterceptors();

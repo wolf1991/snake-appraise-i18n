@@ -9,29 +9,26 @@
       </view>
     </view>
     <view class="w-100% flex flex-wrap justify-between">
-      <view class="bg-#f7f7f9 flex-basis-226rpx text-center" v-for="item in appraiseUserList" :key="item.id">
-        <image
-          class="w-120rpx h-120rpx mt-48rpx rounded-120rpx"
-          style="
-            box-shadow:
-              0 4px 20px 0 #a4a8b614,
-              0 4px 10px 0 #9d9fa614;
-          "
-          :src="$u.imageResize(item.headImage, 120)"
-          mode="aspectFill" />
-        <view class="mb-16rpx text-28rpx font-500">{{ item.name }}</view>
-        <view class="flex items-center justify-between px-8rpx pb-20rpx font-300 text-#111">
-          <view class="flex-1 w-80rpx">
-            <text class="text-26rpx font-700 snake-font-dinBold">{{ item.appraiseCount }}</text>
-            <view class="text-18rpx text-#aaaaaa">排队人数</view>
-          </view>
-          <view class="w-1rpx h-48rpx bg-#e7e7e7"></view>
-          <view class="flex-1 w-80rpx">
-            <text class="text-26rpx font-700 snake-font-dinBold">{{ $u.numFormat(item.total) }}</text>
-            <view class="text-18rpx text-#aaaaaa">累计战绩</view>
+      <template v-for="item in appraiseUserList" :key="item.id">
+        <view class="bg-#f7f7f9 flex-basis-226rpx text-center">
+          <image
+            class="w-120rpx h-120rpx mt-48rpx rounded-120rpx img-shadow"
+            :src="$u.imageResize(item.headImage, 120)"
+            mode="aspectFill" />
+          <view class="mb-16rpx text-28rpx font-500">{{ item.name }}</view>
+          <view class="flex items-center justify-between px-8rpx pb-20rpx fw-300 text-#111">
+            <view class="flex-1 w-80rpx">
+              <text class="text-26rpx font-700 snake-font-dinBold">{{ item.appraiseCount }}</text>
+              <view class="text-18rpx text-#aaaaaa">排队人数</view>
+            </view>
+            <view class="w-1rpx h-48rpx bg-#e7e7e7"></view>
+            <view class="flex-1 w-80rpx">
+              <text class="text-26rpx font-700 snake-font-dinBold">{{ $u.numFormat(item.total) }}</text>
+              <view class="text-18rpx text-#aaaaaa">累计战绩</view>
+            </view>
           </view>
         </view>
-      </view>
+      </template>
     </view>
   </view>
 </template>
@@ -64,9 +61,11 @@ const getPageData = async () => {
     // #ifdef APP-PLUS
     params.pageType = 'app';
     // #endif
+
     // #ifdef MP-ALIPAY
     params.pageType = 'alma';
     // #endif
+
     // #ifdef MP-WEIXIN
     params.pageType = 'wxma';
     // #endif
@@ -97,4 +96,10 @@ const getAppraiseUserList = async () => {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.img-shadow {
+  box-shadow:
+    0 4px 20px 0 #a4a8b614,
+    0 4px 10px 0 #9d9fa614;
+}
+</style>
