@@ -121,11 +121,7 @@ const changeBaseUrl = () => {
     content: `当前是${isProd ? '正式' : '测试'}地址：${getBaseUrl()}`,
     success: (modalRes) => {
       if (modalRes.confirm) {
-        const itemList = ['获取用户信息', ...config.baseUrlList];
-
-        // #ifdef MP-ALIPAY
-        itemList.splice(1, 0, '获取订单前置信息');
-        // #endif
+        const itemList = ['获取用户信息', '开发配置', ...config.baseUrlList];
 
         uni.showActionSheet({
           itemList,
@@ -149,26 +145,16 @@ const changeBaseUrl = () => {
               return;
             }
 
-            // #ifdef MP-ALIPAY
-            if (sheetRes.tapIndex === 1 && itemList[sheetRes.tapIndex] === '获取订单前置信息') {
-              my.checkBeforeAddOrder({
-                success: ({ requireOrder, sceneId, sourceId }) => {
-                  uni.showModal({
-                    title: '订单前置信息',
-                    content: JSON.stringify({ requireOrder, sceneId, sourceId }),
-                    success: (res) => {
-                      if (res.confirm) {
-                        uni.$u.copy(sourceId);
-                      }
-                    },
-                  });
-                },
-              });
+            if (sheetRes.tapIndex === 1) {
+              uni.$u.navTo('/pages/user/devConfig');
               return;
             }
-            // #endif
 
             const baseUrl = itemList[sheetRes.tapIndex];
+
+            if (!baseUrl.includes('http')) {
+              return;
+            }
 
             // 设置环境地址
             uni.setStorageSync('BASE_URL', baseUrl);

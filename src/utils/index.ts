@@ -1,5 +1,4 @@
 import { pages, subPackages } from '@/pages.json';
-import { string } from '@/uni_modules/uview-plus/libs/function/test';
 
 /**
  * 得到所有的需要登录的pages，包括主包和分包的
@@ -148,7 +147,10 @@ export const thumbnailZip = (value: string): string => {
  * @param {string} [linkType='navigateTo'] - 跳转类型，可选值为 'navigateTo', 'redirectTo', 'reLaunch', 'switchTab'
  */
 export const navTo = (url: string, linkType: string = 'navigateTo') => {
-  if (!url) return;
+  if (!url) {
+    // console.log('url为空，无法跳转', url);
+    return;
+  }
 
   try {
     if (url.startsWith('http')) {

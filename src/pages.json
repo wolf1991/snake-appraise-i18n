@@ -54,6 +54,12 @@
           "style": {
             "navigationBarTitleText": "设置"
           }
+        },
+        {
+          "path": "devConfig",
+          "style": {
+            "navigationBarTitleText": "开发配置"
+          }
         }
       ]
     },
