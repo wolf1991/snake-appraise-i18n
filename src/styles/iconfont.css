@@ -53,6 +53,10 @@
   content: '\e6a9';
 }
 
+.icon-banzhu:before {
+  content: '\e602';
+}
+
 .icon-pen:before {
   content: '\e6b8';
 }

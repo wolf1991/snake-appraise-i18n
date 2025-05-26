@@ -78,6 +78,7 @@ export const routeInterceptor = {
     uni.addInterceptor('navigateTo', navigateToInterceptor);
     uni.addInterceptor('reLaunch', navigateToInterceptor);
     uni.addInterceptor('redirectTo', navigateToInterceptor);
+    uni.addInterceptor('switchTab', navigateToInterceptor);
     // https://uniapp.dcloud.net.cn/api/interceptor.html#removeinterceptor
     // 注意：拦截uni.switchTab本身没有问题。但是在微信小程序端点击tabbar的底层逻辑并不是触发uni.switchTab。
     // 所以误认为拦截无效，此类场景的解决方案是在tabbar页面的页面生命周期onShow中处理。

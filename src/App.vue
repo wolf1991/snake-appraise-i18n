@@ -3,7 +3,7 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 
 // #ifdef APP-PLUS
 import { postPushBind } from '@/api/user';
-import { appUpdate } from '@/utils/appUpdate';
+import { appUpdate } from '@/utils/js/appUpdate';
 import permissionListener from '@/utils/permission/permission-listener';
 // #endif
 

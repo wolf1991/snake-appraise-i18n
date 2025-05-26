@@ -114,6 +114,14 @@
       "root": "pages/appraise",
       "pages": [
         {
+          "path": "allAppraisers",
+          "needLogin": true,
+          "style": {
+            "navigationBarTitleText": "当前在线鉴别师",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
           "path": "appraiser",
           "needLogin": true,
           "style": {

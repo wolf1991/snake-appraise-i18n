@@ -35,6 +35,14 @@ export const getCategoryBrandListApi = (params) =>
   });
 
 /**
+ * 获取鉴别品类列表
+ */
+export const getAppraiseCategoryListApi = (params = {}) =>
+  http.get('/appraise/category/list', {
+    data: params,
+  });
+
+/**
  * 获取鉴别图片模板
  */
 export const getCategoryBrandDetailApi = (params) =>

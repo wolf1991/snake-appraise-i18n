@@ -92,7 +92,7 @@
 import config from '@/config/config';
 import { postLogin, getCaptchCode, postPushBind } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
-import graceChecker from '@/utils/graceChecker';
+import graceChecker from '@/utils/js/graceChecker';
 
 const userStore = useUserStore();
 export default {

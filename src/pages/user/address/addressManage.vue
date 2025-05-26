@@ -110,7 +110,7 @@
 </template>
 <script>
 import { getAddressGet, postAddressSave } from '@/api/user';
-import graceChecker from '@/utils/graceChecker';
+import graceChecker from '@/utils/js/graceChecker';
 
 export default {
   data() {

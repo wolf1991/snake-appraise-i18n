@@ -8,9 +8,9 @@ export function setConfig() {
     /* defaultConfig 为默认全局配置 */
     defaultConfig.baseURL = `${getBaseUrl()}`; /* 根域名 */
     // #ifdef H5
-    if (import.meta.env.VITE_USER_NODE_ENV === 'development') {
-      defaultConfig.baseURL = '/api';
-    }
+    // if (import.meta.env.VITE_USER_NODE_ENV === 'development') {
+    //   defaultConfig.baseURL = '/api';
+    // }
     // #endif
 
     defaultConfig.timeout = 10000; // 超时时间设置为10秒;

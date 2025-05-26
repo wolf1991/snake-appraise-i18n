@@ -1,9 +1,9 @@
 <template>
   <snake-cms :pageInfo="pageInfo" :pageComponents="pageComponents" :scrollTop="scrollTop"></snake-cms>
-  <view class="flex flex-col items-center px-24rpx pt-20rpx bg-white">
+  <view class="flex flex-col items-center px-24rpx py-20rpx bg-white">
     <view class="flex items-center justify-between w-100% pb-32rpx">
       <view class="text-32rpx font-600">当前在线鉴别师</view>
-      <view class="flex items-center text-#b2b2b2 text-24rpx" @click="$u.navTo('/pages/identify/allidentifier')">
+      <view class="flex items-center text-#b2b2b2 text-24rpx" @click="$u.navTo('/pages/appraise/allAppraisers')">
         全部
         <u-icon color="#b2b2b2" name="arrow-right" size="14" />
       </view>
