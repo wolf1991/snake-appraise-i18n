@@ -75,6 +75,14 @@
     @confirm="modalConfirmHandle"
     @cancel="modalShow = false"></u-modal>
 
+  <u-modal
+    :show="checkResultShow"
+    showCancelButton
+    title="请再次确认鉴定结果！"
+    :content="`当前鉴定结果【${stateMap[selectStatus]}】，请再次确认后提交结果！`"
+    @confirm="checkResultConfirm"
+    @cancel="checkResultShow = false"></u-modal>
+
   <view class="h-104rpx pb-safe"></view>
   <view class="snake-fixed-bottom">
     <view class="py-12rpx px-24rpx">
@@ -83,7 +91,7 @@
         :disabled="submitDisabled"
         :loading="btnLoading"
         customStyle="border-radius: 16rpx; height: 88rpx; font-size: 28rpx"
-        @click="confirmIdentify">
+        @click="checkResultConfirm">
         提交
       </u-button>
     </view>
@@ -101,6 +109,7 @@ const requestId = ref('');
 const appraiseId = ref();
 const catId = ref();
 const fromOrigin = ref('');
+const isAhsOrder = ref(false);
 
 const selectStatus = ref('');
 const needImgSwtich = ref(false);
@@ -114,8 +123,18 @@ const hintImageList = ref([]);
 
 const reasonList = ref([]);
 const modalShow = ref(false);
+const checkResultShow = ref(false);
 
 const btnLoading = ref(false);
+
+const stateMap = {
+  unappraised: '等待鉴别',
+  finish: '鉴别为真',
+  fail: '无法鉴别',
+  fake: '鉴别为假',
+  outrange: '不在鉴别范围',
+  need_img: '待补图',
+};
 
 const submitDisabled = computed(() => {
   if (needImgSwtich.value) {
@@ -131,6 +150,7 @@ onLoad((options) => {
   appraiseId.value = options?.appraiseId;
   catId.value = options.catId;
   fromOrigin.value = options?.fromOrigin;
+  isAhsOrder.value = JSON.parse(options?.isAhsOrder || 'false');
   getAppraiseFastList();
 });
 
@@ -172,6 +192,15 @@ const modalConfirmHandle = async () => {
   await uni.$u.sleep(300);
   uni.navigateBack();
 };
+
+const checkResultConfirm = () => {
+  if (isAhsOrder.value) {
+    checkResultShow.value = true;
+    return;
+  }
+  confirmIdentify();
+};
+
 const confirmIdentify = async () => {
   const en = Base64.encode(requestId.value);
   const params = {
@@ -200,6 +229,7 @@ const confirmIdentify = async () => {
 
   try {
     const response = await postAppraiserDoAppraiseApi(params);
+    checkResultShow.value = false;
     if (response.success) {
       uni.$u.toast('鉴别完成');
       if (['fake', 'fail'].includes(selectStatus.value)) {
@@ -221,6 +251,7 @@ const confirmIdentify = async () => {
   } catch (error) {
     // TODO handle the exception
     btnLoading.value = false;
+    checkResultShow.value = false;
   }
 };
 

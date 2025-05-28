@@ -22,6 +22,7 @@
       "@uni-helper/uni-types",
       "@mini-types/alipay",
       "@types/wechat-miniprogram",
+      "@types/umtrack-wx",
       "./src/uni_modules/uview-plus/types",
       "./src/typings.d.ts"
     ]

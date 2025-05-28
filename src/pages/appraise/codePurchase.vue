@@ -55,7 +55,7 @@
 
   <view class="w-100% snake-fixed-bottom flex flex-col px-24rpx">
     <view class="text-24rpx bg-white pt-12rpx" @click="checkAgreement">
-      <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click="checkAgreement" />
+      <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click.stop="checkAgreement" />
       <text class="text-24rpx text-#0f1113">我已阅读并同意</text>
       <text class="snake-font-medium text-24rpx text-#0f1113" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
         《鉴别扣服务协议》

@@ -255,6 +255,7 @@ const identifyHandle = async () => {
     catId: orderInfo.value.catId,
     requestId: orderInfo.value.requestId,
     fromOrigin: orderInfo.value.fromOrigin,
+    isAhsOrder: orderInfo.value.subOrigin === 'ahs' && orderInfo.value.storeId !== undefined,
   });
   uni.$u.navTo(`/pages/appraise/appraiseCheck${stringParams}`);
 };

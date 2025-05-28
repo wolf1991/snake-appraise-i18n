@@ -103,7 +103,7 @@ declare module 'uview-plus' {
      * @param {string} url - 要跳转的页面路径
      * @param {string} [linkType='navigateTo'] - 跳转类型，可选值为 'navigateTo', 'redirectTo', 'reLaunch', 'switchTab'
      */
-    navTo: (url: string) => void;
+    navTo: (url: string, linkType?: string) => void;
     /**
      * 将文本复制到剪贴板
      *

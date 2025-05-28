@@ -15,6 +15,8 @@ import { routeInterceptor } from './interceptors';
 import utils from '@/utils';
 // 引入请求封装库
 import { initRequest } from '@/utils/request/index';
+// 友盟统计
+import uma from '@/utils/uma';
 
 // 引入uview-plus对小程序分享的mixin封装
 // eslint-disable-next-line import/no-named-as-default
@@ -35,6 +37,7 @@ export function createApp() {
   uni.$u = {
     ...uni.$u,
     ...utils,
+    uma,
   };
 
   // #ifdef MP
