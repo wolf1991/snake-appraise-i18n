@@ -2,14 +2,22 @@
 
 declare global {
   // 响应数据结构
-  type IResData<T> = {
+  interface IResData<T> {
     success: boolean;
     status: number;
     msg: string;
     data: T;
     // token 只在登录接口时有值，其他接口没有
     token?: string;
-  };
+  }
+
+  // 分页响应参数
+  interface IResPage<T = unknown> {
+    items: T[];
+    page: number;
+    perPage: number;
+    total: number;
+  }
 
   // 用户信息
   type IUserInfo = {

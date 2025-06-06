@@ -14,13 +14,8 @@ interface ICmsInfoRes {
  * @param {Number} params.id - 页面ID（id与pageType至少提供一个）
  * @param {String} params.pageType - 页面类型 'wxma'、'alma'、'app'（id与pageType至少提供一个）
  */
-// export const getCmsInfo = (params: { id?: string; pageType?: string }) => {
-//   const path = params.pageType ? `/app/cms/${params.pageType}` : '/app/cms/comm';
-//   const queryParams = params.pageType ? {} : { data: params };
-//   return http.get<ICmsInfoRes>(path, queryParams);
-// };
-
-export const getCmsInfo = (params) =>
-  http.get('/mms/cms/info', {
-    data: params,
-  });
+export const getCmsInfo = (params: { id?: string; pageType?: string }) => {
+  const path = params.pageType ? `/app/cms/${params.pageType}` : '/app/cms/comm';
+  const queryParams = params.pageType ? {} : { data: params };
+  return http.get<ICmsInfoRes>(path, queryParams);
+};

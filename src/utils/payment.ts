@@ -101,6 +101,7 @@ export function aliPay(paymentInfo) {
  *
  */
 export const requestPayment = (options) => {
+  console.log('options?.data', options?.data);
   const { type, payData, payDataType } = options?.data || {};
 
   console.log('支付渠道-type', type);

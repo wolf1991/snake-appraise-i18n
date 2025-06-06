@@ -5,17 +5,23 @@ declare module 'uview-plus' {
     };
   }
 
+  interface IHttpConfig {
+    baseURL?: string;
+    timeout?: number;
+    header?: Record<string, string>;
+  }
+
   interface IHttp {
-    request: <T = unknown>(url: string, data?: any) => Promise<T>;
-    get: <T>(url: string, data?: any) => Promise<IResData<T>>;
-    post: <T>(url: string, data?: any) => Promise<IResData<T>>;
-    setConfig: (config: Partial<GlobalConfig.config>) => void;
+    request: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
+    get: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
+    post: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
+    setConfig: (config: Partial<IHttpConfig>) => void;
     interceptors: {
       request: {
-        use: (config: any, config: any) => void;
+        use: (config: IHttpConfig) => IHttpConfig | Promise<IHttpConfig>;
       };
       response: {
-        use: (config: any, config: any) => void;
+        use: (response: IResData) => IResData | Promise<IResData>;
       };
     };
   }
@@ -69,6 +75,7 @@ declare module 'uview-plus' {
     queryParams: (data: any, isPrefix?: boolean, arrayFormat?: string) => void;
 
     // 自定义的
+
     /**
      * @description 格式化时间
      * @param {String|Number} dateTime 需要格式化的时间戳
@@ -112,6 +119,19 @@ declare module 'uview-plus' {
      */
     copy: (copyText: string, callback?: () => void) => void;
 
+    /**
+     * 预览图片
+     *
+     * @param {string|string[]} image - 要预览的图片的URL或URL数组
+     * @param {number} [index=0] - 当前显示图片的索引，默认为0
+     */
+    previewImage: (image: string[], current?: number) => void;
+
+    /**
+     * 对数字进行三位分割
+     * @param {*} value  需要进行分割的数字
+     * @returns  返回分割后的数字串
+     */
     numFormat: (value: number) => string;
     /**
      * 获取页面历史栈指定层实例

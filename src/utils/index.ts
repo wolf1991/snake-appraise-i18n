@@ -331,7 +331,39 @@ export function numFormat(value) {
 function getHistoryPage(back = 0) {
   const pages = getCurrentPages();
   const beforePage = pages[pages.length - 1 + back];
-  return beforePage.$vm.$.exposed;
+  return beforePage.$vm.$.exposed || getHistoryPage2(back);
+}
+
+/**
+ * 获取页面历史栈指定层实例
+ * @param back {number} [0] - 0或者负数，表示获取历史栈的哪一层，0表示获取当前页面实例，-1 表示获取上一个页面实例。默认0。
+ */
+function getHistoryPage2(back = 0) {
+  const pages = getCurrentPages();
+  const len = pages.length;
+  return pages[len - 1 + back] && pages[len - 1 + back].$vm;
+}
+
+// 查询节点信息
+// 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
+// 解决办法为在组件根部再套一个没有任何作用的view元素
+export function getRect(selector, all) {
+  return new Promise((resolve) => {
+    let query = uni.createSelectorQuery().in(this);
+    // #ifdef MP-ALIPAY
+    query = uni.createSelectorQuery();
+    // #endif
+    query[all ? 'selectAll' : 'select'](selector)
+      .boundingClientRect((rect) => {
+        if (all && Array.isArray(rect) && rect.length) {
+          resolve(rect);
+        }
+        if (!all && rect) {
+          resolve(rect);
+        }
+      })
+      .exec();
+  });
 }
 
 export default {
@@ -347,4 +379,5 @@ export default {
   copy,
   numFormat,
   getHistoryPage,
+  getRect,
 };

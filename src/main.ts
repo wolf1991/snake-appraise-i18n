@@ -37,8 +37,8 @@ export function createApp() {
   uni.$u = {
     ...uni.$u,
     ...utils,
-    uma,
   };
+  uni.$uma = uma;
 
   // #ifdef MP
   app.mixin(mpShare);

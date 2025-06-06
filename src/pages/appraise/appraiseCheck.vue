@@ -80,7 +80,7 @@
     showCancelButton
     title="请再次确认鉴定结果！"
     :content="`当前鉴定结果【${stateMap[selectStatus]}】，请再次确认后提交结果！`"
-    @confirm="checkResultConfirm"
+    @confirm="confirmIdentify"
     @cancel="checkResultShow = false"></u-modal>
 
   <view class="h-104rpx pb-safe"></view>
