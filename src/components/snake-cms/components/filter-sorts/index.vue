@@ -150,7 +150,7 @@ export default {
     // 筛选参数
     filterParams() {
       const params = {};
-      params.sort = this.filters.sortList[this.sortIndex]?.value;
+      params.sort = this.sizeValue;
       params.gradeFilter = this.gradeValue.join(',');
       params.sizeFilter = this.sizeValue.join(',');
       return params;
