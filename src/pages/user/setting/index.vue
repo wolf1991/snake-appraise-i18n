@@ -1,10 +1,14 @@
 <template>
-  <view class="snake-bg-white">
-    <view class="snake-columns snake-flex-allcenter snake-py-50">
-      <image src="@/static/logo.png" style="width: 144rpx; height: 144rpx; border-radius: 50%" mode="widthFix"></image>
-      <view class="snake-fs-32 snake-mt-40" v-if="version">当前版本 V{{ version }}</view>
+  <view class="bg-white">
+    <view class="flex-center flex-col py-50rpx">
+      <image
+        class="w-144rpx h-144rpx mb-32rpx rounded-50%"
+        src="@/static/logo.png"
+        style="box-shadow: 0 4px 20px 0 #a4a8b618"
+        mode="widthFix"></image>
+      <view class="text-32rpx mt-40rpx" v-if="version">当前版本 V{{ version }}</view>
       <!-- #ifndef H5  -->
-      <!-- <view class="snake-mt-16">
+      <!-- <view class="mt-16rpx">
 				<u-button
 					plain
 					shape="circle"
@@ -16,12 +20,16 @@
       <!-- #endif -->
     </view>
     <u-cell-group :border="false">
-      <u-cell title="用户服务协议" isLink @click="$u.navTo('/pages/common/cms?pageId=866')"></u-cell>
-      <u-cell title="隐私协议" isLink :border="false" @click="$u.navTo('/pages/common/cms?pageId=865')"></u-cell>
+      <u-cell title="用户服务协议" isLink @click="$u.navTo(`/pages/common/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
+      <u-cell
+        title="隐私协议"
+        isLink
+        :border="false"
+        @click="$u.navTo(`/pages/common/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
     </u-cell-group>
-    <view class="snake-fixed-bottom snake-px-24">
-      <view class="snake-py-12">
-        <u-button type="primary" plain customStyle="height: 88rpx;" @click="logout">退出登录</u-button>
+    <view class="snake-fixed-bottom px-24rpx">
+      <view class="py-12rpx">
+        <u-button type="primary" shape="circle" plain customStyle="height: 88rpx;" @click="logout">退出登录</u-button>
       </view>
     </view>
   </view>
@@ -30,9 +38,11 @@
 <script>
 import { postLogout } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
+import { isProd } from '@/utils/request/util';
 export default {
   data() {
     return {
+      isProd,
       version: '',
     };
   },

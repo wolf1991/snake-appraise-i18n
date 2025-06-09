@@ -4,12 +4,12 @@
       <view class="popup-container">
         <view :class="[`page-popup-popup page-popup-popup--${datas.popupMode}`]">
           <view :class="[`close close--${datas.popupMode}`]" @click.stop="show = false" v-if="datas.popupMode === 'bottom'">
-            <u-icon name="close" color="#26273A" size="18"></u-icon>
+            <u-icon name="close2" color="#26273A" size="18"></u-icon>
           </view>
           <image class="page-popup-img" mode="aspectFill" :src="datas.image" @click.stop="handleToPage"></image>
         </view>
         <view :class="[`close close--${datas.popupMode}`]" @click.stop="show = false" v-if="datas.popupMode === 'center'">
-          <u-icon name="close" color="#fff" size="28"></u-icon>
+          <u-icon name="close2" color="#fff" size="28"></u-icon>
         </view>
       </view>
     </u-popup>
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     handleToPage() {
-      this.navTo(this.datas.url);
+      uni.$u.navTo(this.datas.url);
     },
   },
 };

@@ -7,7 +7,7 @@
       :style="[itemStyle]"
       @click="$emit('item-click', item, index)">
       <view class="card-img">
-        <lazy-load :image="imageFilter(item)" style="width: 100%" />
+        <snake-lazy-load :image="imageFilter(item)" style="width: 100%" />
         <template v-if="listType === 'sale' || listType === 'new'">
           <view v-if="(item.channelStatus === 'off' || item.amount <= 0) && listType === 'sale'" class="mantle">
             <image class="mantle__image" src="https://cdn.puresnake.com/joker/static/daily-new-soldout.png" />
@@ -22,14 +22,14 @@
             <view class="image-warp">
               <!-- 新人标签 -->
               <template v-if="item.tag">
-                <image class="new-image" :src="imgs.newImage" />
+                <image class="new-image" :src="newImage" />
                 <view class="tag-text">
                   {{ item.tag.title }}
                 </view>
               </template>
               <!-- 出价标签 -->
-              <template v-if="item.activityInfo && item.activityInfo.attendance">
-                <image class="hot-image" :src="imgs.hotImage" />
+              <template v-if="item.activityInfo && item.activityInfo.attendance && attendanceShow">
+                <image class="hot-image" :src="hotImage" />
                 <view class="tag-text">{{ item.activityInfo.attendance }}人出价中</view>
               </template>
             </view>
@@ -77,9 +77,9 @@
                 {{ item.jokerDiscount || '99' }}
               </text>
             </view>
-            <view v-if="item.activityInfo && item.activityInfo.activityTag" class="item-tags">
+            <!-- <view v-if="item.activityInfo && item.activityInfo.activityTag" class="item-tags">
               {{ item.activityInfo.activityTag }}
-            </view>
+            </view> -->
             <view v-if="item.savePrice" class="item-tags">省¥{{ item.savePrice }}</view>
             <view v-if="item.activityTag === 'new'" class="item-tags">新人专享</view>
             <view v-if="item.activityTag === 'discount'" class="item-tags">限时折扣</view>
@@ -92,8 +92,18 @@
           </view>
         </template>
         <template v-if="listType === 'auction'">
+          <view class="goods-tag" style="padding-bottom: 10rpx">
+            <view
+              v-if="item.activityInfo && item.activityInfo.endTime && isEndTime(item)"
+              class="item-tags"
+              style="border: 2rpx solid #f3eaff; background: #f3eaff; color: #7a3bff">
+              捡漏
+            </view>
+          </view>
+
           <view class="goods-name u-line-2">
-            {{ item.size }}{{ item.gradeName ? ` · ${item.gradeName}` : '' }} | {{ item.name }}
+            <!-- {{ item.gradeName ? ` · ${item.gradeName}` : '' }} -->
+            {{ item.size }} | {{ item.name }}
           </view>
           <view class="goods-desc" style="padding-top: 25rpx">
             <view class="goods-auction-price">
@@ -118,12 +128,8 @@
 </template>
 
 <script>
-import lazyLoad from '../lazy-load/lazy-load.vue';
 export default {
-  name: 'GoodsList',
-  components: {
-    lazyLoad,
-  },
+  name: 'goods-list',
   props: {
     goodsList: {
       type: Array,
@@ -155,18 +161,12 @@ export default {
       type: Number,
       default: 0,
     },
-    imgs: {
-      type: Object,
-      default() {
-        return {
-          newImage: 'https://cdn.puresnake.com/joker/auction/newcomer_product.png',
-          hotImage: 'https://cdn.puresnake.com/joker/auction/popular_product.png',
-        };
-      },
-    },
   },
   data() {
-    return {};
+    return {
+      newImage: 'https://cdn.puresnake.com/joker/auction/newcomer_product.png',
+      hotImage: 'https://cdn.puresnake.com/joker/auction/popular_product.png',
+    };
   },
   computed: {
     itemStyle() {
@@ -195,16 +195,17 @@ export default {
         return style;
       };
     },
+    isEndTime() {
+      return (item) => {
+        const currentTime = Date.now();
+        const endTime = item.activityInfo?.endTime || '';
+        const timeDifference = endTime - currentTime;
+        const twoHoursInMilliseconds = 2 * 60 * 60 * 1000; // 2小时 单位毫秒
+        return !item.activityInfo?.attendance && timeDifference <= twoHoursInMilliseconds;
+      };
+    },
   },
   methods: {
-    async uninterested(item) {
-      const response = await this.$http.get('/mms/goods/info/uninterested', { goodsInfoId: item.id });
-      if (response.success) {
-        this.$u.toast(response.data);
-      } else {
-        this.$u.toast(response.msg);
-      }
-    },
     imageFilter(item) {
       if (item.name && item.name.includes('潮服')) {
         return `${item.image}?x-oss-process=style/ys`;

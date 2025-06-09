@@ -53,7 +53,7 @@ export default {
         return;
       }
       // 如果为0，意味着尚未初始化
-      if (this.menuHeight === 0 || this.menuItemHeight === 0) {
+      if (this.menuHeight == 0 || this.menuItemHeight == 0) {
         await this.getElRect('menu-scroll-view', 'menuHeight');
         await this.getElRect('tab-item', 'menuItemHeight');
       }
@@ -63,7 +63,7 @@ export default {
     },
     // 获取一个目标元素的高度
     getElRect(elClass, dataVal) {
-      return new Promise((resolve, reject) => {
+      new Promise((resolve, reject) => {
         const query = uni.createSelectorQuery().in(this);
         query
           .select('.' + elClass)

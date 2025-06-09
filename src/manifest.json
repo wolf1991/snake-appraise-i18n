@@ -1,108 +1,108 @@
 {
-	"name": "SNAKE鉴别",
-	"appid": "__UNI__0BF2711",
-	"description": "",
-	"versionName": "1.0.23",
-	"versionCode": "1023",
-	"transformPx": false,
-	/* 5+App特有相关 */
-	"app-plus": {
-		"usingComponents": true,
-		"nvueStyleCompiler": "uni-app",
-		"compilerVersion": 3,
-		"splashscreen": {
-			"alwaysShowBeforeRender": true,
-			"waiting": true,
-			"autoclose": true,
-			"delay": 0
-		},
-		/* 模块配置 */
-		"modules": {
-			"Camera": {},
-			"Payment": {},
-			"Push": {},
-			"Share": {},
-			"Statistic": {}
-		},
-		/* 应用发布信息 */
-		"distribute": {
-			/* android打包配置 */
-			"android": {
-				"permissions": [
-					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
-					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-				]
-			},
-			/* ios打包配置 */
-			"ios": {},
-			/* SDK配置 */
-			"sdkConfigs": {
-				"payment": {
-					"alipay": {
-						"__platform__": ["ios", "android"]
-					}
-				},
-				"push": {
-					"unipush": {
-						"version": "2",
-						"offline": true
-					}
-				},
-				"share": {
-					"weixin": {
-						"appid": "wxbeba1e607ea90901",
-						"UniversalLinks": "https://m.puresnake.com/ulink/"
-					}
-				},
-				"statics": {
-					"umeng": {
-						"appkey_ios": "600e249d6a2a470e8f8838d6",
-						"channelid_ios": "App Store",
-						"appkey_android": "",
-						"channelid_android": ""
-					}
-				}
-			}
-		}
-	},
-	/* 快应用特有相关 */
-	"quickapp": {},
-	/* 小程序特有相关 */
-	"mp-weixin": {
-		"appid": "wx1ec429bacbbdae09",
-		"setting": {
-			"urlCheck": false
-		},
-		"usingComponents": true,
-		"mergeVirtualHostAttributes": true
-	},
-	"mp-alipay": {
-		"usingComponents": true,
-		"mergeVirtualHostAttributes": true,
-		"component2": true,
-		"appid": "2021001181693966"
-	},
-	"mp-baidu": {
-		"usingComponents": true
-	},
-	"mp-toutiao": {
-		"usingComponents": true
-	},
-	"uniStatistics": {
-		"enable": false
-	},
-	"vueVersion": "3"
+    "name" : "SNAKE鉴别",
+    "appid" : "__UNI__0BF2711",
+    "description" : "",
+    "versionName" : "1.0.23",
+    "versionCode" : "1023",
+    "transformPx" : false,
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueStyleCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {
+            "Camera" : {},
+            "Payment" : {},
+            "Push" : {},
+            "Share" : {},
+            "Statistic" : {}
+        },
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ]
+            },
+            /* ios打包配置 */
+            "ios" : {},
+            /* SDK配置 */
+            "sdkConfigs" : {
+                "payment" : {
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                },
+                "push" : {
+                    "unipush" : {
+                        "version" : "2",
+                        "offline" : true
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxbeba1e607ea90901",
+                        "UniversalLinks" : "https://m.puresnake.com/ulink/"
+                    }
+                },
+                "statics" : {
+                    "umeng" : {
+                        "appkey_ios" : "600e249d6a2a470e8f8838d6",
+                        "channelid_ios" : "App Store",
+                        "appkey_android" : "",
+                        "channelid_android" : ""
+                    }
+                }
+            }
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "wx1ec429bacbbdae09",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true,
+        "mergeVirtualHostAttributes" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true,
+        "mergeVirtualHostAttributes" : true,
+        "component2" : true,
+        "appid" : "2021001181693966"
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "uniStatistics" : {
+        "enable" : false
+    },
+    "vueVersion" : "3"
 }

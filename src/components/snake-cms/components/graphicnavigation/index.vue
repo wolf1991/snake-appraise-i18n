@@ -10,7 +10,7 @@
           v-for="(item, index) in datas.imageList"
           :key="index"
           :style="{ padding: datas.imgMargin + 'rpx', width: 100 / datas.showSize + '%' }"
-          @click="navTo(item.url)">
+          @click="$u.navTo(item.url)">
           <image
             class="image-warp"
             :src="item.src"

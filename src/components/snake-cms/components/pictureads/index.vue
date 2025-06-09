@@ -10,8 +10,8 @@
         v-for="(item, index) in datas.imageList"
         :key="index"
         class="imgLis"
-        :style="{ 'margin-bottom': datas.imageMargin + 'rpx', height: datas.height * 2 + 'rpx' }"
-        @click="navTo(item.url)">
+        :style="{ 'margin-bottom': datas.imageMargin + 'rpx', height: $u.addUnit(datas.height, 'rpx') }"
+        @click="$u.navTo(item.url)">
         <!-- 图片 -->
         <image class="image" :src="item.src" :style="{ borderRadius: datas.borderRadius + 'rpx' }" />
         <!-- 标题 -->
@@ -27,7 +27,7 @@
         :previous-margin="swiperMargin"
         :next-margin="swiperMargin"
         circular
-        :height="datas.height + 'rpx'"
+        :height="datas.height"
         :autoplay="datas.imageList.length > 0"
         :radius="datas.borderRadius"
         key-name="src"
@@ -113,12 +113,12 @@ export default {
         const endTime = new Date(item.datetime[1]);
         // 检查当前时间是否在 startTime 和 endTime 之间（包括边界）
         if (now >= startTime && now <= endTime) {
-          return this.navTo(item.url);
+          return uni.$u.navTo(item.url);
         } else {
           return this.$u.toast('活动未开始');
         }
       }
-      this.navTo(this.datas.imageList[index].url);
+      uni.$u.navTo(this.datas.imageList[index].url);
     },
   },
 };

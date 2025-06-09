@@ -14,7 +14,7 @@
             <text class="address-text">{{ addressData.name }}</text>
             <text class="address-text address-phone">{{ addressData.phone }}</text>
           </view>
-          <view class="full-address snake-flex-vcenter">
+          <view class="full-address flex-items-center">
             <text>{{ address }}</text>
           </view>
         </view>

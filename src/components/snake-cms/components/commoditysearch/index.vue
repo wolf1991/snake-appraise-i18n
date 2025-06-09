@@ -53,7 +53,7 @@
         </view>
         <!-- 右侧icon图片 最多两个 -->
         <template v-if="datas.iconImgList.length !== 0">
-          <view :id="item.id" class="right" v-for="(item, index) in datas.iconImgList" :key="index" @click="navTo(item.url)">
+          <view :id="item.id" class="right" v-for="(item, index) in datas.iconImgList" :key="index" @click="$u.navTo(item.url)">
             <image class="right-image" :src="item.src" :style="{ width: item.width + 'rpx', height: item.height + 'rpx' }" />
           </view>
         </template>
@@ -100,20 +100,20 @@ export default {
   methods: {
     // 点击热词跳转
     hotordsClick(index) {
-      this.navTo(this.datas.textList[index].url);
+      uni.$u.navTo(this.datas.textList[index].url);
     },
     toPage() {
       // 如果可以回车搜索 则不能跳转
       if (this.datas.isSearch) {
         return false;
       }
-      this.navTo(this.datas.url);
+      uni.$u.navTo(this.datas.url);
     },
     confirm(e) {
       if (!this.datas.url) {
         return this.$u.toast('跳转路径不存在');
       }
-      this.navTo(this.datas.url + e.detail.value);
+      uni.$u.navTo(this.datas.url + e.detail.value);
     },
   },
 };

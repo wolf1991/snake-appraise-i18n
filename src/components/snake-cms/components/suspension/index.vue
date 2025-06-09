@@ -4,7 +4,10 @@
     :animation="animationData"
     :style="{ right: datas.right + '%', bottom: datas.bottom + '%' }"
     v-if="datas.src && isShow">
-    <view class="suspension-wrap" :style="{ width: datas.width + 'rpx', height: datas.height + 'rpx' }" @click="navTo(datas.url)">
+    <view
+      class="suspension-wrap"
+      :style="{ width: datas.width + 'rpx', height: datas.height + 'rpx' }"
+      @click="$u.navTo(datas.url)">
       <view class="icons" @click.stop.prevent="close">
         <u-icon name="close-circle-fill" size="18" color="rgba(7, 7, 7, 0.2)"></u-icon>
       </view>

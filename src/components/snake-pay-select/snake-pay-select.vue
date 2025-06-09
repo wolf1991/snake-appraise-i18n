@@ -2,10 +2,10 @@
   <u-popup :show="show" :z-index="101">
     <!-- 支付-模态层弹窗 -->
     <view class="pay-wrapper">
-      <view class="pay-wrapper-title snake-relative">
-        <view class="snake-f18">选择支付方式</view>
-        <view class="snake-absolute-rt" @click="close">
-          <text class="next-icons icon-guanbi snake-f18 snake-deepblack" style="margin-right: 28rpx"></text>
+      <view class="pay-wrapper-title pos-relative">
+        <view class="text-32rpx">选择支付方式</view>
+        <view class="pos-absolute top-0 right-28rpx" @click="close">
+          <text class="next-icons icon-colse text-42rpx snake-deepblack"></text>
         </view>
       </view>
       <view class="pay-wrapper-content">
@@ -16,7 +16,7 @@
           <view v-for="(item, index) in payList" :key="index" class="type-item" @tap="changePayType(item.payChannel, item.valid)">
             <!-- 余额支付 支付宝 微信支付 -->
             <view
-              class="snake-mr10 codesign-icon"
+              class="mr-10rpx codesign-icon"
               :class="item.icon"
               :style="{
                 'font-size': item.payChannel == 'asset' ? '55rpx' : '48rpx',
@@ -26,19 +26,19 @@
               <text class="tit">{{ item.payChannelName }}</text>
             </view>
             <label class="pay-radio">
-              <text v-if="payType == item.payChannel" class="next-icons icon-selected snake-f21" style="color: #2ebd7c"></text>
-              <text v-else class="next-icons icon-notselected snake-f21" style="color: #dddddd"></text>
+              <text v-if="payType == item.payChannel" class="next-icons icon-selected text-38rpx text-#2ebd7c"></text>
+              <text v-else class="next-icons icon-notselected text-38rpx text-#dddddd"></text>
             </label>
           </view>
         </view>
         <!-- #ifdef APP-PLUS -->
-        <view class="folded-btn snake-font-regular snake-flex-allcenter" @click="openFolded" v-if="foldedShow">
+        <view class="folded-btn snake-font-regular flex-center" @click="openFolded" v-if="foldedShow">
           <text>展开其他支付方式</text>
-          <text class="next-icons icon-arrow-down snake-ml2"></text>
+          <text class="next-icons icon-arrow-down ml-2rpx"></text>
         </view>
         <!-- #endif -->
         <button class="pay-btn" @click="toPayment">去支付</button>
-        <view class="snake-safe-bottom"></view>
+        <view class="pb-safe"></view>
       </view>
     </view>
   </u-popup>
@@ -202,6 +202,7 @@ export default {
 
   .pay-name {
     flex: 1;
+    padding-left: 20rpx;
   }
 }
 

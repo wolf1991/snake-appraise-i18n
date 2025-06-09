@@ -38,10 +38,10 @@
  * @property {String Number} border-radius 图片圆角值，单位rpx（默认0）
  * @property {String Number} height 图片高度，单位rpx（默认450）
  * @property {String Number} mode 图片的裁剪模式，详见image组件裁剪模式（默认aspectFill）
- * @example <u-lazy-load :image="image"></u-lazy-load>
+ * @example <snake-lazy-load :image="image"></snake-lazy-load>
  */
 export default {
-  name: 'lazy-load',
+  name: 'snake-lazy-load',
   props: {
     // 图片路径
     image: {

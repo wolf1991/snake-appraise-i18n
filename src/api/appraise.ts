@@ -170,7 +170,7 @@ export const postAppraiseCodePurchaseApi = (params) => http.post('/appraise/code
  * 鉴别扣购买记录
  */
 export const getAppraiseCodeOrderListApi = (params) =>
-  http.get('/appraise/code/order/list', {
+  http.get<IResPage>('/appraise/code/order/list', {
     data: params,
   });
 

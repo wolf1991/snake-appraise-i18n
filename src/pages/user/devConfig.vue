@@ -1,5 +1,5 @@
 <template>
-  <view class="p-20rpx">
+  <view class="p-20rpx text-28rpx">
     <view class="flex-items-center">
       <text class="pr-10rpx">开发域名</text>
       <u-input v-model="baseUrl" placeholder="请输入开发域名"></u-input>
@@ -17,11 +17,30 @@
       <u-textarea v-model="pageUrl" placeholder="请输入页面路径"></u-textarea>
     </view>
     <view class="flex-items-center mt-20rpx">
-      <u-button type="primary" plain color="#007aff" custom-style="height: 74rpx; margin-left: 10rpx;" @click="openSelectRoute">
+      <u-button
+        type="primary"
+        plain
+        color="#007aff"
+        custom-style="height: 74rpx; margin-left: 10rpx;"
+        @click="openSelectRoute('pageUrl')">
         选择
       </u-button>
       <u-button type="primary" color="#007aff" custom-style="height: 74rpx; margin-left: 10rpx;" @click="$u.navTo(pageUrl)">
         跳转
+      </u-button>
+    </view>
+
+    <view class="mt-20rpx">
+      <view class="mb-20rpx">页面分享参数</view>
+      <u-input v-model="shareParams.title" placeholder="请输入分享名称"></u-input>
+      <view class="mt-20rpx"></view>
+      <u-input v-model="shareParams.imageUrl" placeholder="请输入图片地址"></u-input>
+      <view class="mt-20rpx"></view>
+      <u-textarea v-model="shareParams.path" placeholder="请输入分享路径，不填默认首页"></u-textarea>
+    </view>
+    <view class="mt-20rpx">
+      <u-button type="primary" plain color="#007aff" custom-style="height: 74rpx;" @click="openSelectRoute('shareParams.path')">
+        选择
       </u-button>
     </view>
 
@@ -40,6 +59,7 @@ import { useUserStore } from '@/stores';
 
 import { getBaseUrl, setConfig } from '@/utils/request/util';
 import { getAllPages } from '@/utils';
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 
 const $u = uni.$u;
 
@@ -51,6 +71,14 @@ const pageUrl = ref('');
 
 const routeShow = ref(false);
 const routeColumns = ref([]);
+
+const shareParams = ref({
+  title: '分享标题',
+  imageUrl: '',
+  path: '/pages/tabbar/main',
+});
+
+const variable = ref('');
 
 const setBaseUrl = async () => {
   // 设置环境地址
@@ -100,7 +128,9 @@ const setBaseUrl = async () => {
   // #endif
 };
 
-const openSelectRoute = () => {
+const openSelectRoute = (key) => {
+  variable.value = key || 'pageUrl';
+
   const blackList = ['/pages/user/devConfig'];
 
   const routes = getAllPages('')
@@ -117,9 +147,34 @@ const openSelectRoute = () => {
 };
 
 const routeConfirm = (e) => {
-  pageUrl.value = e.value[0].path + '?=';
-  routeShow.value = false;
+  if (variable.value === 'pageUrl') {
+    pageUrl.value = e.value[0].path + '?=';
+  } else {
+    shareParams.value.path = e.value[0].path + '?=';
+  }
 };
+
+// 分享好友
+onShareAppMessage((e) => {
+  if (e.from === 'button') {
+    // 来自页面内分享按钮
+    console.log(e);
+  }
+  return {
+    title: shareParams.value.title,
+    path: shareParams.value.path,
+    imageUrl: shareParams.value.imageUrl,
+  };
+});
+
+// 分享到朋友圈
+onShareTimeline(() => {
+  return {
+    title: shareParams.value.title,
+    path: shareParams.value.path,
+    imageUrl: shareParams.value.imageUrl,
+  };
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -15,13 +15,13 @@ declare module 'uview-plus' {
     request: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
     get: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
     post: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
-    setConfig: (config: Partial<IHttpConfig>) => void;
+    setConfig: (config) => void;
     interceptors: {
       request: {
-        use: (config: IHttpConfig) => IHttpConfig | Promise<IHttpConfig>;
+        use: (response: any, response: any) => void;
       };
       response: {
-        use: (response: IResData) => IResData | Promise<IResData>;
+        use: (response: any, response: any) => void;
       };
     };
   }

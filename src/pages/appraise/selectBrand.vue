@@ -20,15 +20,10 @@
         :key="cellIndex"
         @click.stop="navToNext(cell)">
         <view class="flex-items-center" style="align-items: center">
-          <view
-            class="snake-flex"
-            style="border: 1px solid #c8c7cc; border-radius: 100rpx; height: 70rpx; width: 70rpx; align-items: center">
-            <image
-              :src="$u.imageResize(cell.image, 160)"
-              style="height: 100%; width: 100rpx; border-radius: 50%; margin: 10rpx"
-              mode="widthFix"></image>
+          <view class="flex-items-center rounded-100rpx h-70rpx w-70rpx" style="border: 1px solid #c8c7cc">
+            <image class="rounded-50% h-100% w-100rpx m-10rpx" :src="$u.imageResize(cell.image, 160)" mode="widthFix"></image>
           </view>
-          <view style="padding-left: 20rpx">{{ cell.brandName }}</view>
+          <view class="pl-20rpx">{{ cell.brandName }}</view>
         </view>
       </view>
     </u-index-item>

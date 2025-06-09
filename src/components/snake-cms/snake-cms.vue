@@ -19,13 +19,7 @@
       <u-notice-bar
         v-if="item.component === 'notice'"
         :datas="item.setStyle"
-        :text="
-          item.setStyle.direction === 'row'
-            ? item.setStyle.noticeText
-            : Array.isArray(textList)
-              ? item.setStyle.noticeText
-              : textList
-        "
+        :text="getText(item)"
         :bg-color="item.setStyle.backColor"
         :direction="item.setStyle.direction"
         :color="item.setStyle.textColor"
@@ -49,36 +43,38 @@
         <u-sticky
           v-if="item.setStyle.tabShow || item.setStyle.filterShow"
           :custom-nav-height="customNavHeight"
-          :scroll-top="scrollTop"
           :disabled="!item.setStyle.stickyDisabled"
           :bg-color="item.setStyle.backgroundColor">
-          <u-tabs
-            v-if="item.setStyle.tabShow && item.setStyle.tabslist.length"
-            keyName="label"
-            :list="item.setStyle.tabslist"
-            :current="tabsCurrent"
-            :activeStyle="{ color: '#000', fontWeight: 600, fontSize: '32rpx' }"
-            :inactiveStyle="{ color: '#606266', fontSize: '26rpx' }"
-            :lineWidth="25"
-            :lineHeight="4"
-            lineColor="#06D290"
-            :bg-color="item.setStyle.backgroundColor"
-            item-style="height: 34px;"
-            @change="handleTabs">
+          <view :style="`background-color: ${item.setStyle.backgroundColor};`">
+            <u-tabs
+              v-if="item.setStyle.tabShow && item.setStyle.tabslist.length"
+              keyName="label"
+              :list="item.setStyle.tabslist"
+              :current="tabsCurrent"
+              :activeStyle="{ color: '#000', fontWeight: 600, fontSize: '32rpx' }"
+              :inactiveStyle="{ color: '#606266', fontSize: '26rpx' }"
+              :lineWidth="25"
+              :lineHeight="4"
+              lineColor="#06D290"
+              :bg-color="item.setStyle.backgroundColor"
+              item-style="height: 38px;"
+              @change="tabsHandle"></u-tabs>
             <filter-sorts
               v-if="item.setStyle.filterShow"
               ref="filterSortsRef"
               :filters="filters"
-              :bgcolor="item.setStyle.backgroundColor"
+              :priceFilterShow="item.setStyle.filterParams.priceFilterShow"
+              :bgColor="item.setStyle.backgroundColor"
+              customStyle="padding: 0 20rpx;"
               :custom-nav-height="customNavHeight"
               :init="filtersSort"
-              @confirm="confirmFilter"
-              @change="changeFilterSorts" />
-          </u-tabs>
+              @change="confirmFilter" />
+          </view>
         </u-sticky>
         <!-- 新商品列表 -->
         <goods-list
           :goods-list="goodsList"
+          :attendanceShow="item.setStyle.attendanceShow"
           :bg-color="item.setStyle.backgroundColor"
           :page-margin="item.setStyle.pageMargin"
           :commodity-type="item.setStyle.commodityType"
@@ -94,20 +90,9 @@
           :text-color="item.setStyle.emptyColor"
           :custom-style="{ padding: '60px 0 300px', backgroundColor: item.setStyle.backgroundColor }" />
       </view>
-      <view v-if="item.component === 'goodslist2'">
-        <goods-list2
-          :goods-list="goodsList2"
-          :bg-color="item.setStyle.backgroundColor"
-          :page-margin="item.setStyle.pageMargin"
-          :commodity-type="item.setStyle.commodityType"
-          :image-margin="item.setStyle.imageMargin"
-          :list-type="item.setStyle.listType"
-          @item-click="handlerItemClick"
-          @handlerOffer="handlerOffer" />
-      </view>
       <!-- 自定义模块组件 -->
       <custommodule v-if="item.component === 'custommodule'" :datas="item.setStyle">
-        <slot :name="item.setStyle.slotName"></slot>
+        <slot :name="item.setStyle.slotName" />
       </custommodule>
       <jumpApplet v-if="item.component === 'jumpApplet'" :datas="item.setStyle" />
       <follow v-if="item.component === 'follow'" :datas="item.setStyle" />
@@ -131,7 +116,6 @@ import richtext from './components/richtext/richtext.vue';
 import coupon from './components/coupon/index.vue';
 import pagePopup from './components/page-popup/index.vue';
 import goodsList from './components/goodsList/index.vue';
-import goodsList2 from './components/goodsList/index2.vue';
 import auxiliarysegmentation from './components/auxiliarysegmentation/index.vue';
 import pictureads from './components/pictureads/index.vue';
 import custommodule from './components/custommodule/index.vue';
@@ -151,18 +135,17 @@ export default {
     magiccube,
     richtext,
     goodsList,
-    goodsList2,
     auxiliarysegmentation,
     pictureads,
     suspension,
     custommodule,
+    follow,
     jumpApplet,
     imgaes,
     activitySession,
     filterSorts,
     coupon,
     pagePopup,
-    follow,
     float,
   },
   props: {
@@ -186,13 +169,19 @@ export default {
     },
     customNavHeight: {
       type: [Number, String],
+      // #ifdef H5
+      default: 44,
+      // #endif
+      // #ifndef H5
+      // eslint-disable-next-line no-dupe-keys
       default: 0,
+      // #endif
     },
   },
   data() {
     return {
       componentsList: [],
-      page: 0,
+      page: 1,
       goodsList: [],
       goodsList2: [],
       goodsStatus: 'loadmore', // 加载状态
@@ -249,28 +238,31 @@ export default {
     },
   },
   methods: {
-    async init() {
-      try {
-        await this.getActivityList();
-        await this.getFilter();
-        this.getGoodsList('refresh');
-        this.getGoodsList2('refresh');
-      } catch (error) {
-        console.log('error', error);
+    getText(item) {
+      if (item.setStyle.direction === 'row') {
+        return item.setStyle.noticeText;
+      } else if (Array.isArray(this.textList)) {
+        return item.setStyle.noticeText;
+      } else {
+        return this.textList;
       }
+    },
+    async init() {
+      await uni.$u.sleep();
+      await this.getActivityList();
+      await this.getFilter();
+      await this.getGoodsList('refresh');
     },
     // 活动场次切换
     activityCurrentChange(item) {
-      if (this.activityCurrent === item.id) {
-        return;
-      }
+      if (this.activityCurrent === item.id) return;
       this.activityCurrent = item.id;
       this.goodsParams.activityId = item.id === '001' ? '' : item.id;
       this.auctionSetParams = item;
       this.refreshGoodsList();
     },
     // tab切换
-    handleTabs(item) {
+    tabsHandle(item) {
       this.tabsCurrent = item.index;
       this.goodsParams.categoryId = item.value || '';
       this.goodsParams.filterParam = {};
@@ -289,10 +281,7 @@ export default {
       this.goodsParams.filterParam = params;
       this.getGoodsList('refresh');
     },
-    changeFilterSorts(e) {
-      this.isFilterSorts = e.show;
-    },
-    // 获取活动场次
+    // 获取活动场次列表
     async getActivityList() {
       for (const item of this.componentsList) {
         if (item.component === 'goodslist' && item.setStyle.activitySessionShow && item.setStyle.listType === 'auction') {
@@ -301,35 +290,39 @@ export default {
             status: 'ing',
             subType: item.setStyle?.subType || '', // 场次类型
           };
-          const response = await uni.$u.http.get('/mms/activity/list', {
-            data: params,
-          });
-          if (response.success) {
-            const newList = response.data.items || [];
-            if (newList.length) {
-              this.activityList = [
-                {
-                  id: '001',
-                  squareImage: 'https://cdn.puresnake.com/joker/static/all.png',
-                  endTime: newList[0].endTime,
-                  name: newList[0].name,
-                  subtitle: newList[0].subtitle,
-                  shareImage: newList[0].shareImage,
-                  posterImage: newList[0].posterImage,
-                },
-                ...newList,
-              ];
-              this.auctionSetParams = this.activityList[0];
-              if (this.pageInfo?.activityId) {
-                const itemData = this.activityList.find((el) => this.pageInfo.activityId === el.id);
-                const activityId = itemData.id === '001' ? '' : itemData.id;
-                this.auctionSetParams = itemData || this.activityList[0];
-                this.activityCurrent = activityId;
-                this.goodsParams.activityId = activityId;
+          try {
+            const response = await uni.$u.http.get('/mms/activity/list', {
+              data: params,
+            });
+            if (response.success) {
+              const newList = response.data.items || [];
+              if (newList.length) {
+                this.activityList = [
+                  {
+                    id: '001',
+                    squareImage: 'https://cdn.puresnake.com/joker/static/all.png',
+                    endTime: newList[0].endTime,
+                    name: newList[0].name,
+                    subtitle: newList[0].subtitle,
+                    shareImage: newList[0].shareImage,
+                    posterImage: newList[0].posterImage,
+                  },
+                  ...newList,
+                ];
+                this.auctionSetParams = this.activityList[0];
+                if (this.pageInfo?.activityId) {
+                  const itemData = this.activityList.find((el) => this.pageInfo.activityId === el.id);
+                  const activityId = itemData.id === '001' ? '' : itemData.id;
+                  this.auctionSetParams = itemData || this.activityList[0];
+                  this.activityCurrent = activityId;
+                  this.goodsParams.activityId = activityId;
+                }
+              } else {
+                this.activityList = [];
               }
-            } else {
-              this.activityList = [];
             }
+          } catch (error) {
+            uni.$u.toast(error.msg);
           }
           break;
         }
@@ -353,18 +346,22 @@ export default {
           if (this.goodsParams.categoryId) {
             params.categoryId = this.goodsParams.categoryId;
           }
-          const response = await uni.$u.http.get(item.setStyle.filterInterfaceUrl, { data: params });
-          if (response.success) {
-            this.filters = response.data || {};
-            if (item.setStyle.tabShow !== 'custom') {
-              const newCategoryList = response.data?.categoryList || [];
-              if (newCategoryList.length) {
-                newCategoryList[0].label = '全部';
+          try {
+            const response = await uni.$u.http.get(item.setStyle.filterInterfaceUrl, { data: params });
+            if (response.success) {
+              this.filters = response.data || {};
+              if (item.setStyle.tabShow !== 'custom') {
+                const newCategoryList = response.data?.categoryList || [];
+                if (newCategoryList.length) {
+                  newCategoryList[0].label = '全部';
+                }
+                item.setStyle.tabslist = newCategoryList;
               }
-              item.setStyle.tabslist = newCategoryList;
+            } else {
+              uni.$u.toast(response.msg);
             }
-          } else {
-            this.$u.toast(response.msg);
+          } catch (error) {
+            uni.$u.toast(error.msg);
           }
           break;
         }
@@ -388,7 +385,7 @@ export default {
         if (item.component === 'goodslist') {
           // 刷新
           if (type === 'refresh') {
-            this.page = 0;
+            this.page = 1;
             this.goodsList = [];
           }
           // 列表参数
@@ -398,7 +395,7 @@ export default {
           };
           // 列表筛选 初始参数 start
           // 活动id
-          if (item.setStyle.goodsListType === 'activity') {
+          if (item.setStyle.goodsListType === 'activity' && item.setStyle?.filterParams?.activityId) {
             params.activityId = item.setStyle.filterParams.activityId;
           }
           // 活动条件
@@ -408,12 +405,11 @@ export default {
             params.activityUserRule = item.setStyle.filterParams?.activityUserRule || '';
           }
           // 商品条件
-          if (item.setStyle.goodsListType === 'goodsCondition') {
-            params.low = item.setStyle.filterParams.low;
-            params.high = item.setStyle.filterParams.high;
-            params.sellingDay = item.setStyle.filterParams.sellingDay;
-            params.cateId = item.setStyle.filterParams.categoryId;
-          }
+          params.low = item.setStyle?.filterParams?.low || '';
+          params.high = item.setStyle?.filterParams.high || '';
+          params.sellingDay = item.setStyle?.filterParams?.sellingDay || '';
+          params.cateId = item.setStyle?.filterParams?.categoryId || '';
+
           // 不需要条件判断
           params.sort = item.setStyle.filterParams.sort;
           params.showOutOfStock = item.setStyle.filterParams?.showOutOfStock || 0;
@@ -422,6 +418,7 @@ export default {
             params.activityType = 'auction'; // 商品类型
             params.activitySubType = item.setStyle?.subType || ''; // 场次类型
           }
+
           // 搜索key
           if (item.setStyle.key) {
             params.key = item.setStyle.key;
@@ -434,10 +431,16 @@ export default {
           if (this.goodsParams?.activityId) {
             params.activityId = this.goodsParams?.activityId || '';
           }
+          let barnds = [...(item.setStyle.filterParams?.brandNames || [])];
           // 筛选参数
           if (!this.$u.test.empty(this.goodsParams.filterParam || {})) {
             params = Object.assign({}, params, this.goodsParams.filterParam);
+            if (this.goodsParams?.filterParam?.brandFilter) {
+              barnds = barnds.concat(this.goodsParams?.filterParam?.brandFilter.split(','));
+            }
           }
+          params.brandFilter = barnds.join(',');
+
           uni.showLoading({
             title: '加载中...',
             mask: true,
@@ -460,76 +463,6 @@ export default {
         }
       });
     },
-    // 获取商品列表
-    getGoodsList2(type = '') {
-      this.componentsList.forEach(async (item) => {
-        if (item.component === 'goodslist2') {
-          // 刷新
-          if (type === 'refresh') {
-            this.goodsList2 = [];
-          }
-          // 列表参数
-          let params = {
-            page: 0,
-            size: item.setStyle?.filterParams?.pageSize || 20,
-          };
-          // 列表筛选
-          // 活动id
-          if (item.setStyle.goodsListType === 'activity') {
-            params.activityId = item.setStyle.filterParams.activityId;
-          }
-          // 活动条件
-          if (item.setStyle.goodsListType === 'activityStatus' || item.setStyle.goodsListType === 'activityCondition') {
-            params.activityStatus = item.setStyle.filterParams.activityStatus;
-            params.activityType = item.setStyle.filterParams.activityType;
-            params.activityUserRule = item.setStyle.filterParams?.activityUserRule || '';
-          }
-          // 商品条件
-          if (item.setStyle.goodsListType === 'goodsCondition') {
-            params.low = item.setStyle.filterParams.low;
-            params.high = item.setStyle.filterParams.high;
-            params.sellingDay = item.setStyle.filterParams.sellingDay;
-            params.cateId = item.setStyle.filterParams.categoryId;
-          }
-          params.sort = item.setStyle?.filterParams?.sort || '';
-          params.showOutOfStock = item.setStyle.filterParams?.showOutOfStock || 0;
-
-          if (item.setStyle.listType !== 'sale' && item.setStyle.listType !== 'new') {
-            params.activityType = item.setStyle.listType; // 商品类型
-          }
-          // 搜索key
-          if (item.setStyle.key) {
-            params.key = item.setStyle.key;
-          }
-          // 类目id
-          if (this.goodsParams.categoryId) {
-            params.cateId = this.goodsParams.categoryId;
-          }
-          // 场次id
-          if (this.goodsParams?.activityId) {
-            params.activityId = this.goodsParams?.activityId || '';
-          }
-          // 筛选参数
-          if (!this.$u.test.empty(this.goodsParams.filterParam || {})) {
-            params = Object.assign(params, this.goodsParams.filterParam);
-          }
-          uni.showLoading({
-            title: '加载中...',
-            mask: true,
-          });
-          const response = await uni.$u.http.get(item.setStyle.goodsInterfaceUrl, {
-            data: params,
-          });
-          uni.hideLoading();
-          if (response.success) {
-            const newList = response.data.items || [];
-            this.goodsList2 = this.goodsList2.concat(newList);
-          } else {
-            this.$u.toast(response.msg);
-          }
-        }
-      });
-    },
     // 跳转商品详情页
     handlerItemClick(item, index) {
       const pageObj = {
@@ -541,14 +474,14 @@ export default {
       } else {
         uni.setStorageSync('old_cmsId', pageObj);
       }
-      this.navTo(`/pages/buy/detail?id=${item.id}&goodsIndex=${index}`);
+      uni.$u.navTo(`/pages/buy/detail?goodsId=${item.id}&goodsIndex=${index}&cmsId=${this.pageInfo.pageId}`);
     },
     // 公告跳转
     handleNotice(item, index) {
       if (item.setStyle.direction === 'row') {
-        this.navTo(item.setStyle.url);
+        uni.$u.navTo(item.setStyle.url);
       } else {
-        this.navTo(item.setStyle.textList[index].url);
+        uni.$u.navTo(item.setStyle.textList[index].url);
       }
     },
     // 点击报价或者修改报价

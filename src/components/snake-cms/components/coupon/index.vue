@@ -55,12 +55,12 @@ export default {
   mounted() {
     this.getCouponCheck();
     if (this.datas.modeType === 'popup' && this.datas.popupMode === 'bottom') {
-      // uni.hideTabBar({ animation: true });
+      uni.hideTabBar({ animation: true });
     }
   },
   methods: {
     async getCouponCheck() {
-      const response = await uni.$u.http.get('/v3/user/coupon/check', { activityId: this.datas.couponId });
+      const response = await this.$http.get('/user/coupon/check', { activityId: this.datas.couponId });
       this.isCouponCheck = response?.data?.result || false;
       this.tipMessage = response.msg;
       if (this.datas.modeType === 'popup' && this.isCouponCheck) {
@@ -74,7 +74,7 @@ export default {
         this.report();
         return;
       }
-      const response = await uni.$u.http.post('/v3/user/coupon/add', { activityId: this.datas.couponId });
+      const response = await this.$http.post('/user/coupon/add', { activityId: this.datas.couponId });
       if (response.success) {
         this.isCouponCheck = false;
         this.show = false;
@@ -93,7 +93,7 @@ export default {
       console.log(this.datas, this.datas.type !== '12');
       // type 10 内部跳转 type 12 外部跳转
       if (this.datas.type !== '12') {
-        this.navTo(this.datas.afterUrl);
+        uni.$u.navTo(this.datas.afterUrl);
         return;
       }
       if (!this.datas.afterUrl) {

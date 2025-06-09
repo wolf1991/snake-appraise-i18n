@@ -1,8 +1,8 @@
 <template>
-  <view class="snake-pt-20 snake-px-24">
+  <view class="pt-20rpx px-24rpx">
     <form class="snake-form">
-      <view class="snake-bg-white snake-px-28 snake-box-sizing">
-        <view class="snake-form-item snake-border-b snake-flex-vcenter">
+      <view class="bg-white px-28rpx box-border">
+        <view class="snake-form-item snake-border-b flex-items-center">
           <text class="snake-form-label snake-black">收货人</text>
           <view class="snake-form-body">
             <input
@@ -29,18 +29,18 @@
         </view>
         <view class="snake-form-item snake-border-b">
           <text class="snake-form-label snake-black">所在地区</text>
-          <view class="snake-form-body snake-flex-vcenter" @tap="openPicker">
+          <view class="snake-form-body flex-center" @tap="openPicker">
             <view
               type="text"
-              class="snake-form-input snake-gray7 snake-py-4"
+              class="snake-form-input snake-gray7 py-4rpx"
               name="area"
               :class="{ placeholder: addressData.area === '' }">
               {{ addressData.area || '点击选择' }}
             </view>
-            <text class="next-icons icon-arrow-right snake-fs-32 snake-gray7"></text>
+            <text class="next-icons icon-arrow-right text-32rpx snake-gray7"></text>
           </view>
         </view>
-        <view class="snake-form-item" style="align-items: flex-start">
+        <view class="snake-form-item !items-start">
           <text class="snake-form-label snake-black">详细地址</text>
           <view class="snake-form-body">
             <textarea
@@ -53,13 +53,13 @@
           </view>
         </view>
       </view>
-      <view class="snake-bg-white snake-mt-20 snake-px-28 snake-box-sizing">
-        <view class="snake-form-item" style="height: 100rpx">
+      <view class="bg-white mt-20rpx px-28rpx box-border">
+        <view class="snake-form-item h-100rpx">
           <view style="flex-shrink: 0">
-            <text class="snake-fs-28 snake-black">设置为默认地址</text>
-            <text class="snake-fs-22 snake-gray snake-ml-6">(每次下单时默认使用)</text>
+            <text class="text-28rpx snake-black">设置为默认地址</text>
+            <text class="text-22rpx snake-gray ml-6rpx">(每次下单时默认使用)</text>
           </view>
-          <view class="snake-form-body snake-nowrap snake-flex-end">
+          <view class="snake-form-body flex justify-end">
             <switch
               name="defaulted"
               :checked="addressData.defaulted"
@@ -69,7 +69,7 @@
           </view>
         </view>
       </view>
-      <view class="snake-py-40 snake-px-24">
+      <view class="py-40rpx">
         <u-button
           type="primary"
           shape="circle"
@@ -80,14 +80,14 @@
           保存
         </u-button>
         <!-- <u-button
-					v-if="addressData.id"
-					type="primary"
-					shape="circle"
-					plain
-					customStyle="height: 88rpx; font-size: 32rpx; margin-top: 28rpx"
-					@click="deleteAddress">
-					删除地址
-				</u-button> -->
+          v-if="addressData.id"
+          type="primary"
+          shape="circle"
+          plain
+          customStyle="height: 88rpx; font-size: 32rpx; margin-top: 28rpx"
+          @click="deleteAddress">
+          删除地址
+        </u-button> -->
         <!-- #ifdef MP-WEIXIN -->
         <u-button
           v-if="!addressData.id"

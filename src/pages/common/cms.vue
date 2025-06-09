@@ -1,12 +1,11 @@
 <template>
   <view :style="{ backgroundColor: pageInfo.bgColor }">
-    <snake-cms ref="cmsRef" :pageInfo="pageInfo" :pageComponents="pageComponents" :customNavHeight="0" :scrollTop="scrollTop">
-      <template v-slot:kefu>
-        <view class="snake-m-20" v-if="pageId == 973">
-          <button type="primary" open-type="contact">客服</button>
-        </view>
-      </template>
-    </snake-cms>
+    <snake-cms
+      ref="cmsRef"
+      :pageInfo="pageInfo"
+      :pageComponents="pageComponents"
+      :customNavHeight="customNavHeight"
+      :scrollTop="scrollTop"></snake-cms>
   </view>
 </template>
 
@@ -20,6 +19,16 @@ export default {
       pageComponents: [],
       scrollTop: 0,
     };
+  },
+  computed: {
+    customNavHeight() {
+      const sys = uni.getSystemInfoSync();
+      let height = 0;
+      // #ifdef H5
+      height = sys.statusBarHeight + sys.windowTop;
+      // #endif
+      return height;
+    },
   },
   onLoad(options) {
     this.pageId = options.pageId;
@@ -41,6 +50,26 @@ export default {
     this.refresh();
     await this.$u.sleep(300);
     uni.stopPullDownRefresh();
+  },
+  // 分享好友
+  onShareAppMessage(e) {
+    if (e.from === 'button') {
+      // 来自页面内分享按钮
+      console.log(e);
+    }
+    return {
+      title: this.pageInfo.shareParams?.title || 'cms',
+      path: `/pages/common/cms?pageId=${this.pageId}&type=shareLink`,
+      imageUrl: this.pageInfo.shareParams?.imageUrl || '',
+    };
+  },
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: this.pageInfo.shareParams?.title || 'cms',
+      path: `/pages/common/cms?pageId=${this.pageId}&type=shareLink`,
+      imageUrl: this.pageInfo.shareParams?.imageUrl || '',
+    };
   },
   methods: {
     refresh() {
@@ -65,7 +94,7 @@ export default {
           // #endif
         });
       } else {
-        uni.$u.toast(response.msg)
+        uni.$u.toast(response.msg);
       }
     },
   },

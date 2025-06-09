@@ -6,7 +6,7 @@ import md5 from '@/utils/js/md5';
 export function setConfig() {
   uni.$u.http.setConfig((defaultConfig) => {
     /* defaultConfig 为默认全局配置 */
-    defaultConfig.baseURL = `${getBaseUrl()}`; /* 根域名 */
+    defaultConfig.baseURL = `${getBaseUrl()}/v3`; /* 根域名 */
     // #ifdef H5
     // if (import.meta.env.VITE_USER_NODE_ENV === 'development') {
     //   defaultConfig.baseURL = '/api';
@@ -15,6 +15,8 @@ export function setConfig() {
 
     defaultConfig.timeout = 10000; // 超时时间设置为10秒;
     defaultConfig.header['Content-Type'] = 'application/json';
+
+    isProd = getIsProd();
 
     return defaultConfig;
   });
@@ -32,7 +34,7 @@ export function getIsProd() {
   return baseUrl.includes('puresnake');
 }
 // 判断是否为生产环境的域名
-export const isProd = getIsProd();
+export let isProd = getIsProd();
 
 /**
  * 生成签名

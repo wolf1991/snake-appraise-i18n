@@ -5,11 +5,11 @@
       :style="{
         padding: $u.addUnit(imgsData.paddingLR, 'rpx'),
       }"
-      @click="navTo(imgsData.url)">
+      @click="$u.navTo(imgsData.url)">
       <image
         class="image"
         :src="imgsData.src"
-        :style="{ height: !imgsData.height ? '100%' : $u.addUnit(imgsData.height, 'rpx') }"
+        :style="{ height: !imgsData.height ? '100%' : imgsData.height + 'rpx' }"
         :mode="imgMode"></image>
     </view>
   </view>

@@ -3,35 +3,6 @@ snakeUI.css
 verson : 2.0
 */
 
-// 宽度 高度
-.snake-w-full {
-  width: 100%;
-}
-.snake-min-w-full {
-  min-width: 100%;
-}
-.snake-w-unset {
-  width: unset;
-}
-.snake-h-full {
-  height: 100%;
-}
-.snake-min-h-full {
-  min-height: 100%;
-}
-.snake-h-unset {
-  height: unset;
-}
-
-@for $i from 20 through 400 {
-  .snake-w-#{$i} {
-    width: #{$i}rpx !important;
-  }
-  .snake-h-#{$i} {
-    height: #{$i}rpx !important;
-  }
-}
-
 // 偶数字体大小
 @for $i from 16 through 68 {
   @if $i % 2 == 0 {
@@ -79,13 +50,6 @@ $fontWeight: 300, 400, 500, 600, 700, 800, unset;
       border-bottom-right-radius: #{$i}rpx;
       border-bottom-left-radius: #{$i}rpx;
     }
-  }
-}
-
-// 文本居中方式
-@each $var in left, center, right {
-  .snake-text-#{$var} {
-    text-align: #{$var};
   }
 }
 
@@ -155,15 +119,6 @@ $fontWeight: 300, 400, 500, 600, 700, 800, unset;
       -webkit-box-orient: vertical !important;
     }
   }
-}
-
-// 超出隐藏
-.snake-overflow-hidden {
-  overflow: hidden;
-}
-
-.snake-box-sizing {
-  box-sizing: border-box;
 }
 
 // 字体

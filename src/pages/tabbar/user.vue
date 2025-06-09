@@ -1,10 +1,7 @@
 <template>
   <view class="header-bg">
-    <view
-      class="snake-columns snake-flex-allcenter snake-w-full snake-absolute-lt"
-      style="top: 124rpx; left: 50%; transform: translateX(-50%)"
-      @tap="loginHandle">
-      <view style="border: 2px solid #ffffff; border-radius: 50%">
+    <view class="flex-center flex-col pos-absolute top-124rpx left-50%" style="transform: translateX(-50%)" @tap="loginHandle">
+      <view class="mb-28rpx rounded-50%" style="border: 2px solid #ffffff">
         <u-image
           width="150rpx"
           height="150rpx"
@@ -13,20 +10,20 @@
           :src="userInfo.logo || 'https://s.qiuxietang.com/swan-home/user/default-profile.png'"
           mode="widthFix"></u-image>
       </view>
-      <view class="snake-columns snake-flex-allcenter snake-mt-28">
+      <view class="flex-center flex-col">
         <template v-if="isLogined">
-          <!-- <view class="snake-fw-500 snake-mb-10 snake-ellipse-2">{{ userInfo.nickname || '' }}</view> -->
+          <!-- <view class="fw-500 mb-10rpx snake-ellipse-2">{{ userInfo.nickname || '' }}</view> -->
           <u-text color="#000" size="36rpx" format="encrypt" mode="phone" bold :text="userInfo.mobile"></u-text>
         </template>
         <template v-else>
-          <text class="snake-fs-30 snake-h5 snake-bold snake-black">登录/注册</text>
+          <text class="fs-30rpx fw-bold snake-black">登录/注册</text>
         </template>
       </view>
     </view>
   </view>
-  <view class="snake-h-220"></view>
+  <view class="h-220rpx"></view>
 
-  <view class="snake-relative snake-overflow-hidden">
+  <view class="pos-relative overflow-hidden">
     <u-cell-group :border="false">
       <block v-for="item in menuList" :key="item.value">
         <u-cell isLink :border="false" @click="clickNavTo(item.hrefUrl)">
@@ -34,13 +31,13 @@
             <view :class="[`next-icons ${item.icon} snake-fs-48`]"></view>
           </template>
           <template v-slot:title>
-            <view class="snake-fs-36 snake-font-din">{{ item.label }}</view>
+            <view class="fs-36rpx snake-font-din">{{ item.label }}</view>
           </template>
         </u-cell>
         <u-line customStyle="margin-left: 132rpx"></u-line>
       </block>
     </u-cell-group>
-    <view class="snake-absolute-lb snake-w-90 snake-h-90" style="bottom: 80rpx" @longpress="changeBaseUrl"></view>
+    <view class="pos-absolute left-0 bottom-80rpx w-90rpx h-90rpx" @longpress="changeBaseUrl"></view>
   </view>
 </template>
 <script setup lang="ts">
@@ -55,20 +52,6 @@ const userStore = useUserStore();
 
 const { userInfo, isLogined } = storeToRefs(userStore);
 
-// userStore.setUserInfo({
-//     refreshToken: '45b2befb5cd249558a3a425aa26aafc1',
-//     expire: 2592000000,
-//     reg: false,
-//     userId: 1345,
-//     username: '17596153107',
-//     mobile: '17596153107',
-//     logo: 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
-//     nickname: '微信用户',
-//     role: 'user',
-//     authorityList: ['app:user'],
-//     token: '42c722279b8d7914aa1a159f2b1c1e3244f',
-//   });
-
 const menuList = ref();
 
 onLoad(() => {
@@ -80,8 +63,9 @@ const getMenuList = async () => {
 
   if (response.success) {
     const newList = response?.data || [];
+    const black = ['imgEvalOrder', 'recycleOrder'];
     menuList.value = [
-      ...newList,
+      ...newList.filter((item) => !black.includes(item.value)),
       {
         label: '客服中心',
         value: 'kf',

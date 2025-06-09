@@ -3,12 +3,12 @@
     <view class="top-title">收银台</view>
     <view style="padding-top: 54rpx">
       <view class="top-amount">支付金额</view>
-      <view class="snake-flex-allcenter">
+      <view class="flex-center">
         <view class="prices">￥</view>
         <view class="price">{{ price }}</view>
       </view>
     </view>
-    <view class="snake-flex" style="margin-top: 168rpx" v-if="cancellation">
+    <view class="flex" style="margin-top: 168rpx" v-if="cancellation">
       <button class="return" open-type="launchApp" app-parameter="wechat">
         <view class="return-size">返回商户</view>
       </button>
@@ -16,7 +16,7 @@
         <view class="payment-size">重新支付</view>
       </button>
     </view>
-    <view class="snake-flex-allcenter" style="margin-top: 168rpx" v-if="disburse">
+    <view class="flex-center" style="margin-top: 168rpx" v-if="disburse">
       <button class="return" open-type="launchApp" app-parameter="wechat">
         <view class="return-size">返回商户</view>
       </button>

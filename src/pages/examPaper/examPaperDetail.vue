@@ -59,7 +59,7 @@
               </view>
             </scroll-view>
           </view>
-          <view class="bottom snake-space-between snake-flex-vcenter snake-border-t">
+          <view class="bottom flex-items-center justify-between snake-border-t">
             <text class="snake-font-regular text-22rpx text-#888891 font-400">已选：{{ item.userAnswer || '未答题' }}</text>
             <text class="snake-font-regular text-32rpx text-#2ebd7c font-600">答案：{{ item.answer || '' }}</text>
           </view>

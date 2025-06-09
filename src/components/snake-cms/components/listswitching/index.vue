@@ -567,7 +567,7 @@ export default {
       }
     },
     habdleToDetails(item) {
-      this.navTo('/pages/buy/detail', {
+      uni.$u.navTo('/pages/buy/detail', {
         id: item.id,
       });
     },
@@ -602,30 +602,22 @@ export default {
         case 0: // 左上
           this.styleString.top = '5px';
           this.styleString.left = '0px';
-          if (this.datas.commoditycornertype === 0) {
-            this.styleString.borderRadius = '0 10px 10px 0 !important';
-          }
+          this.datas.commoditycornertype === 0 ? (this.styleString.borderRadius = '0 10px 10px 0 !important') : '';
           break;
         case 1: // 左下
           this.styleString.bottom = '5px';
           this.styleString.left = '0px';
-          if (this.datas.commoditycornertype === 0) {
-            this.styleString.borderRadius = '0 10px 10px 0 !important';
-          }
+          this.datas.commoditycornertype === 0 ? (this.styleString.borderRadius = '0 10px 10px 0 !important') : '';
           break;
         case 2: // 右上
           this.styleString.top = '5px';
           this.styleString.right = '0px';
-          if (this.datas.commoditycornertype === 0) {
-            this.styleString.borderRadius = '10px 0px 0px 10px !important';
-          }
+          this.datas.commoditycornertype === 0 ? (this.styleString.borderRadius = '10px 0px 0px 10px !important') : '';
           break;
         case 3: // 右下
           this.styleString.bottom = '5px';
           this.styleString.right = '0px';
-          if (this.datas.commoditycornertype === 0) {
-            this.styleString.borderRadius = '10px 0px 0px 10px !important';
-          }
+          this.datas.commoditycornertype === 0 ? (this.styleString.borderRadius = '10px 0px 0px 10px !important') : '';
           break;
       }
     },

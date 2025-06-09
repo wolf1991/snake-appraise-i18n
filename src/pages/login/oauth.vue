@@ -1,8 +1,15 @@
 <template>
   <view class="flex-center flex-col">
-    <u-navbar fixed placeholder :title="title" bgColor="transparent" autoBack></u-navbar>
+    <u-navbar fixed placeholder :title="title" bgColor="transparent" autoBack>
+      <template v-slot:left>
+        <view></view>
+      </template>
+    </u-navbar>
     <view class="mt-141rpx flex-center flex-col">
-      <image class="w-180rpx h180rpx mb-32rpx" src="@/static/logo.png"></image>
+      <image
+        class="w-180rpx h180rpx mb-32rpx rounded-50%"
+        src="@/static/logo.png"
+        style="box-shadow: 0 4px 20px 0 #a4a8b614"></image>
       <text class="text-42rpx font-600" style="letter-spacing: 2rpx">欢迎登录</text>
     </view>
     <!-- #ifdef MP -->
@@ -13,7 +20,7 @@
     <view class="mt-80rpx"></view>
     <!-- #endif -->
 
-    <view class="snake-w-full snake-px-44 snake-box-sizing">
+    <view class="w-full px-44rpx box-border">
       <!-- #ifdef H5 -->
       <u-input
         type="number"
@@ -26,7 +33,7 @@
       <u-input
         type="number"
         v-model="code"
-        maxlength="6"
+        :maxlength="6"
         border="bottom"
         placeholder="请输入验证码"
         placeholder-style="color: #8E8E93;;font-size:14px;">
@@ -77,13 +84,11 @@
       </button>
       <!-- #endif -->
     </view>
-    <view
-      class="snake-flex-allcenter snake-wrap snake-gray snake-mt-40 snake-fs-20 snake-mx-40"
-      @click.stop="isAgreement = !isAgreement">
-      <radio :checked="isAgreement" color="#000" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
+    <view class="flex-center flex-wrap mt-40rpx mx-40rpx text-20rpx snake-gray" @click.stop="isAgreement = !isAgreement">
+      <radio :checked="isAgreement" color="#06d290" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
       <text>我已阅读，理解并接受以下规定</text>
-      <text class="snake-primary" @click.stop="navTo('/pages/common/cms?pageId=974')">《用户协议》</text>
-      <text class="snake-primary" @click.stop="navTo('/pages/common/cms?pageId=975')">《隐私协议》</text>
+      <text class="text-#06d290" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1009 : 857}`)">《用户协议》</text>
+      <text class="text-#06d290" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1011 : 856}`)">《隐私协议》</text>
     </view>
   </view>
 </template>
@@ -94,10 +99,13 @@ import { postLogin, getCaptchCode, postPushBind } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
 import graceChecker from '@/utils/js/graceChecker';
 
+import { isProd } from '@/utils/request/util';
+
 const userStore = useUserStore();
 export default {
   data() {
     return {
+      isProd,
       // #ifndef MP-ALIPAY
       title: '登录',
       // #endif
@@ -168,7 +176,6 @@ export default {
       if (checkRes) {
         this.loginWithAuthCode(formData);
       } else {
-        this.logining = false;
         uni.$u.toast(graceChecker.error);
       }
     },
@@ -238,13 +245,11 @@ export default {
             ...response.data,
             token: response.token,
           });
-          uni.hideLoading();
-
           // #ifdef APP
           this.pushBind();
           // #endif
-
           await uni.$u.sleep(1000);
+          uni.hideLoading();
           uni.navigateBack();
         } else {
           uni.hideLoading();

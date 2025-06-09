@@ -24,7 +24,7 @@
           <pictureads
             :datas="{
               swiperType: 1,
-              height: datas.heights * 2,
+              height: datas.heights,
               borderRadius: datas.borderRadius,
               imageList: imageList(datas.imageTypeObj[datas.rubiksCubeType][index]),
             }"></pictureads>
