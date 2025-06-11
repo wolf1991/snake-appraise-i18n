@@ -1,6 +1,6 @@
 <template>
   <view class="filter-sorts" id="filtersId" :style="[{ backgroundColor: bgcolor }, customStyle]">
-    <view class="flex-1 flex items-center text-center">
+    <view class="flex-1 flex items-center text-center" v-if="filters?.sortList?.length">
       <snake-drop-menu ref="dropMenuRef" custom-style="flex: 3; min-width: 0">
         <snake-drop-menu-item
           v-model="sortValue"
@@ -58,18 +58,22 @@
       </view>
     </view>
     <!-- 筛选 -->
-    <snake-filter-popup
+    <filterPopup
       ref="filterPopupRef"
       :show="showDrawer"
       :filter="filters"
       :customNavHeight="customNavHeight"
       @colse="closeDrawer"
-      @confirm="filterConfirm"></snake-filter-popup>
+      @confirm="filterConfirm"></filterPopup>
   </view>
 </template>
 <script>
+import filterPopup from './components/filter-popup.vue';
 export default {
   name: 'filter-sorts',
+  components: {
+    filterPopup,
+  },
   props: {
     filters: {
       type: Object,
@@ -93,6 +97,10 @@ export default {
       },
     },
     priceFilterShow: {
+      type: Boolean,
+      default: true,
+    },
+    showTabs: {
       type: Boolean,
       default: true,
     },
@@ -150,7 +158,7 @@ export default {
     // 筛选参数
     filterParams() {
       const params = {};
-      params.sort = this.sizeValue;
+      params.sort = this.sortValue;
       params.gradeFilter = this.gradeValue.join(',');
       params.sizeFilter = this.sizeValue.join(',');
       return params;
@@ -192,7 +200,7 @@ export default {
       query.select('#filtersId').boundingClientRect();
       query.exec((res) => {
         const navbarHeight = 44;
-        const tabsHeight = 38;
+        const tabsHeight = this.showTabs ? 38 : 0;
         let scrollTop = res[0].scrollTop + res[1].top - navbarHeight - tabsHeight;
         // #ifndef H5
         scrollTop = scrollTop - this.systemInfo.statusBarHeight;

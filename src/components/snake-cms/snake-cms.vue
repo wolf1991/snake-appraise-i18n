@@ -65,6 +65,7 @@
               :filters="filters"
               :priceFilterShow="item.setStyle.filterParams.priceFilterShow"
               :bgColor="item.setStyle.backgroundColor"
+              :showTabs="item.setStyle.tabShow && item.setStyle.tabslist.length"
               customStyle="padding: 0 20rpx;"
               :custom-nav-height="customNavHeight"
               :init="filtersSort"
@@ -199,6 +200,7 @@ export default {
       tabsCurrent: 0,
       isFilterSorts: false,
       auctionSetParams: {},
+      isRefresh: false,
     };
   },
   computed: {
@@ -277,9 +279,12 @@ export default {
       this.refreshGoodsList();
     },
     // 点击确定筛选
-    confirmFilter(params) {
+    async confirmFilter(params) {
+      this.isRefresh = true;
       this.goodsParams.filterParam = params;
-      this.getGoodsList('refresh');
+      await this.getGoodsList('refresh');
+      await uni.$u.sleep(30);
+      this.isRefresh = false;
     },
     // 获取活动场次列表
     async getActivityList() {
@@ -369,15 +374,18 @@ export default {
     },
     // 加载更多
     loadMore() {
-      if (this.goodsStatus === 'loading') {
+      if (this.goodsStatus === 'loading' && !this.isRefresh) {
         this.getGoodsList();
       }
     },
     // 重新请求列表
     async refreshGoodsList(param = {}) {
+      this.isRefresh = true;
       this.goodsParams = Object.assign(this.goodsParams, param);
       await this.getFilter();
-      this.getGoodsList('refresh');
+      await this.getGoodsList('refresh');
+      await uni.$u.sleep(30);
+      this.isRefresh = false;
     },
     // 获取商品列表
     getGoodsList(type = '') {
@@ -393,7 +401,7 @@ export default {
             page: this.page,
             size: item.setStyle?.filterParams?.pageSize || 20,
           };
-          // 列表筛选 初始参数 start
+
           // 活动id
           if (item.setStyle.goodsListType === 'activity' && item.setStyle?.filterParams?.activityId) {
             params.activityId = item.setStyle.filterParams.activityId;
@@ -405,15 +413,16 @@ export default {
             params.activityUserRule = item.setStyle.filterParams?.activityUserRule || '';
           }
           // 商品条件
-          params.low = item.setStyle?.filterParams?.low || '';
-          params.high = item.setStyle?.filterParams.high || '';
+          if (item.setStyle?.filterParams?.low || item.setStyle?.filterParams?.high) {
+            params.low = item.setStyle?.filterParams?.low || '';
+            params.high = item.setStyle?.filterParams?.high || '';
+          }
           params.sellingDay = item.setStyle?.filterParams?.sellingDay || '';
           params.cateId = item.setStyle?.filterParams?.categoryId || '';
 
-          // 不需要条件判断
           params.sort = item.setStyle.filterParams.sort;
           params.showOutOfStock = item.setStyle.filterParams?.showOutOfStock || 0;
-          // end
+
           if (item.setStyle.listType === 'auction') {
             params.activityType = 'auction'; // 商品类型
             params.activitySubType = item.setStyle?.subType || ''; // 场次类型
@@ -451,7 +460,7 @@ export default {
             const newList = response.data.items || [];
             this.goodsList = this.goodsList.concat(newList);
             // 分页判断
-            if (newList.length < 10) {
+            if (newList.length < params.size) {
               this.goodsStatus = 'nomore';
             } else {
               this.goodsStatus = 'loading';
