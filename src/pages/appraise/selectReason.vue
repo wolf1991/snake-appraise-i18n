@@ -1,18 +1,21 @@
 <template>
-  <view class="pl-42rpx pr-20rpx bg-white">
-    <block v-for="(item, index) in reasonList" :key="index">
-      <view class="reason-item" @click="selsectReason(item)">
-        <view class="reason-item__label">{{ item.label }}</view>
-        <text v-if="item.checked" class="next-icons icon-selected reason-item__icon" style="color: #2ebd7c"></text>
-        <text v-else class="next-icons icon-selected reason-item__icon"></text>
-      </view>
-      <view class="reason-item__textarea" v-if="item.checked && item.isOtherRemark">
-        <textarea v-model="item.otherRemark" placeholder="请输入其他问题" />
-      </view>
-    </block>
-    <u-empty :show="!reasonList.length" text="没有选项原因" margin-top="80"></u-empty>
+  <view>
+    <view class="pb-20rpx pl-42rpx pr-20rpx bg-white">
+      <block v-for="(item, index) in reasonList" :key="index">
+        <view class="reason-item" @click="selsectReason(item)">
+          <view class="reason-item__label">{{ item.label }}</view>
+          <text v-if="item.checked" class="next-icons icon-selected reason-item__icon" style="color: #2ebd7c"></text>
+          <text v-else class="next-icons icon-selected reason-item__icon"></text>
+        </view>
+        <view class="reason-item__textarea" v-if="item.checked && item.isOtherRemark">
+          <textarea v-model="item.otherRemark" placeholder="请输入其他问题" />
+        </view>
+      </block>
+      <u-empty :show="!reasonList.length" text="没有选项原因" margin-top="80"></u-empty>
+    </view>
 
-    <view class="h-104rpx pb-safe"></view>
+    <view class="h-124rpx pb-safe"></view>
+
     <view class="snake-fixed-bottom">
       <view class="py-12rpx px-24rpx">
         <u-button color="#000000" customStyle="border-radius: 16rpx;" @click="nextSelectImage">

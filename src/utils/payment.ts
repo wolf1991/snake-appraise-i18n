@@ -115,7 +115,7 @@ export const requestPayment = (options) => {
   const upperCaseType = type ? type.toLocaleUpperCase() : '';
 
   if (!type || (!payData && upperCaseType !== 'FREE')) {
-    handlePaymentSuccess(options, {
+    handlePaymentFail(options, {
       errMsg: '支付类型或支付信息不存在',
     });
     return;
@@ -128,7 +128,8 @@ export const requestPayment = (options) => {
       handlePaymentSuccess(options, {});
       break;
     case 'WX_JSAPI':
-    case 'WX_APP': {
+    case 'WX_APP':
+    case 'WX_MA': {
       // 微信小程序支付参数示例：
       // payData:"{"appId":"","timeStamp":"","nonceStr":"","package":"","signType":"RSA","paySign":""}"
       const wxPayload = Object.assign({}, JSON.parse(payData));

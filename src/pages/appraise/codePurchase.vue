@@ -2,7 +2,7 @@
   <view class="my-20rpx mx-24rpx rounded-4rpx">
     <snake-address-board
       :addressData="addressData"
-      @click="$u.navTo('/pages/user/address/address?source=1')"></snake-address-board>
+      @click="$u.navTo('/pages/user/address/address?source=2')"></snake-address-board>
   </view>
 
   <view class="bg-white rounded-4rpx mx-20rpx p-24rpx flex">
@@ -156,6 +156,12 @@ export default {
         uni.$u.toast('请选择上门取件地址');
         return;
       }
+
+      if (this.num === 0 && this.amount - this.num === 0) {
+        this.$toast('请选择扣类型');
+        return;
+      }
+
       if (!this.agreement) {
         uni.$u.toast('请勾选协议');
         return;
@@ -194,15 +200,10 @@ export default {
       const response = await postAppraiseCodePurchaseApi(params);
       if (response.success) {
         const { payDataType, payData, type } = response.data;
-        if (this.totalPrice < 0.1) {
-          uni.$u.toast(response.data);
-          await uni.$u.sleep(1000);
-          uni.$u.navTo('/pages/order/codeOrderList');
-          return;
-        }
+
         requestPayment({
           data: {
-            data: payData,
+            payData,
             type: type || params.payType,
             payDataType,
           },

@@ -27,6 +27,9 @@ const navigateToInterceptor = {
       if (args.url.includes('pages/identify/range2')) {
         args.url = args.url.replace('pages/identify/range2', 'pages/appraise/selectBrand');
       }
+      if (args.url.includes('pages/identify/range')) {
+        args.url = args.url.replace('pages/identify/range', 'pages/appraise/selectBrand');
+      }
       if (args.url.includes('pages/identify/order')) {
         args.url = args.url.replace('pages/identify/order', 'pages/order/orderList');
       }

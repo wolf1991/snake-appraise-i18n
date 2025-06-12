@@ -4,7 +4,8 @@
     :sticky="false"
     :index-list="brandGroupIndexList"
     inactiveColor="#ACACB7"
-    activeColor="#26273A">
+    activeColor="#26273A"
+    v-if="brandGroupList.length">
     <u-index-item v-for="(item, index) in brandGroupList" :key="index">
       <u-index-anchor
         :text="brandGroupIndexList[index]"
@@ -105,10 +106,10 @@ export default {
       let url = `/pages/appraise/identify?item=${encodeURIComponent(JSON.stringify(item))}`;
 
       if (this.appraiseCode) {
-        url = url + `&rangeId=${this.currentTab}&appraiseCode=${this.appraiseCode}`;
+        url = `${url}&appraiseCode=${this.appraiseCode}`;
       }
       if (this.appraiserId) {
-        url = url + `&appraiserId=${this.appraiserId}`;
+        url = `${url}&appraiserId=${this.appraiserId}`;
       }
       uni.$u.navTo(url);
     },

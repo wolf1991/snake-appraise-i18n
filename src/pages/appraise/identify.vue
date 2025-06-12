@@ -2,7 +2,8 @@
   <view class="pt-20rpx px-24rpx">
     <view
       class="bg-contain bg-no-repeat pl-24rpx py-20rpx flex rounded-4rpx"
-      style="background-image: url('https://cdn.puresnake.com/xy-web/identify_top.png')">
+      style="background-image: url('https://cdn.puresnake.com/xy-web/identify_top.png')"
+      v-if="!$u.test.empty(brandDetail)">
       <view class="w-120rpx h-120rpx rounded-2rpx" style="border: 1px solid #e8e8e8">
         <image class="w-120rpx h-120rpx" :src="$u.imageResize(brandDetail.image, 120)" mode="aspectFit"></image>
       </view>
@@ -44,43 +45,45 @@
       <view class="mt-20rpx">
         <u-textarea
           v-model="description"
-          placeholderClass=""
           placeholder="您可以在这里介绍更多装备信息"
           count
           :maxlength="70"
+          :cursorSpacing="200"
           border="none"></u-textarea>
-      </view>
-
-      <view class="snake-fixed-bottom px-24rpx">
-        <view class="h-60rpx line-height-60rpx text-24rpx" @click="agreement = !agreement">
-          <text v-if="agreement" class="next-icons icon-selected text-#06d290"></text>
-          <text v-else class="next-icons icon-notselected text-#888891"></text>
-          我已阅读并同意
-          <text class="text-#06d290" @click="$u.navTo('/pages/custom/cms?pageId=863')">《鉴别服务协议》</text>
-        </view>
-        <view class="flex-items-center justify-between pb-20rpx">
-          <view class="flex-items-center">
-            <text>需支付</text>
-            <view class="text-34rpx font-600 color-#ff3367">
-              <text>￥</text>
-              <text class="text-52rpx">{{ priceParts(identifyPrice).integer }}</text>
-              <text>.{{ priceParts(identifyPrice).decimal }}</text>
-            </view>
-          </view>
-
-          <u-button
-            customStyle="width: 286rpx; height: 90rpx; font-size: 32rpx; margin: 0"
-            color="#06d290"
-            :loading="payLoading"
-            :throttleTime="500"
-            @click="confirmIdentify">
-            去鉴别
-          </u-button>
-        </view>
       </view>
     </view>
 
-    <sanke-pay-select ref="paySelectRef"></sanke-pay-select>
+    <snake-pay-select ref="paySelectRef"></snake-pay-select>
+
+    <view class="h-190rpx pb-safe"></view>
+
+    <view class="snake-fixed-bottom px-24rpx">
+      <view class="h-60rpx line-height-60rpx text-24rpx" @click="agreement = !agreement">
+        <text v-if="agreement" class="next-icons icon-selected text-#06d290"></text>
+        <text v-else class="next-icons icon-notselected text-#888891"></text>
+        我已阅读并同意
+        <text class="text-#06d290" @click="$u.navTo('/pages/custom/cms?pageId=863')">《鉴别服务协议》</text>
+      </view>
+      <view class="flex-items-center justify-between pb-20rpx">
+        <view class="flex-items-center">
+          <text>需支付</text>
+          <view class="text-34rpx font-600 color-#ff3367">
+            <text>￥</text>
+            <text class="text-52rpx">{{ priceParts(identifyPrice).integer }}</text>
+            <text>.{{ priceParts(identifyPrice).decimal }}</text>
+          </view>
+        </view>
+
+        <u-button
+          customStyle="width: 286rpx; height: 90rpx; font-size: 32rpx; margin: 0"
+          color="#06d290"
+          :loading="payLoading"
+          :throttleTime="500"
+          @click="confirmIdentify">
+          去鉴别
+        </u-button>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -128,9 +131,7 @@ const priceParts = computed(() => {
 
 onLoad((options) => {
   brandDetail.value = JSON.parse(decodeURIComponent(options.item));
-
   appraiseCode.value = options.appraiseCode;
-
   getBrandDetail();
 });
 
@@ -138,7 +139,7 @@ onShow(async () => {
   if (isClick.value) {
     isClick.value = false;
     await uni.$u.sleep(1000);
-    uni.$u.navTo('/pages/appraise/orderList');
+    uni.$u.navTo('/pages/order/orderList');
   }
 });
 
@@ -278,9 +279,6 @@ const confirmIdentify = async () => {
 
   params.imageList = imageList;
 
-  // talkingdata上传
-  // this.$util.tdappEvent('鉴别信息上传', undefined, params);
-
   try {
     const response = await postAppraiseOrderApi(params);
     if (response.success) {
@@ -290,12 +288,12 @@ const confirmIdentify = async () => {
         uni.$u.toast('下单成功');
         appraiseCode.value && uni.setStorageSync('appraiseCode', '');
         await uni.$u.sleep(1000);
-        uni.$u.navTo('/pages/appraise/orderList');
+        uni.$u.navTo('/pages/order/orderList');
       } else {
         // 拉起支付
         requestPayment({
           data: {
-            data: payData,
+            payData,
             type: type || params.payType, // 首单免费会有type
             payDataType,
           },
@@ -306,14 +304,14 @@ const confirmIdentify = async () => {
             } else {
               uni.$u.toast('支付成功');
               await uni.$u.sleep(1000);
-              uni.$u.navTo('/pages/appraise/orderList');
+              uni.$u.navTo('/pages/order/orderList');
             }
           },
           fail: async () => {
             // this.$u.toast('支付失败');
             payLoading.value = false;
             await uni.$u.sleep(1000);
-            uni.$u.navTo('/pages/appraise/orderList');
+            uni.$u.navTo('/pages/order/orderList');
           },
         });
       }
@@ -330,10 +328,9 @@ const confirmIdentify = async () => {
 <style lang="scss" scoped>
 ::v-deep .u-textarea {
   border-radius: 4rpx !important;
-  background: #f6f6f6;
-
-  .u-textarea__count {
-    background: #f6f6f6 !important;
-  }
+  background: #f6f6f6 !important;
+}
+::v-deep .u-textarea__count {
+  background: #f6f6f6 !important;
 }
 </style>

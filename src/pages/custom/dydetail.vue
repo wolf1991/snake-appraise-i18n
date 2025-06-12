@@ -30,7 +30,6 @@
 
 <script>
 import { getAppraiseDyOrderDetailApi } from '@/api/appraise';
-import { getCmsInfo } from '@/api/cms';
 import { isProd } from '@/utils/request/util';
 export default {
   data() {
@@ -70,11 +69,10 @@ export default {
   methods: {
     goIdentify() {
       const token = uni.getStorageSync('token');
-      console.log(token);
       if (!token) {
         // #ifdef H5
         uni.navigateTo({
-          url: '/pages/login/login',
+          url: '/pages/login/oauth',
         });
         // #endif
 

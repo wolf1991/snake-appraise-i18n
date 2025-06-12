@@ -227,6 +227,7 @@ const selectPickerConfirm = async () => {
   });
   if (response.success) {
     uni.$u.toast(response.data as string);
+    uni.$u.getHistoryPage(-1)?.refreshList?.();
     await uni.$u.sleep(1000);
     pickerShow.value = false;
     uni.navigateBack();
@@ -267,7 +268,7 @@ const grabOrderHandle = async () => {
   });
   if (response.success) {
     uni.$u.toast('抢单成功!');
-    uni.$u.getHistoryPage(-1)?.refresh?.();
+    uni.$u.getHistoryPage(-1)?.refreshList?.();
     await uni.$u.sleep(1000);
     uni.navigateBack();
   } else {

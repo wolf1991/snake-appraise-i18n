@@ -21,7 +21,7 @@
       @close="imgEditorShow = false"
       @change="imageEditorChange"></snake-image-editor>
 
-    <view class="h-104rpx pb-safe"></view>
+    <view class="h-124rpx pb-safe"></view>
     <view class="snake-fixed-bottom" style="background-color: #fff; z-index: unset">
       <view class="py-12rpx px-24rpx">
         <u-button color="#000000" customStyle="border-radius: 16rpx;" @click="clickComplete">完成</u-button>

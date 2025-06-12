@@ -331,7 +331,7 @@ export function numFormat(value) {
 function getHistoryPage(back = 0) {
   const pages = getCurrentPages();
   const beforePage = pages[pages.length - 1 + back];
-  return beforePage.$vm.$.exposed || getHistoryPage2(back);
+  return beforePage?.$vm?.$?.exposed || getHistoryPage2(back);
 }
 
 /**

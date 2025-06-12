@@ -80,6 +80,12 @@ export default {
         await this.$u.sleep(200);
         uni.hideLoading();
         uni.navigateBack();
+      } else {
+        uni.showLoading();
+        uni.$u.getHistoryPage(-1).addressData = item;
+        await this.$u.sleep(200);
+        uni.hideLoading();
+        uni.navigateBack();
       }
     },
   },
