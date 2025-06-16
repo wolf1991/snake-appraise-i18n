@@ -5,7 +5,7 @@ import { loadEnv } from 'vite';
 
 // 获取环境变量的范例
 const env = loadEnv(process.env.NODE_ENV!, path.resolve(process.cwd(), 'env'));
-const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE } = env;
+const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_ALI_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE } = env;
 
 export default defineManifestConfig({
   name: VITE_APP_TITLE,
@@ -15,11 +15,6 @@ export default defineManifestConfig({
   versionCode: '100',
   transformPx: false,
   locale: VITE_FALLBACK_LOCALE, // 'zh-Hans'
-  h5: {
-    router: {
-      base: VITE_APP_PUBLIC_BASE,
-    },
-  },
   /* 5+App特有相关 */
   'app-plus': {
     usingComponents: true,
@@ -109,9 +104,12 @@ export default defineManifestConfig({
       urlCheck: false,
     },
     usingComponents: true,
-    // __usePrivacyCheck__: true,
+    optimization: {
+      subPackages: true,
+    },
   },
   'mp-alipay': {
+    appid: VITE_ALI_APPID,
     usingComponents: true,
     styleIsolation: 'shared',
   },
@@ -125,4 +123,9 @@ export default defineManifestConfig({
     enable: false,
   },
   vueVersion: '3',
+  h5: {
+    router: {
+      base: VITE_APP_PUBLIC_BASE,
+    },
+  },
 });
