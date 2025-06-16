@@ -219,10 +219,53 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
 
     const isTabbar = url.includes('tabbar');
 
+    console.log('url', url);
+
+    console.log('isTabbar', isTabbar);
+
+    console.log('uni', uni);
+    console.log('uni', uni.switchTab);
+
+    console.log('linkType', linkType);
+
     // 执行类似uni.navigateTo的方法
+    // #ifndef H5
     uni[isTabbar ? 'switchTab' : linkType]({
       url,
     });
+    // #endif
+
+    // #ifdef H5
+    // h5环境下 需要显示显示使用跳转方法
+    // https://ask.dcloud.net.cn/question/153714
+    if (isTabbar) {
+      uni.switchTab({
+        url,
+      });
+      return;
+    }
+    switch (linkType) {
+      case 'redirectTo':
+        uni.redirectTo({
+          url,
+        });
+        break;
+      case 'reLaunch':
+        uni.redirectTo({
+          url,
+        });
+        break;
+      case 'switchTab':
+        uni.switchTab({
+          url,
+        });
+        break;
+      default:
+        uni.navigateTo({
+          url,
+        });
+    }
+    // #endif
   } catch (error) {
     console.error('Navigation error:', error);
   }
