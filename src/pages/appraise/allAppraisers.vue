@@ -22,7 +22,7 @@
           :src="$u.imageResize(item.headImage, 120)"
           mode="aspectFill" />
         <view class="mb-16rpx text-28rpx font-500">{{ item.name }}</view>
-        <view class="line-clamp-2 mt-10rpx h-66rpx line-height-66rpx text-24rpx text-#666666">{{ item.scope }}</view>
+        <view class="h-66rpx line-height-33rpx line-clamp-2 mt-10rpx mx-10rpx text-24rpx text-#666666">{{ item.scope }}</view>
         <view class="flex items-center justify-between fw-300 text-#111 bg-#f6f6f6 h-97rpx">
           <view class="flex-1 w-80rpx">
             <text class="text-26rpx font-700 snake-font-dinBold">{{ item.appraiseCount }}</text>

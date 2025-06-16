@@ -184,17 +184,17 @@ export default {
 
       // #ifdef H5
       params.payType = 'alipay_h5';
-      params.callbackUrl = this.H5PAYRETURN;
+      params.callbackUrl = '/pages/order/codeOrderList';
       // #endif
 
       // #ifdef MP-ALIPAY
       params.payType = 'alipay_ma';
-      params.buyerId = userStore.userInfo.openid;
+      params.buyerId = userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID');
       // #endif
 
       // #ifdef MP-WEIXIN
       params.payType = 'wx_ma';
-      params.buyerId = userStore.userInfo.openid;
+      params.buyerId = userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID');
       // #endif
 
       const response = await postAppraiseCodePurchaseApi(params);

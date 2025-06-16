@@ -60,7 +60,7 @@ export default {
         });
     },
     async wxPayPayment() {
-      const openid = this.$store.getters?.getOpenid || uni.getStorageSync('__SK_OPENID');
+      const openid = userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID');
       this.cancellation = false;
       const params = {
         openid,
