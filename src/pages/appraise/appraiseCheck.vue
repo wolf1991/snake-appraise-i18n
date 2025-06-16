@@ -243,7 +243,7 @@ const confirmIdentify = async () => {
         uni.removeStorageSync(`fail_${catId.value}_reason_list`);
       }
       uni.removeStorageSync('image_select_list');
-      uni.$u.getHistoryPage(-2)?.refreshList?.();
+      uni.$u.getHistoryPage(-1)?.replaceDetail?.();
       await uni.$u.sleep(1000);
       btnLoading.value = false;
       uni.navigateBack();

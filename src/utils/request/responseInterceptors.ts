@@ -135,7 +135,7 @@ const handleCommonErrors = (response) => {
   const errorMap = {
     400: '请求参数错误',
     403: '没有访问权限',
-    // 404: '资源不存在',
+    404: '资源不存在',
     500: response.data?.msg || '服务器错误',
     502: '网关错误',
     504: '网关超时',

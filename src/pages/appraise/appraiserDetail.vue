@@ -171,9 +171,11 @@ const reasonList = ref([]);
 const reasonValue = ref('');
 const modalShow = ref(false);
 const type = ref('');
+const listIndex = ref(-1);
 
 onLoad((options) => {
   type.value = options.type;
+  listIndex.value = options.listIndex;
 
   if (options.orderId) {
     orderId.value = options.orderId;
@@ -275,6 +277,29 @@ const grabOrderHandle = async () => {
     uni.$u.toast(response.msg);
   }
 };
+
+// 替换详情
+const replaceDetail = async () => {
+  let orderLsit = uni.$u.getHistoryPage(-1)?.myList?.orderList || [];
+  let length = orderLsit.length - 1;
+  const loadingType = uni.$u.getHistoryPage(-1)?.myList?.loadingType;
+  if (loadingType !== 'noMore' && listIndex.value === length) {
+    await uni.$u.getHistoryPage(-1)?.loadMyList();
+    orderLsit = uni.$u.getHistoryPage(-1)?.myList?.orderList || [];
+    length = orderLsit.length - 1;
+  }
+  if (listIndex.value < length) {
+    const index = listIndex.value + 1;
+    const orderId = orderLsit[index]?.id;
+    orderId && uni.$u.navTo(`/pages/identifier/orderdetail?orderId=${orderId}&listIndex=${index}`, 'redirectTo');
+  } else {
+    getDetail();
+  }
+};
+
+defineExpose({
+  replaceDetail,
+});
 </script>
 
 <style lang="scss" scoped></style>

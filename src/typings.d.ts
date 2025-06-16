@@ -20,7 +20,7 @@ declare global {
   }
 
   // 用户信息
-  type IUserInfo = {
+  interface IUserInfo {
     userId?: string | number;
     mobile?: string;
     username?: string;
@@ -32,7 +32,7 @@ declare global {
     refreshToken?: string;
     expire?: number;
     [key: string]: any;
-  };
+  }
 }
 
 export {}; // 防止模块污染

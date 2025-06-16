@@ -22,7 +22,7 @@ export const getMenuListApi = () => http.get<IAppraiseMenuList[]>('/appraise/men
  * 获取鉴别师列表
  */
 export const getAppraiseUserListApi = (params) =>
-  http.get('/appraise/userList', {
+  http.get<IResPage>('/appraise/userList', {
     data: params,
   });
 
