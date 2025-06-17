@@ -1,10 +1,6 @@
 <template>
   <view class="flex-center flex-col">
-    <u-navbar fixed placeholder :title="title" bgColor="transparent" autoBack>
-      <template v-slot:left>
-        <view></view>
-      </template>
-    </u-navbar>
+    <u-navbar fixed placeholder :title="title" bgColor="transparent" autoBack></u-navbar>
     <view class="mt-141rpx flex-center flex-col">
       <image
         class="w-180rpx h180rpx mb-32rpx rounded-50%"
@@ -85,10 +81,10 @@
       <!-- #endif -->
     </view>
     <view class="flex-center flex-wrap mt-40rpx mx-40rpx text-20rpx snake-gray" @click.stop="isAgreement = !isAgreement">
-      <radio :checked="isAgreement" color="#06d290" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
+      <radio :checked="isAgreement" color="#0f1113" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
       <text>我已阅读，理解并接受以下规定</text>
-      <text class="text-#06d290" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1009 : 857}`)">《用户协议》</text>
-      <text class="text-#06d290" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1011 : 856}`)">《隐私协议》</text>
+      <text class="text-primary" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1009 : 857}`)">《用户协议》</text>
+      <text class="text-primary" @click.stop="navTo(`/pages/common/cms?pageId=${isProd ? 1011 : 856}`)">《隐私协议》</text>
     </view>
   </view>
 </template>

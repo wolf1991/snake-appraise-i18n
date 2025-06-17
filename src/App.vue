@@ -27,7 +27,6 @@ onLaunch((options) => {
    * @param {Object} referrerInfo
    */
   if (referrerInfo) {
-    console.log(referrerInfo);
     const { extraData } = referrerInfo;
     if (extraData && extraData.sk_channel) {
       uni.setStorage({

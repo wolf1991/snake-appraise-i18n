@@ -152,6 +152,7 @@ const routeConfirm = (e) => {
   } else {
     shareParams.value.path = e.value[0].path + '?=';
   }
+  routeShow.value = false;
 };
 
 // 分享好友

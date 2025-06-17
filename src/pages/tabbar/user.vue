@@ -21,7 +21,7 @@
       </view>
     </view>
   </view>
-  <view class="h-220rpx"></view>
+  <view class="h-200rpx"></view>
 
   <view class="pos-relative overflow-hidden">
     <u-cell-group :border="false">

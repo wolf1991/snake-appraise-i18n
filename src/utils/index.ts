@@ -83,7 +83,8 @@ export const getQueryParams = (url: string) => {
 
     let decodedValue = value ? ensureDecodeURIComponent(value) : '';
     try {
-      decodedValue = JSON.parse(decodedValue);
+      // 如果解码后的值包含大括号，尝试将其解析为JSON对象或数组
+      decodedValue = decodedValue.includes('{') ? JSON.parse(decodedValue) : decodedValue;
     } catch (e) {
       // 保持原值
     }
@@ -219,15 +220,6 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
 
     const isTabbar = url.includes('tabbar');
 
-    console.log('url', url);
-
-    console.log('isTabbar', isTabbar);
-
-    console.log('uni', uni);
-    console.log('uni', uni.switchTab);
-
-    console.log('linkType', linkType);
-
     // 执行类似uni.navigateTo的方法
     // #ifndef H5
     uni[isTabbar ? 'switchTab' : linkType]({
@@ -236,7 +228,7 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
     // #endif
 
     // #ifdef H5
-    // h5环境下 需要显示显示使用跳转方法
+    // h5环境下 需要显示使用跳转方法
     // https://ask.dcloud.net.cn/question/153714
     if (isTabbar) {
       uni.switchTab({

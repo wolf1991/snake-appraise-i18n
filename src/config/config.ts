@@ -1,8 +1,6 @@
 // 获取环境变量
 const { VITE_SERVER_BASEURL, VITE_SERVER_BASEURL_DEV, VITE_USER_NODE_ENV } = import.meta.env;
 
-console.log('env->', import.meta.env);
-
 // 项目公共配置
 let config = {
   // baseUrl
