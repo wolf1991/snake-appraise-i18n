@@ -5,30 +5,20 @@ declare module 'uview-plus' {
     };
   }
 
-  interface IHttpConfig {
-    baseURL?: string;
-    timeout?: number;
-    header?: Record<string, string>;
-  }
-
-  interface IHttp {
-    request: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
-    get: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
-    post: <T>(url: string, data?: any, config?: IHttpConfig) => Promise<IResData<T>>;
-    setConfig: (config) => void;
+  interface IHttpRequest {
     interceptors: {
-      request: {
-        use: (response: any, response: any) => void;
-      };
-      response: {
-        use: (response: any, response: any) => void;
-      };
+      request: HttpInterceptorManager<HttpRequestConfig, HttpRequestConfig>;
+      response: HttpInterceptorManager<HttpResponse, HttpError>;
     };
+    request<T>(config: HttpRequestConfig<UniApp.RequestTask>): Promise<IResData<T>>;
+    get<T>(url: string, config?: HttpRequestConfig<UniApp.RequestTask>): Promise<IResData<T>>;
+    post<T>(url: string, data?: AnyObject, config?: HttpRequestConfig<UniApp.RequestTask>): Promise<IResData<T>>;
+    setConfig(onSend: (config: HttpRequestConfig) => HttpRequestConfig): void;
   }
 
   interface $u {
     props: IProps;
-    http: IHttp;
+    http: IHttpRequest;
     /**
      * @description 进行延时，以达到可以简写代码的目的 比如: await uni.$u.sleep(20)将会阻塞20ms
      * @param {number} value 堵塞时间 单位ms 毫秒

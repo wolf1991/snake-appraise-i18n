@@ -1,84 +1,86 @@
 <template>
-  <view class="my-20rpx mx-24rpx rounded-4rpx">
-    <snake-address-board
-      :addressData="addressData"
-      @click="$u.navTo('/pages/user/address/address?source=2')"></snake-address-board>
-  </view>
-
-  <view class="bg-white rounded-4rpx mx-20rpx p-24rpx flex">
-    <view class="flex-items-center">
-      <image class="w-160rpx h-160rpx" :src="$u.thumbnailZip(curRange.image)" mode="widthFix" v-if="curRange.image"></image>
+  <view>
+    <view class="my-20rpx mx-24rpx rounded-4rpx">
+      <snake-address-board
+        :addressData="addressData"
+        @click="$u.navTo('/pages/user/address/address?source=2')"></snake-address-board>
     </view>
-    <view class="flex flex-col justify-between flex-1 ml-20rpx">
-      <view>
-        <view class="text-26rpx">{{ curRange.name }}</view>
-        <view class="text-22rpx text-#aaaaaa mt-10rpx" style="font-family: DIN-Regular">x{{ amount }}{{ '组' }}</view>
+
+    <view class="bg-white rounded-4rpx mx-20rpx p-24rpx flex">
+      <view class="flex-items-center">
+        <image class="w-160rpx h-160rpx" :src="$u.thumbnailZip(curRange.image)" mode="widthFix" v-if="curRange.image"></image>
       </view>
+      <view class="flex flex-col justify-between flex-1 ml-20rpx">
+        <view>
+          <view class="text-26rpx">{{ curRange.name }}</view>
+          <view class="text-22rpx text-#aaaaaa mt-10rpx" style="font-family: DIN-Regular">x{{ amount }}{{ '组' }}</view>
+        </view>
+        <view class="flex justify-between">
+          <view></view>
+          <view class="text-28rpx snake-font-dinmedium">
+            <text class="text-18rpx">￥</text>
+            <text>{{ totalPrice }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bg-white rounded-4rpx mt-20rpx mx-24rpx p-24rpx">
       <view class="flex justify-between">
-        <view></view>
-        <view class="text-28rpx snake-font-dinmedium">
-          <text class="text-18rpx">￥</text>
-          <text>{{ totalPrice }}</text>
-        </view>
+        <view class="flex-items-center font-600">鞋扣</view>
+        <u-number-box v-model="num" :min="0"></u-number-box>
+      </view>
+      <view class="flex justify-between mt-30rpx">
+        <view class="flex-items-center font-600">其他扣(服/包/配饰等)</view>
+        <view>{{ num === 0 ? 0 : amount - num }}组</view>
       </view>
     </view>
-  </view>
+    <textarea
+      class="w-697rpx h-134rpx mt-20rpx mx-24rpx bg-#F6F6F6 text-24rpx py-20rpx px-24rpx box-border"
+      style="border: 1px solid #e8e8e8"
+      placeholder="(必填)请注明需要多少组鞋扣或其他扣（服饰、配饰、包等）"
+      placeholder-class="text-#b1b2c1 text-24rpx font-300 text-left"
+      v-model="remark"></textarea>
 
-  <view class="bg-white rounded-4rpx mt-20rpx mx-24rpx p-24rpx">
-    <view class="flex justify-between">
-      <view class="flex-items-center font-600">鞋扣</view>
-      <u-number-box v-model="num" :min="0"></u-number-box>
+    <view class="bg-white flex-items-center justify-between rounded-4rpx mt-20rpx mx-24rpx h-80rpx px-24rpx">
+      <view>实付金额</view>
+      <view class="text-28rpx" style="font-family: DIN-Medium">¥{{ totalPrice.toFixed(2) }}</view>
     </view>
-    <view class="flex justify-between mt-30rpx">
-      <view class="flex-items-center font-600">其他扣(服/包/配饰等)</view>
-      <view>{{ num === 0 ? 0 : amount - num }}组</view>
-    </view>
-  </view>
-  <textarea
-    class="w-697rpx h-134rpx mt-20rpx mx-24rpx bg-#F6F6F6 text-24rpx py-20rpx px-24rpx box-border"
-    style="border: 1px solid #e8e8e8"
-    placeholder="(必填)请注明需要多少组鞋扣或其他扣（服饰、配饰、包等）"
-    placeholder-class="text-#b1b2c1 text-24rpx font-300 text-left"
-    v-model="remark"></textarea>
-
-  <view class="bg-white flex-items-center justify-between rounded-4rpx mt-20rpx mx-24rpx h-80rpx px-24rpx">
-    <view>实付金额</view>
-    <view class="text-28rpx" style="font-family: DIN-Medium">¥{{ totalPrice.toFixed(2) }}</view>
-  </view>
-  <view class="text-#aaaaaa text-24rpx py-18rpx px-24rpx">
-    <view class="mt-10rpx">购买须知：</view>
-    <view class="mt-10rpx">1. 下单付款后，SNAKE平台将联系您并寄出商品邮费到付，请关注。</view>
-    <view class="mt-10rpx">2. 用户使用鉴别扣后，无需额外支付鉴别费用，一经售出不退不换。</view>
-  </view>
-
-  <view class="h-152rpx pb-safe"></view>
-
-  <view class="w-100% snake-fixed-bottom flex flex-col px-24rpx">
-    <view class="text-24rpx bg-white pt-12rpx" @click="checkAgreement">
-      <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click.stop="checkAgreement" />
-      <text class="text-24rpx text-#0f1113">我已阅读并同意</text>
-      <text class="snake-font-medium text-24rpx text-#0f1113" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
-        《鉴别扣服务协议》
-      </text>
+    <view class="text-#aaaaaa text-24rpx py-18rpx px-24rpx">
+      <view class="mt-10rpx">购买须知：</view>
+      <view class="mt-10rpx">1. 下单付款后，SNAKE平台将联系您并寄出商品邮费到付，请关注。</view>
+      <view class="mt-10rpx">2. 用户使用鉴别扣后，无需额外支付鉴别费用，一经售出不退不换。</view>
     </view>
 
-    <view class="flex-items-center justify-between pb-12rpx">
-      <view class="flex-items-center text-24rpx">
-        <text>实付金额:</text>
-        <view class="text-34rpx text-#ff3367 snake-font-dinmedium">
-          <text class="text-22rpx">￥</text>
-          <text>{{ totalPrice }}</text>
-        </view>
+    <view class="h-152rpx pb-safe"></view>
+
+    <view class="w-100% snake-fixed-bottom flex flex-col px-24rpx">
+      <view class="text-24rpx bg-white pt-12rpx" @click="checkAgreement">
+        <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click.stop="checkAgreement" />
+        <text class="text-24rpx text-#0f1113">我已阅读并同意</text>
+        <text class="snake-font-medium text-24rpx text-#0f1113" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
+          《鉴别扣服务协议》
+        </text>
       </view>
 
-      <u-button
-        type="primary"
-        :throttle-time="600"
-        :disabled="disabled"
-        custom-style="width: 212rpx; height: 80rpx; margin: 0"
-        @click="submitOrder">
-        提交订单
-      </u-button>
+      <view class="flex-items-center justify-between pb-12rpx">
+        <view class="flex-items-center text-24rpx">
+          <text>实付金额:</text>
+          <view class="text-34rpx text-#ff3367 snake-font-dinmedium">
+            <text class="text-22rpx">￥</text>
+            <text>{{ totalPrice }}</text>
+          </view>
+        </view>
+
+        <u-button
+          type="primary"
+          :throttle-time="600"
+          :disabled="disabled"
+          custom-style="width: 212rpx; height: 80rpx; margin: 0"
+          @click="submitOrder">
+          提交订单
+        </u-button>
+      </view>
     </view>
   </view>
 </template>
@@ -157,8 +159,8 @@ export default {
         return;
       }
 
-      if (this.num === 0 && this.amount - this.num === 0) {
-        this.$toast('请选择扣类型');
+      if (this.num === 0) {
+        this.$u.toast('请选择扣类型');
         return;
       }
 

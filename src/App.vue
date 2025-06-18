@@ -21,6 +21,11 @@ onLaunch((options) => {
     uni.setStorageSync('__SK_CHANNEL', query.sk_channel);
   }
 
+  if (query['snake-inviter'] || query.si) {
+    const inviter = query['snake-inviter'] || query.si;
+    userStore.setInviter(inviter);
+  }
+
   /**
    * 支付宝小程序带参数相互跳转
    * @link https://opensupport.alipay.com/support/helpcenter/142/201602493601?ant_source=zsearch
@@ -35,9 +40,6 @@ onLaunch((options) => {
       });
     }
   }
-});
-onShow(() => {
-  console.log('App Show');
 
   // #ifdef APP-PLUS
 
@@ -70,6 +72,17 @@ onShow(() => {
       console.log('接收到的消息内容', res);
     }
   });
+
+  // #endif
+
+  // #ifdef MP
+  mpUpdate();
+  // #endif
+});
+onShow(() => {
+  console.log('App Show');
+
+  // #ifdef APP-PLUS
 
   // 如果个别页面需要单独定制 请在页面单独写
   const permissionEnums = {
@@ -139,7 +152,6 @@ const checkNotificationAuthorized = () => {
       title: '通知权限',
       content: '您还没有开启通知权限，无法接收到消息通知，请前往设置！',
       confirmText: '去设置',
-      showCancel: false,
       success: (res) => {
         if (res.confirm) {
           uni.openAppAuthorizeSetting();
@@ -159,7 +171,7 @@ const pushBind = () => {
   // 获取客户端唯一的推送标识
   uni.getPushClientId({
     success: async (res) => {
-      const response = await postPushBind({
+      await postPushBind({
         appid: appBaseInfo.appId,
         deviceId: deviceInfo.deviceId,
         deviceType: deviceInfo.deviceBrand,

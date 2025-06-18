@@ -1,13 +1,14 @@
 import appConfig from '@/config/config';
 import { useUserStore } from '@/stores';
 import { fromCode, processRequestParams } from './util';
+import { HttpRequestConfig, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-request';
 
 /**
  * 请求拦截器
  */
 export const requestInterceptors = () => {
   uni.$u.http.interceptors.request.use(
-    (config) => {
+    (config: HttpRequestConfig) => {
       // 可使用async await 做异步操作
       // 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
       config.data = config.data || {};
@@ -27,9 +28,9 @@ export const requestInterceptors = () => {
 
       const skChannel = uni.getStorageSync('__SK_CHANNEL');
 
-      // if (store.getters?.inviter) {
-      //   config.header['snake-inviter'] = store.getters.inviter;
-      // }
+      if (userStore?.inviter) {
+        config.header['snake-inviter'] = userStore.inviter;
+      }
 
       // #ifdef H5
       config.header.appId = '202310111401';
@@ -60,7 +61,7 @@ export const requestInterceptors = () => {
       // #endif
       return config;
     },
-    (config) => {
+    (config: HttpResponse) => {
       console.error('请求拦截器发生错误:', config);
       // 可使用async await 做异步操作
       return Promise.reject(config);

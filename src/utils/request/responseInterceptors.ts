@@ -1,6 +1,7 @@
 import { useUserStore } from '@/stores';
 
 import { postRefreshToken } from '@/api/user';
+import { HttpError, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-request';
 
 // 是否正在刷新token的标记
 let isRefreshing = false;
@@ -16,13 +17,13 @@ let retryCount = 0;
  */
 export const responseInterceptors = () => {
   uni.$u.http.interceptors.response.use(
-    (response) => {
+    (response: HttpResponse) => {
       /* 对响应成功做点什么 可使用async await 做异步操作 */
       const data = response.data;
 
       return data || {};
     },
-    (response) => {
+    (response: HttpError) => {
       // 请求错误做点什么。可以使用async await 做异步操作
       console.log('err-response', response);
 
@@ -40,7 +41,7 @@ export const responseInterceptors = () => {
   );
 };
 
-const handleUnauthorizedError = async (response) => {
+const handleUnauthorizedError = async (response: HttpError) => {
   const userStore = useUserStore();
 
   // 检查是否存在刷新令牌
@@ -131,7 +132,7 @@ const refreshTokenHandle = async (refreshToken = '', userStore) => {
  *
  * @param response HTTP响应对象
  */
-const handleCommonErrors = (response) => {
+const handleCommonErrors = (response: HttpError) => {
   const errorMap = {
     400: '请求参数错误',
     403: '没有访问权限',
