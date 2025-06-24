@@ -8,6 +8,7 @@ import permissionListener from '@/utils/permission/permission-listener';
 // #endif
 
 import { useUserStore } from '@/stores/modules/user';
+import { onBeforeMount } from 'vue';
 
 const userStore = useUserStore();
 
@@ -109,6 +110,38 @@ onHide(() => {
   permissionListener && permissionListener.stopFunc();
   // #endif
 });
+
+onBeforeMount(() => {
+  // #ifdef H5
+  addScriptBeforeHead();
+  // #endif
+});
+
+// #ifdef H5
+function addScriptBeforeHead() {
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.text = `
+                var _czc = _czc || [];
+                (function () {
+                    var um = document.createElement("script");
+                    um.src = "https://v1.cnzz.com/z.js?id=1278912380&async=1";
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(um, s);
+                })();
+            `;
+
+  const head = document.getElementsByTagName('head')[0];
+
+  if (head) {
+    head.parentNode.insertBefore(script, head);
+  } else {
+    // 如果没有<head>标签，则添加到<body>的开头
+    document.body.insertBefore(script, document.body.firstChild);
+  }
+}
+
+// #endif
 
 // #ifdef MP
 const mpUpdate = () => {
