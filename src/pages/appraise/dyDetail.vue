@@ -18,10 +18,14 @@
       </view>
     </view>
     <view class="snake-fixed-bottom">
-      <view
-        class="w-702rpx h-94rpx line-height-94rpx mx-auto text-center bg-#26273a rounded-2rpx fw-bold text-36rpx snake-font-semibold"
-        @click="goIdentify">
-        去鉴别
+      <view class="py-12rpx px-24rpx">
+        <u-button
+          type="primary"
+          :throttle-time="500"
+          custom-style="height: 94rpx; font-size: 32rpx; font-weight: 600"
+          @click="goIdentify">
+          去鉴别
+        </u-button>
       </view>
     </view>
     <snake-login-popup :show="logInShow" @close="logInShow = false" @refresh="typeRefresh"></snake-login-popup>
@@ -30,7 +34,6 @@
 
 <script>
 import { getAppraiseDyOrderDetailApi } from '@/api/appraise';
-import { getCmsInfo } from '@/api/cms';
 import { isProd } from '@/utils/request/util';
 export default {
   data() {
@@ -48,13 +51,13 @@ export default {
     q = my.getLaunchOptionsSync().query.qrCode;
     // #endif
     // 扫普通二维码进入参数 {"q":"https%253A%252F%252Fxy.puresnake.com%252Fs%253Fp%253D60201715","scancode_time":"1603866721"}
-    q = this.$util.getQueryParams(decodeURIComponent(q));
+    q = uni.$u.getQueryParams(decodeURIComponent(q));
     options = { ...options, ...q };
     this.code = options.id;
   },
-  onShow() {
+  async onShow() {
     if (this.code) {
-      this.getDetail();
+      await this.getDetail();
     }
     // #ifdef MP-WEIXIN
     if (!this.appraiseDetail.status) {
@@ -70,11 +73,10 @@ export default {
   methods: {
     goIdentify() {
       const token = uni.getStorageSync('token');
-      console.log(token);
       if (!token) {
         // #ifdef H5
         uni.navigateTo({
-          url: '/pages/login/login',
+          url: '/pages/login/oauth',
         });
         // #endif
 

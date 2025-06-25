@@ -97,6 +97,16 @@ export default ({ command, mode }) => {
           drop_debugger: true,
         },
       },
+      rollupOptions: {
+        output: {
+          // 设置chunk的文件名格式
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          // 设置入口文件的文件名格式
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          // 设置静态资源文件的文件名格式
+          assetFileNames: 'assets/[ext]/[name].[ext]',
+        },
+      },
     },
   });
 };

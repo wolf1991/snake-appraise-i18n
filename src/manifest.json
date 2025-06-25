@@ -109,7 +109,8 @@
   "vueVersion": "3",
   "h5": {
     "router": {
-      "base": "/appraise/"
+      "base": "",
+      "mode": "history"
     }
   }
 }

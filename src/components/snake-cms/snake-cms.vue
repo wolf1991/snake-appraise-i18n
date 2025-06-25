@@ -65,7 +65,7 @@
               :filters="filters"
               :priceFilterShow="item.setStyle.filterParams.priceFilterShow"
               :bgColor="item.setStyle.backgroundColor"
-              :showTabs="item.setStyle.tabShow && item.setStyle.tabslist.length"
+              :showTabs="item.setStyle.tabShow && !!item.setStyle.tabslist.length"
               customStyle="padding: 0 20rpx;"
               :custom-nav-height="customNavHeight"
               :init="filtersSort"

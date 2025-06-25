@@ -125,6 +125,7 @@ export default defineManifestConfig({
   h5: {
     router: {
       base: VITE_APP_PUBLIC_BASE,
+      mode: 'history',
     },
   },
 });

@@ -8,9 +8,23 @@ import permissionListener from '@/utils/permission/permission-listener';
 // #endif
 
 import { useUserStore } from '@/stores/modules/user';
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, watch } from 'vue';
 
 const userStore = useUserStore();
+
+// #ifdef H5
+watch(
+  () => window.location.href,
+  () => {
+    // 监听hash变化，用于/d 页面跳转逻辑
+    const location = window.location;
+    if (location.pathname === '/d') {
+      uni.$u.navTo(`/pages/appraise/dyDetail${location?.search || ''}`);
+    }
+  },
+  { immediate: true },
+);
+// #endif
 
 onLaunch((options) => {
   console.log('App Launch');
@@ -118,16 +132,17 @@ onBeforeMount(() => {
 });
 
 // #ifdef H5
+
 function addScriptBeforeHead() {
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.text = `
                 var _czc = _czc || [];
                 (function () {
-                    var um = document.createElement("script");
-                    um.src = "https://v1.cnzz.com/z.js?id=1278912380&async=1";
-                    var s = document.getElementsByTagName("script")[0];
-                    s.parentNode.insertBefore(um, s);
+                  var um = document.createElement("script");
+                  um.src = "https://v1.cnzz.com/z.js?id=1278215573&async=1";
+                  var s = document.getElementsByTagName("script")[0];
+                  s.parentNode.insertBefore(um, s);
                 })();
             `;
 
