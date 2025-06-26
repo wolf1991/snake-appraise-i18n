@@ -8,77 +8,73 @@
         style="box-shadow: 0 4px 20px 0 #a4a8b614"></image>
       <text class="text-42rpx font-600" style="letter-spacing: 2rpx">欢迎登录</text>
     </view>
-    <!-- #ifdef MP -->
-    <view class="mt-268rpx"></view>
-    <!-- #endif -->
 
-    <!-- #ifdef H5 -->
-    <view class="mt-80rpx"></view>
-    <!-- #endif -->
+    <view :class="`${isPhoneCode ? 'mt-80rpx' : 'mt-268rpx'}`"></view>
 
     <view class="w-full px-44rpx box-border">
-      <!-- #ifdef H5 -->
-      <u-input
-        type="number"
-        v-model="phoneNumber"
-        maxlength="11"
-        border="bottom"
-        placeholder="请输入手机号"
-        placeholder-style="color: #8E8E93;font-size:14px;" />
+      <template v-if="isPhoneCode">
+        <u-input
+          type="number"
+          v-model="phoneNumber"
+          maxlength="11"
+          border="bottom"
+          placeholder="请输入手机号"
+          placeholder-style="color: #8E8E93;font-size:14px;" />
 
-      <u-input
-        type="number"
-        v-model="code"
-        :maxlength="6"
-        border="bottom"
-        placeholder="请输入验证码"
-        placeholder-style="color: #8E8E93;;font-size:14px;">
-        <template v-slot:suffix>
-          <up-code :seconds="seconds" ref="uCodeRef" @change="codeChange"></up-code>
+        <u-input
+          type="number"
+          v-model="code"
+          :maxlength="6"
+          border="bottom"
+          placeholder="请输入验证码"
+          placeholder-style="color: #8E8E93;;font-size:14px;">
+          <template v-slot:suffix>
+            <up-code :seconds="seconds" ref="uCodeRef" @change="codeChange"></up-code>
 
-          <text class="text-28rpx" @tap="getCode">{{ codeText }}</text>
-        </template>
-      </u-input>
+            <text class="text-28rpx" @tap="getCode">{{ codeText }}</text>
+          </template>
+        </u-input>
 
-      <u-button
-        type="primary"
-        :throttleTime="500"
-        customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold; margin-top: 40rpx"
-        @click="doLogin">
-        登录
-      </u-button>
+        <u-button
+          type="primary"
+          :throttleTime="500"
+          customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold; margin-top: 40rpx"
+          @click="doLogin">
+          登录
+        </u-button>
+      </template>
 
-      <!-- #endif -->
-
-      <!-- #ifdef MP-WEIXIN -->
-      <u-button
-        v-if="isAgreement"
-        type="primary"
-        open-type="getPhoneNumber"
-        :throttleTime="500"
-        customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold"
-        @getphonenumber="phonenumberHandle">
-        手机号快捷登录
-      </u-button>
-      <u-button
-        v-else
-        type="primary"
-        :throttleTime="500"
-        customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold"
-        @click="phonenumberHandle">
-        手机号快捷登录
-      </u-button>
-      <!-- #endif -->
-      <!-- #ifdef MP-ALIPAY -->
-      <button
-        type="primary"
-        open-type="getAuthorize"
-        @getAuthorize="phonenumberHandle"
-        scope="phoneNumber"
-        style="background-color: #06d290; border-color: #06d290; height: 96rpx; font-size: 32rpx; font-weight: bold">
-        手机号快捷登录
-      </button>
-      <!-- #endif -->
+      <template v-else>
+        <!-- #ifdef MP-WEIXIN -->
+        <u-button
+          v-if="isAgreement"
+          type="primary"
+          open-type="getPhoneNumber"
+          :throttleTime="500"
+          customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold"
+          @getphonenumber="phonenumberHandle">
+          手机号快捷登录
+        </u-button>
+        <u-button
+          v-else
+          type="primary"
+          :throttleTime="500"
+          customStyle="height: 96rpx; font-size: 32rpx; font-weight: bold"
+          @click="phonenumberHandle">
+          手机号快捷登录
+        </u-button>
+        <!-- #endif -->
+        <!-- #ifdef MP-ALIPAY -->
+        <button
+          type="primary"
+          open-type="getAuthorize"
+          @getAuthorize="phonenumberHandle"
+          scope="phoneNumber"
+          style="background-color: #06d290; border-color: #06d290; height: 96rpx; font-size: 32rpx; font-weight: bold">
+          手机号快捷登录
+        </button>
+        <!-- #endif -->
+      </template>
     </view>
     <view class="flex-center flex-wrap mt-40rpx mx-40rpx text-20rpx snake-gray" @click.stop="isAgreement = !isAgreement">
       <radio :checked="isAgreement" color="#0f1113" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
@@ -115,7 +111,15 @@ export default {
       code: '',
       seconds: 60,
       codeText: '',
+      isPhoneCode: false, // 是否为手机号登录
     };
+  },
+  onLoad(options) {
+    // #ifdef H5
+    this.isPhoneCode = true;
+    // #endif
+
+    this.isPhoneCode = JSON.parse(options?.isPhoneCode || 'false') || this.isPhoneCode;
   },
   methods: {
     // 获取服务供应商
@@ -148,7 +152,6 @@ export default {
     },
     // 手机登录
     async doLogin() {
-      console.log('doLogin', this.isAgreement);
       if (!this.isAgreement) {
         uni.$u.toast('同意协议后继续登录操作');
         return;

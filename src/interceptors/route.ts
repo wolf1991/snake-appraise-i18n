@@ -21,6 +21,7 @@ const navigateToInterceptor = {
   // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
   invoke(args: { url: string }) {
     console.log('args', args);
+
     if (!args.url.includes('http')) {
       args.url = args.url.replace('custom', 'common');
 

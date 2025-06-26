@@ -196,6 +196,12 @@
           "style": {
             "navigationBarTitleText": "鉴别详情"
           }
+        },
+        {
+          "path": "createIdentify",
+          "style": {
+            "navigationBarTitleText": "鉴定详情"
+          }
         }
       ]
     },

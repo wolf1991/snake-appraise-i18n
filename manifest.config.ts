@@ -106,6 +106,7 @@ export default defineManifestConfig({
     optimization: {
       subPackages: true,
     },
+    __usePrivacyCheck__: true,
   },
   'mp-alipay': {
     appid: VITE_ALI_APPID,

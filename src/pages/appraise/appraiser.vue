@@ -31,6 +31,7 @@
         </template>
       </u-select>
     </view>
+    <view class="flex-center h-60rpx bg-#f1f1f1 text-24rpx" @click="refreshList">点击刷新</view>
     <u-tabs
       v-if="tabCurrent === 1"
       :list="statusList"
@@ -53,7 +54,11 @@
       v-if="tabCurrent === 1"
       @click="$u.navTo(`/pages/appraise/appraiserDetail?orderId=${item.id}&listIndex=${index}`)" />
   </template>
-  <u-empty margin-top="160rpx" v-if="orderList.length === 0"></u-empty>
+  <u-empty
+    icon="https://cdn.puresnake.com/caas/d7fc1bd2ec6d485f9716f93b4dfe1f60.png"
+    margin-top="160rpx"
+    text="暂无数据~"
+    v-if="orderList.length === 0"></u-empty>
   <u-loadmore :status="loadingStatus" customStyle="padding-bottom: 20rpx" v-if="orderList.length"></u-loadmore>
 
   <view class="pos-fixed right-48rpx bottom-360rpx" @click="$u.navTo('/pages/examPaper/examPaperList')" v-if="tabCurrent === 1">
@@ -127,6 +132,10 @@ const filterList = ref([
   {
     label: '云鉴',
     value: 'tb_yj',
+  },
+  {
+    label: '入仓鉴定',
+    value: 'rcjd',
   },
 ]);
 

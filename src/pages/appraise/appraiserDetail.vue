@@ -88,12 +88,12 @@
       </view>
     </view>
     <view class="mt-20rpx mb-40rpx bg-white px-24rpx py-30rpx" v-if="orderInfo.orderLogList.length">
-      <view class="mt-10rpx text-24rpx font-400" v-for="log in orderInfo.orderLogList" :key="log.id">
+      <view class="mt-10rpx text-26rpx font-400" v-for="log in orderInfo.orderLogList" :key="log.id">
         <view class="flex-items-center justify-between">
           <view class="inline-block">{{ log.operate }}:</view>
           <view class="">{{ $u.formatTime(log.gmtCreate, 'yyyy-mm-dd hh:MM') }}</view>
         </view>
-        <view class="block" v-if="log.remark">{{ log.remark }}</view>
+        <view class="block mt-6rpx text-gray-5 text-24rpx" v-if="log.remark">{{ log.remark }}</view>
       </view>
     </view>
 
@@ -111,16 +111,14 @@
       @confirm="modalConfirmHandle"
       @cancel="modalShow = false"></u-modal>
 
-    <view class="h-104rpx pb-safe"></view>
+    <view class="h-132rpx pb-safe"></view>
     <view class="snake-fixed-bottom" v-if="orderInfo.status === 'unappraised'">
       <view class="flex-items-center py-12rpx px-24rpx">
         <u-button
           v-if="type === 'orderHall'"
           type="primary"
-          color="#fff"
-          plain
           :throttle-time="600"
-          custom-style="border: 1px solid #000; color:#000; border-radius: 16rpx 0 0 16rpx; margin: 0"
+          custom-style="height: 88rpx; border-radius: 16rpx; margin: 0"
           @click="grabOrderHandle">
           马上抢单
         </u-button>
@@ -131,7 +129,7 @@
             color="#fff"
             plain
             :throttle-time="600"
-            custom-style="border: 1px solid #000; color:#000; border-radius: 16rpx 0 0 16rpx; margin: 0"
+            custom-style="height: 88rpx; border: 1px solid #000; color:#000; border-radius: 16rpx 0 0 16rpx; margin: 0"
             @click="pickerShow = true">
             取消抢单
           </u-button>
@@ -139,7 +137,7 @@
             type="primary"
             color="#000"
             :throttle-time="600"
-            custom-style="border-radius: 0 16rpx 16rpx 0; margin: 0"
+            custom-style="height: 88rpx; border-radius: 0 16rpx 16rpx 0; margin: 0"
             @click="identifyHandle">
             马上鉴别
           </u-button>

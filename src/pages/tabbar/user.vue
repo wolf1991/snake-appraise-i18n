@@ -39,6 +39,8 @@
     </u-cell-group>
     <view class="pos-absolute left-0 bottom-80rpx w-90rpx h-90rpx" @longpress="changeBaseUrl"></view>
   </view>
+
+  <view class="w-220rpx h-120rpx" @longpress="$u.navTo('/pages/appraise/createIdentify')"></view>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
@@ -48,6 +50,9 @@ import { getMenuListApi } from '@/api/appraise';
 import config from '@/config/config';
 import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
 import { onLoad } from '@dcloudio/uni-app';
+
+const $u = uni.$u;
+
 const userStore = useUserStore();
 
 const { userInfo, isLogined } = storeToRefs(userStore);
@@ -105,7 +110,7 @@ const changeBaseUrl = () => {
     content: `当前是${isProd ? '正式' : '测试'}地址：${getBaseUrl()}`,
     success: (modalRes) => {
       if (modalRes.confirm) {
-        const itemList = ['获取用户信息', '开发配置', ...config.baseUrlList];
+        const itemList = ['获取用户信息', '手机号登录', '开发配置', ...config.baseUrlList];
 
         uni.showActionSheet({
           itemList,
@@ -130,6 +135,11 @@ const changeBaseUrl = () => {
             }
 
             if (sheetRes.tapIndex === 1) {
+              uni.$u.navTo('/pages/login/oauth?isPhoneCode=true');
+              return;
+            }
+
+            if (sheetRes.tapIndex === 2) {
               uni.$u.navTo('/pages/user/devConfig');
               return;
             }

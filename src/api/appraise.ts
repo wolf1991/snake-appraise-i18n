@@ -35,12 +35,41 @@ export const getCategoryBrandListApi = (params) =>
   });
 
 /**
+ * 获取品牌
+ * @param key 搜索
+ */
+export const getBrandListApi = (params) =>
+  http.get<IResPage>('/appraise/brand/list', {
+    data: params,
+  });
+
+/**
+ * 获取用户是不是鉴别师
+ */
+export const getAppraiserCheckApi = (params = {}) =>
+  http.get('/appraise/appraiser/check', {
+    data: params,
+  });
+
+/**
  * 获取鉴别品类列表
  */
 export const getAppraiseCategoryListApi = (params = {}) =>
-  http.get('/appraise/category/list', {
+  http.get<any[]>('/appraise/category/list', {
     data: params,
   });
+
+/**
+ * 创建鉴别订单
+ * @param {Object} params 参数
+ * @param {number} params.brandId       品牌id
+ * @param {number} params.categoryId    类目id
+ * @param {Array} params.imageList      鉴定图片列表
+ * @param {string} params.appraiseCode  鉴定扣码，使用鉴定扣码下单时该项必传
+ * @param {string} [params.status]      鉴定师选择鉴定状态
+ * @param {string} [params.suggestion]  本次鉴定建议
+ */
+export const getCreateDoAppraiseApi = (params) => http.post('/appraise/create/doAppraise', params);
 
 /**
  * 获取鉴别图片模板

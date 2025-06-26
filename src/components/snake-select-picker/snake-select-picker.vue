@@ -1,19 +1,29 @@
 <template>
-  <u-popup :show="show" type="bottom" @close="close">
+  <u-popup :show="show" type="bottom" round="12rpx" @close="close">
     <view class="flex-center h-90rpx pos-relative">
       <text>请选择</text>
       <view class="pos-absolute right-20rpx" @click="close">
         <u-icon name="close" bold size="28rpx"></u-icon>
       </view>
     </view>
-    <scroll-view scroll-y class="max-h-712rpx min-h-300rpx px-20rpx">
+    <u-search
+      v-if="filterable"
+      v-model="filterVal"
+      :showAction="false"
+      placeholder="搜索"
+      margin="20rpx"
+      @search="searchHandle"
+      @clear="searchHandle"></u-search>
+
+    <scroll-view scroll-y @scrolltolower="emit('scrolltolower', $event)" class="max-h-712rpx h-712rpx px-20rpx">
       <u-radio-group placement="column" @change="handleChange">
-        <u-radio
-          v-for="(item, index) in filterColumns"
-          :key="index"
-          :customStyle="{ marginBottom: '8px' }"
-          :label="item[labelKey]"
-          :name="item[valueKey]"></u-radio>
+        <view v-for="(item, index) in filterColumns" :key="index" :id="'radio' + item[valueKey]">
+          <u-radio
+            :customStyle="{ margin: '10rpx 0' }"
+            :label="item[labelKey]"
+            :name="item[valueKey]"
+            :disabled="item.disabled"></u-radio>
+        </view>
       </u-radio-group>
     </scroll-view>
     <view class="py-20rpx px-24rpx">
@@ -25,6 +35,14 @@
 <script setup lang="ts">
 import { PropType, ref, watch } from 'vue';
 
+defineOptions({
+  name: 'snake-select-picker',
+  options: {
+    addGlobalClass: true,
+    virtualHost: true,
+    styleIsolation: 'shared',
+  },
+});
 const props = defineProps({
   show: {
     type: Boolean,
@@ -43,20 +61,26 @@ const props = defineProps({
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
   },
-  /** 选项对象中，value 对应的 key */
-  valueKey: {
-    type: String,
-    default: 'value',
-  },
   /** 选项对象中，展示的文本对应的 key */
   labelKey: {
     type: String,
     default: 'label',
   },
+  /** 选项对象中，value 对应的 key */
+  valueKey: {
+    type: String,
+    default: 'value',
+  },
+  /** 可搜索 */
+  filterable: {
+    type: Boolean,
+    default: false,
+  },
 });
-const emit = defineEmits(['change', 'confirm', 'update:modelValue', 'close']);
+const emit = defineEmits(['search', 'update:searchValue', 'scrolltolower', 'change', 'confirm', 'update:modelValue', 'close']);
 
 const selectValue = ref('');
+const filterVal = ref('');
 const filterColumns = ref<Array<Record<string, any>>>([]);
 
 watch(
@@ -86,6 +110,11 @@ function onConfirm() {
     selectedItems: filterColumns.value.filter((item) => selectValue.value.includes(item[props.valueKey])),
   });
 }
+
+const searchHandle = () => {
+  emit('update:searchValue', filterVal.value);
+  emit('search', filterVal.value);
+};
 </script>
 
 <style lang="scss" scoped>

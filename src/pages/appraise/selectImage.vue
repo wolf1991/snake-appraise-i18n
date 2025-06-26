@@ -115,7 +115,7 @@ export default {
         return this.$u.toast('最少选择一张');
       }
       uni.setStorageSync('image_select_list', this.imageList);
-      this.$u.getHistoryPage(-2).hintImageList = hintImageList;
+      this.$u.getHistoryPage(-2).hintImageList.value = hintImageList;
       uni.navigateBack({
         delta: 2,
       });

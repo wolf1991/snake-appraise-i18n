@@ -151,20 +151,20 @@ export default {
     async saveHandler(filename = 'h5') {
       const tempFilePath = await this.canvasToTempFilePath();
       console.log(tempFilePath);
-      let image = null;
+      let result = {};
 
       // #ifdef H5
       // 创建FormData对象
       // let formData = new FormData();
       // // 转换base64为二进制对象并添加到formData中
       // formData.append('file', this.tempFilePath(base64Data), 'image.jpg');
-      // image = await this.$uploader.upload2oss(formData);
+      // image = await uploader.uploadOss(formData);
       // #endif
 
       // #ifndef H5
-      image = await uploader.upload2oss(tempFilePath);
+      result = await uploader.uploadOss(tempFilePath);
       // #endif
-      this.$emit('change', { image, index: this.index });
+      this.$emit('change', { image: result?.url || '', index: this.index });
       this.cancelHandler();
     },
     // 将base64字符串转换为二进制对象

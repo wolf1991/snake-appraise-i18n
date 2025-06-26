@@ -1,4 +1,5 @@
 // uno.config.ts
+import { info } from 'console';
 import {
   defineConfig,
   presetUno,
@@ -96,6 +97,7 @@ export default defineConfig({
   theme: {
     colors: {
       primary: '#0f1113',
+      info: "#909399"
     },
   },
 });
