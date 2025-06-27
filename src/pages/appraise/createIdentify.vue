@@ -12,7 +12,7 @@
 
       <view class="flex-items-center h-90rpx">
         <view class="text-28rpx form_required">商品品牌</view>
-        <view class="flex-1 flex justify-end text-26rpx ml-24rpx" @click="brandPickerShow = true">
+        <view class="flex-1 flex justify-end text-26rpx ml-24rpx hover:opacity-[0.7]" @click="brandPickerShow = true">
           <text class="text-info">{{ brandName || '请输入商品品牌' }}</text>
           <u-icon name="arrow-right" size="30rpx"></u-icon>
         </view>
@@ -20,7 +20,7 @@
 
       <view class="flex-items-center h-90rpx">
         <view class="text-28rpx form_required">商品类目</view>
-        <view class="flex-1 flex justify-end text-26rpx ml-24rpx" @click="catePickerShow = true">
+        <view class="flex-1 flex justify-end text-26rpx ml-24rpx hover:opacity-[0.7]" @click="catePickerShow = true">
           <text class="text-info">{{ cateName || '请输入商品类目' }}</text>
           <u-icon name="arrow-right" size="30rpx"></u-icon>
         </view>
@@ -30,6 +30,7 @@
         <view class="text-28rpx form_required">鉴定图片</view>
         <view class="flex-1 ml-24rpx">
           <u-upload
+            ref="uploadRef"
             :fileList="formData.imageList"
             :accept="accept"
             multiple
@@ -98,6 +99,8 @@ const isAppraiser = ref(false);
 const showRadio = ref(true);
 const accept = ref('image');
 const status = ref('');
+
+const uploadRef = ref();
 
 const brandName = ref('');
 const cateName = ref('');
@@ -241,6 +244,8 @@ const afterRead = async (event) => {
   for (let i = 0; i < lists.length; i++) {
     const result = await uploader.uploadOss(lists[i].url);
 
+    console.log('uploadRef.value', uploadRef.value);
+
     console.log('result', result);
     const item = formData.value.imageList[fileListLen];
     formData.value.imageList.splice(
@@ -253,6 +258,10 @@ const afterRead = async (event) => {
       }),
     );
     fileListLen++;
+
+    await uni.$u.sleep(100);
+
+    uploadRef.value.chooseFile();
   }
 };
 
@@ -319,16 +328,17 @@ const submit = async () => {
 };
 
 onLoad(async () => {
+  // #ifdef MP-WEIXIN
+  // media
+  accept.value = uni.$u.os() === 'ios' ? 'media' : 'image';
+  // #endif
+
   const data = uni.getStorageSync('createIdentify_data');
 
   formData.value.brandId = data?.brandId || '';
   formData.value.categoryId = data?.categoryId || '';
   brandName.value = data?.brandName || '';
   cateName.value = data?.cateName || '';
-
-  // #ifdef MP-WEIXIN
-  accept.value = 'media';
-  // #endif
 
   await getAppraiserCheck();
   await getBrandList();

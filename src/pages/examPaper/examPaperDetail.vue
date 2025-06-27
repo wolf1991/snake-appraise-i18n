@@ -118,7 +118,7 @@ export default {
           }
         });
       } else {
-        this.$toast(response.msg);
+        uni.$u.toast(response.msg);
       }
     },
   },

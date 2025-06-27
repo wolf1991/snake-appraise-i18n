@@ -110,7 +110,7 @@ export default {
         this.appraiseDetail = response?.data || {};
         if (this.appraiseDetail.status) {
           uni.redirectTo({
-            url: `/pages/appraise/appraiserDetail?orderId=${this.appraiseDetail.id}`,
+            url: `/pages/order/orderDetail?orderId=${this.appraiseDetail.id}`,
           });
         }
       } else {

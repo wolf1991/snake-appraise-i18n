@@ -18,10 +18,14 @@
       </view>
     </view>
     <view class="snake-fixed-bottom">
-      <view
-        class="w-702rpx h-94rpx line-height-94rpx mx-auto text-center bg-#26273a rounded-2rpx fw-bold text-36rpx snake-font-semibold"
-        @click="goIdentify">
-        去鉴别
+      <view class="py-12rpx px-24rpx">
+        <u-button
+          type="primary"
+          :throttle-time="500"
+          custom-style="height: 94rpx; font-size: 32rpx; font-weight: 600"
+          @click="goIdentify">
+          去鉴别
+        </u-button>
       </view>
     </view>
     <snake-login-popup :show="logInShow" @close="logInShow = false" @refresh="typeRefresh"></snake-login-popup>
@@ -106,7 +110,7 @@ export default {
         this.appraiseDetail = response?.data || {};
         if (this.appraiseDetail.status) {
           uni.redirectTo({
-            url: `/pages/appraise/appraiserDetail?orderId=${this.appraiseDetail.id}`,
+            url: `/pages/order/orderDetail?orderId=${this.appraiseDetail.id}`,
           });
         }
       } else {

@@ -64,7 +64,9 @@ export default {
     this.appraiseCode = option.appraiseCode || '';
 
     const pages = getCurrentPages();
-    const page = pages.find((item) => item.route.includes('pages/custom/dydetail'));
+    const page = pages.find(
+      (item) => item.route.includes('pages/custom/dydetail') || item.route.includes('pages/appraise/dyDetail'),
+    );
 
     const appraiseCode = uni.getStorageSync('appraiseCode') || '';
     if (page) {

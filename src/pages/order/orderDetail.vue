@@ -158,8 +158,6 @@ import { getAppraiseOrderDetailApi } from '@/api/appraise';
 
 import { previewImage } from '@/utils';
 
-import LoginPopup from './components/login-popup.vue';
-
 const userStore = useUserStore();
 
 const $u = uni.$u;

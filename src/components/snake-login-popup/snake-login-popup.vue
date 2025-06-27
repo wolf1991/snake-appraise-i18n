@@ -59,6 +59,10 @@
 <script>
 import config from '@/config/config';
 import { postLogin } from '@/api/user';
+import { useUserStore } from '@/stores/modules/user';
+
+const userStore = useUserStore();
+
 export default {
   name: 'snake-login-popup',
   props: {
@@ -121,7 +125,6 @@ export default {
       try {
         // 获取服务供应商
         const provider = await this.getProvider();
-        console.log(provider);
         // 获取登录凭证
         const loginRes = await this.unifiedLogin(provider);
 
@@ -166,18 +169,19 @@ export default {
       try {
         const response = await postLogin(params);
         if (response.success) {
+          this.closeOrRefresh();
           uni.$u.toast('登录成功');
           userStore.setUserInfo({
             ...response.data,
             token: response.token,
           });
           uni.hideLoading();
-          this.closeOrRefresh();
         } else {
           uni.hideLoading();
           uni.$u.toast(response.msg);
         }
       } catch (error) {
+        this.closeOrRefresh();
         uni.hideLoading();
       }
     },

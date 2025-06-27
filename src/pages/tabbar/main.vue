@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { getCmsInfo } from '@/api/cms';
 import { getAppraiseUserListApi } from '@/api/appraise';
 
@@ -55,6 +55,13 @@ const appraiseUserList = ref([]);
 onLoad((options) => {
   getPageData();
   getAppraiseUserList();
+});
+
+onPullDownRefresh(async () => {
+  await getPageData();
+  await getAppraiseUserList();
+  await uni.$u.sleep(500);
+  uni.stopPullDownRefresh();
 });
 
 const getPageData = async () => {

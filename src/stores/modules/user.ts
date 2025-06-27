@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     setUserInfo(val: IUserInfo) {
       this.userInfo = val;
+      uni.setStorageSync('token', this.userInfo.token);
     },
     clearUserInfo() {
       this.userInfo = {};

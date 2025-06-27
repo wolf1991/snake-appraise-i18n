@@ -84,7 +84,12 @@
           class="w-670rpx h-670rpx"
           :src="item.image"
           mode="aspectFill"
-          @tap="previewImage(orderInfo.imageList, index)"></image>
+          @tap="
+            previewImage(
+              orderInfo.imageList.map((e) => e.image),
+              index,
+            )
+          "></image>
       </view>
     </view>
     <view class="mt-20rpx mb-40rpx bg-white px-24rpx py-30rpx" v-if="orderInfo.orderLogList.length">
@@ -172,7 +177,7 @@ const type = ref('');
 const listIndex = ref(-1);
 
 onLoad((options) => {
-  type.value = options.type;
+  type.value = options?.type || '';
   listIndex.value = options.listIndex;
 
   if (options.orderId) {
