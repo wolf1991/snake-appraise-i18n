@@ -3,7 +3,6 @@ import { getFileOssSign, IFileOssSign } from '@/api/common';
 
 class Uploader {
   async uploadOss(filePath: string, prefix = 'appraise') {
-    // H5上传
     const url = await this.webUpload(filePath, prefix);
     return url;
   }
@@ -14,7 +13,7 @@ class Uploader {
       getFileOssSign(prefix)
         .then((response) => {
           if (response.success) {
-            const stsInfo = response.data;
+            const stsInfo = response?.data || ({} as IFileOssSign);
             const fileName = `${stsInfo.dir + uni.$u.timeFormat(new Date(), 'yyyymm')}/${uni.$u.guid(10)}.png`;
             uni.uploadFile({
               url: stsInfo.host,
@@ -43,7 +42,7 @@ class Uploader {
               },
             });
           } else {
-            uni.$u.toast(response.msg || '获取上传签名失败');
+            uni.$u.toast(response?.msg || '获取上传签名失败');
             reject(response);
           }
         })

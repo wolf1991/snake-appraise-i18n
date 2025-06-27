@@ -11,8 +11,8 @@ export default defineManifestConfig({
   name: VITE_APP_TITLE,
   appid: VITE_UNI_APPID,
   description: '',
-  versionName: '1.0.0',
-  versionCode: '100',
+  versionName: '1.0.26',
+  versionCode: '1026',
   transformPx: false,
   /* 5+App特有相关 */
   'app-plus': {
@@ -54,11 +54,49 @@ export default defineManifestConfig({
           '<uses-feature android:name="android.hardware.camera"/>',
           '<uses-permission android:name="android.permission.WRITE_SETTINGS"/>',
         ],
+        permissionExternalStorage: {
+          request: 'none',
+          prompt: '应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。',
+        },
+        permissionPhoneState: {
+          request: 'none',
+          prompt: '为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。',
+        },
       },
       /* ios打包配置 */
-      ios: {},
+      ios: {
+        privacyDescription: {
+          NSPhotoLibraryUsageDescription: '选择需要上传的图片，用于鉴别您的装备',
+          NSCameraUsageDescription: '拍照并上传，用于鉴别您的装备',
+          NSMicrophoneUsageDescription: '开启麦克风用于为用户提供客服语音聊天',
+        },
+      },
       /* SDK配置 */
-      sdkConfigs: {},
+      sdkConfigs: {
+        push: {
+          unipush: {
+            version: '2',
+            offline: false,
+          },
+        },
+        payment: {
+          alipay: {
+            __platform__: ['ios', 'android'],
+          },
+        },
+        share: {
+          weixin: {
+            appid: 'wxbeba1e607ea90901',
+            UniversalLinks: 'https://m.puresnake.com/ulink/',
+          },
+        },
+        oauth: {
+          weixin: {
+            appid: 'wxbeba1e607ea90901',
+            UniversalLinks: 'https://m.puresnake.com/ulink/',
+          },
+        },
+      },
       /* 图标配置 */
       icons: {
         android: {

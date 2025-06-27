@@ -2,8 +2,8 @@
   "name": "SNAKE鉴别",
   "appid": "__UNI__0BF2711",
   "description": "",
-  "versionName": "1.0.0",
-  "versionCode": "100",
+  "versionName": "1.0.26",
+  "versionCode": "1026",
   "transformPx": false,
   "app-plus": {
     "usingComponents": true,
@@ -40,10 +40,51 @@
         "abiFilters": [
           "armeabi-v7a",
           "arm64-v8a"
-        ]
+        ],
+        "permissionExternalStorage": {
+          "request": "none",
+          "prompt": "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+        },
+        "permissionPhoneState": {
+          "request": "none",
+          "prompt": "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
+        }
       },
-      "ios": {},
-      "sdkConfigs": {},
+      "ios": {
+        "privacyDescription": {
+          "NSPhotoLibraryUsageDescription": "选择需要上传的图片，用于鉴别您的装备",
+          "NSCameraUsageDescription": "拍照并上传，用于鉴别您的装备",
+          "NSMicrophoneUsageDescription": "开启麦克风用于为用户提供客服语音聊天"
+        }
+      },
+      "sdkConfigs": {
+        "push": {
+          "unipush": {
+            "version": "2",
+            "offline": false
+          }
+        },
+        "payment": {
+          "alipay": {
+            "__platform__": [
+              "ios",
+              "android"
+            ]
+          }
+        },
+        "share": {
+          "weixin": {
+            "appid": "wxbeba1e607ea90901",
+            "UniversalLinks": "https://m.puresnake.com/ulink/"
+          }
+        },
+        "oauth": {
+          "weixin": {
+            "appid": "wxbeba1e607ea90901",
+            "UniversalLinks": "https://m.puresnake.com/ulink/"
+          }
+        }
+      },
       "icons": {
         "android": {
           "hdpi": "static/app/icons/72x72.png",

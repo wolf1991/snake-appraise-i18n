@@ -25,14 +25,18 @@
       <view class="flex flex-wrap justify-between">
         <template v-for="(model, index) in modelList" :key="index">
           <view class="w-156rpx h-156rpx mb-20rpx" v-if="model.id !== 0 || model.closeable">
-            <image class="w-156rpx h-156rpx" :src="model.image" mode="aspectFill" @click="chooseImage(model.id, index)"></image>
+            <image
+              class="w-156rpx h-156rpx"
+              :src="model.image"
+              mode="aspectFill"
+              @click="chooseImageHandle(model.id, index)"></image>
             <view v-if="model.closeable" class="close" @click="closeWindow(index)">
               <image src="/static/close.png" style="width: 20px; height: 20px" mode="aspectFill"></image>
             </view>
           </view>
         </template>
         <!-- 其他补充 -->
-        <view class="w-156rpx h-156rpx mb-20rpx" @click="chooseImage(0, modelList.length)">
+        <view class="w-156rpx h-156rpx mb-20rpx" @click="chooseImageHandle(0, modelList.length)">
           <image
             class="w-156rpx h-156rpx mb-20rpx"
             src="https://s.qiuxietang.com/images/202402/1212394428866498560.png"
@@ -159,14 +163,14 @@ const getBrandDetail = async () => {
   }
 };
 
-const chooseImage = (modelId, i) => {
+const chooseImageHandle = (modelId, i) => {
   const uploadFunc = async (filePath) => {
     try {
       uni.showLoading({
-        mask: false,
+        title: '上传中...',
+        mask: true,
       });
       const result = await uploader.uploadOss(filePath);
-      console.log('modelList', modelList);
       if (result.url) {
         uploadIndex.value.push(i);
         if (i === modelList.value.length) {
@@ -186,7 +190,7 @@ const chooseImage = (modelId, i) => {
 
       uni.hideLoading();
     } catch (e) {
-      uni.$u.toast(e.message || '上传失败，请重试！');
+      uni.$u.toast(e?.errMsg || e?.message || '上传失败，请重试！');
       uni.hideLoading();
     }
   };

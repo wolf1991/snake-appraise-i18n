@@ -35,8 +35,8 @@
             :accept="accept"
             multiple
             @afterRead="afterRead"
-            :maxCount="9"
-            @delete="deleteImg"></u-upload>
+            @delete="deleteImg"
+            @error="updateeError"></u-upload>
         </view>
       </view>
 
@@ -76,6 +76,8 @@
       :columns="categoryList"
       @close="catePickerShow = false"
       @confirm="catePickerConfirm"></snake-select-picker>
+
+    <view class="h-134rpx pb-safe"></view>
 
     <view class="snake-fixed-bottom">
       <view class="py-12rpx px-24rpx">
@@ -258,15 +260,17 @@ const afterRead = async (event) => {
       }),
     );
     fileListLen++;
-
-    await uni.$u.sleep(100);
-
-    uploadRef.value.chooseFile();
   }
+  await uni.$u.sleep(100);
+  uploadRef.value.chooseFile();
 };
 
 const deleteImg = (event) => {
   formData.value.imageList.splice(event.index, 1);
+};
+
+const updateeError = (e) => {
+  console.log('err', e);
 };
 
 const scanHandle = () => {
@@ -329,7 +333,6 @@ const submit = async () => {
 
 onLoad(async () => {
   // #ifdef MP-WEIXIN
-  // media
   accept.value = uni.$u.os() === 'ios' ? 'media' : 'image';
   // #endif
 

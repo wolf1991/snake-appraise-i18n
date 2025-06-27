@@ -37,6 +37,7 @@
       </view>
     </template>
   </view>
+  <u-empty v-if="appraisersList.length === 0" text="暂无数据"></u-empty>
 </template>
 
 <script setup lang="ts">
