@@ -295,6 +295,12 @@ function useMyOrder() {
     getMyOrderList,
   };
 }
+
+defineExpose({
+  getMyOrderList,
+  loadingStatus,
+  orderList,
+});
 </script>
 
 <style lang="scss" scoped></style>

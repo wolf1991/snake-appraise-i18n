@@ -187,11 +187,10 @@ const chooseImageHandle = (modelId, i) => {
           modelList.value.splice(i, 1, tempModel);
         }
       }
-
-      uni.hideLoading();
+      uni.hideLoading({ noConflict: true });
     } catch (e) {
-      uni.$u.toast(e?.errMsg || e?.message || '上传失败，请重试！');
-      uni.hideLoading();
+      uni.hideLoading({ noConflict: true });
+      uni.$u.toast(e?.errMsg || e?.msg || e?.message || '上传失败，请重试！');
     }
   };
 

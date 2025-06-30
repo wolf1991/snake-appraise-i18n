@@ -29,6 +29,7 @@ class Uploader {
                 signature: stsInfo.signature,
               },
               success: (uploadFileRes) => {
+                console.log('uploadFileRes', uploadFileRes);
                 if (uploadFileRes.statusCode === 200) {
                   resolve({
                     url: `${config.ossCdnUrl}/${fileName}`,
@@ -38,6 +39,12 @@ class Uploader {
                 resolve({
                   url: '',
                 });
+
+                if (uploadFileRes.data.includes('Your proposed upload exceeds the maximum allowed size')) {
+                  uni.$u.toast('上传失败，图片不能超过5M');
+                  return;
+                }
+
                 uni.$u.toast('上传失败，请重新上传');
               },
             });

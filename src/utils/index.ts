@@ -366,14 +366,14 @@ export function numFormat(value) {
 function getHistoryPage(back = 0) {
   const pages = getCurrentPages();
   const beforePage = pages[pages.length - 1 + back];
-  return beforePage?.$vm?.$?.exposed || getHistoryPage2(back);
+  return beforePage?.$vm?.$?.exposed || getHistoryPageOld(back);
 }
 
 /**
- * 获取页面历史栈指定层实例
+ * 获取页面历史栈指定层实例  兼容旧版本写法
  * @param back {number} [0] - 0或者负数，表示获取历史栈的哪一层，0表示获取当前页面实例，-1 表示获取上一个页面实例。默认0。
  */
-function getHistoryPage2(back = 0) {
+function getHistoryPageOld(back = 0) {
   const pages = getCurrentPages();
   const len = pages.length;
   return pages[len - 1 + back] && pages[len - 1 + back].$vm;

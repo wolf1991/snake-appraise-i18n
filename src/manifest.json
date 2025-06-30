@@ -1,158 +1,158 @@
 {
-  "name": "SNAKE鉴别",
-  "appid": "__UNI__0BF2711",
-  "description": "",
-  "versionName": "1.0.26",
-  "versionCode": "1026",
-  "transformPx": false,
-  "app-plus": {
-    "usingComponents": true,
-    "nvueStyleCompiler": "uni-app",
-    "compilerVersion": 3,
-    "splashscreen": {
-      "alwaysShowBeforeRender": true,
-      "waiting": true,
-      "autoclose": true,
-      "delay": 0
-    },
-    "modules": {},
-    "distribute": {
-      "android": {
-        "permissions": [
-          "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-          "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-          "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-          "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-          "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-          "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-          "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-          "<uses-feature android:name=\"android.hardware.camera\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-        ],
-        "minSdkVersion": 30,
-        "targetSdkVersion": 30,
-        "abiFilters": [
-          "armeabi-v7a",
-          "arm64-v8a"
-        ],
-        "permissionExternalStorage": {
-          "request": "none",
-          "prompt": "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
-        },
-        "permissionPhoneState": {
-          "request": "none",
-          "prompt": "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
-        }
-      },
-      "ios": {
-        "privacyDescription": {
-          "NSPhotoLibraryUsageDescription": "选择需要上传的图片，用于鉴别您的装备",
-          "NSCameraUsageDescription": "拍照并上传，用于鉴别您的装备",
-          "NSMicrophoneUsageDescription": "开启麦克风用于为用户提供客服语音聊天"
-        }
-      },
-      "sdkConfigs": {
-        "push": {
-          "unipush": {
-            "version": "2",
-            "offline": false
-          }
-        },
-        "payment": {
-          "alipay": {
-            "__platform__": [
-              "ios",
-              "android"
-            ]
-          }
-        },
-        "share": {
-          "weixin": {
-            "appid": "wxbeba1e607ea90901",
-            "UniversalLinks": "https://m.puresnake.com/ulink/"
-          }
-        },
-        "oauth": {
-          "weixin": {
-            "appid": "wxbeba1e607ea90901",
-            "UniversalLinks": "https://m.puresnake.com/ulink/"
-          }
-        }
-      },
-      "icons": {
-        "android": {
-          "hdpi": "static/app/icons/72x72.png",
-          "xhdpi": "static/app/icons/96x96.png",
-          "xxhdpi": "static/app/icons/144x144.png",
-          "xxxhdpi": "static/app/icons/192x192.png"
-        },
-        "ios": {
-          "appstore": "static/app/icons/1024x1024.png",
-          "ipad": {
-            "app": "static/app/icons/76x76.png",
-            "app@2x": "static/app/icons/152x152.png",
-            "notification": "static/app/icons/20x20.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "proapp@2x": "static/app/icons/167x167.png",
-            "settings": "static/app/icons/29x29.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            "spotlight": "static/app/icons/40x40.png",
-            "spotlight@2x": "static/app/icons/80x80.png"
-          },
-          "iphone": {
-            "app@2x": "static/app/icons/120x120.png",
-            "app@3x": "static/app/icons/180x180.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "notification@3x": "static/app/icons/60x60.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            "settings@3x": "static/app/icons/87x87.png",
-            "spotlight@2x": "static/app/icons/80x80.png",
-            "spotlight@3x": "static/app/icons/120x120.png"
-          }
-        }
-      }
-    },
-    "compatible": {
-      "ignoreVersion": true
-    }
-  },
-  "quickapp": {},
-  "mp-weixin": {
-    "appid": "wx1ec429bacbbdae09",
-    "setting": {
-      "urlCheck": false
-    },
-    "usingComponents": true,
-    "optimization": {
-      "subPackages": true
-    },
-    "__usePrivacyCheck__": true
-  },
-  "mp-alipay": {
-    "usingComponents": true,
-    "appid": "2021001181693966",
-    "styleIsolation": "shared"
-  },
-  "mp-baidu": {
-    "usingComponents": true
-  },
-  "mp-toutiao": {
-    "usingComponents": true
-  },
-  "uniStatistics": {
-    "enable": false
-  },
-  "vueVersion": "3",
-  "h5": {
-    "router": {
-      "base": "",
-      "mode": "history"
-    }
-  }
+	"name": "SNAKE鉴别",
+	"appid": "__UNI__0BF2711",
+	"description": "",
+	"versionName": "1.0.26",
+	"versionCode": "1026",
+	"transformPx": false,
+	"app-plus": {
+		"usingComponents": true,
+		"nvueStyleCompiler": "uni-app",
+		"compilerVersion": 3,
+		"splashscreen": {
+			"alwaysShowBeforeRender": true,
+			"waiting": true,
+			"autoclose": true,
+			"delay": 0
+		},
+		"modules": {
+			"Camera": {},
+			"Push": {},
+			"Payment": {},
+			"OAuth": {},
+			"Share": {}
+		},
+		"distribute": {
+			"android": {
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
+					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+				],
+				"minSdkVersion": 30,
+				"targetSdkVersion": 30,
+				"abiFilters": ["armeabi-v7a", "arm64-v8a"],
+				"permissionExternalStorage": {
+					"request": "none",
+					"prompt": "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+				},
+				"permissionPhoneState": {
+					"request": "none",
+					"prompt": "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
+				}
+			},
+			"ios": {
+				"privacyDescription": {
+					"NSPhotoLibraryUsageDescription": "选择需要上传的图片，用于鉴别您的装备",
+					"NSCameraUsageDescription": "拍照并上传，用于鉴别您的装备",
+					"NSMicrophoneUsageDescription": "开启麦克风用于为用户提供客服语音聊天"
+				}
+			},
+			"sdkConfigs": {
+				"push": {
+					"unipush": {
+						"version": "2",
+						"offline": true
+					}
+				},
+				"payment": {
+					"alipay": {
+						"__platform__": ["ios", "android"]
+					}
+				},
+				"share": {
+					"weixin": {
+						"appid": "wxbeba1e607ea90901",
+						"UniversalLinks": "https://m.puresnake.com/ulink/"
+					}
+				},
+				"oauth": {
+					"weixin": {
+						"appid": "wxbeba1e607ea90901",
+						"UniversalLinks": "https://m.puresnake.com/ulink/"
+					}
+				},
+				"statics": {}
+			},
+			"icons": {
+				"android": {
+					"hdpi": "static/app/icons/72x72.png",
+					"xhdpi": "static/app/icons/96x96.png",
+					"xxhdpi": "static/app/icons/144x144.png",
+					"xxxhdpi": "static/app/icons/192x192.png"
+				},
+				"ios": {
+					"appstore": "static/app/icons/1024x1024.png",
+					"ipad": {
+						"app": "static/app/icons/76x76.png",
+						"app@2x": "static/app/icons/152x152.png",
+						"notification": "static/app/icons/20x20.png",
+						"notification@2x": "static/app/icons/40x40.png",
+						"proapp@2x": "static/app/icons/167x167.png",
+						"settings": "static/app/icons/29x29.png",
+						"settings@2x": "static/app/icons/58x58.png",
+						"spotlight": "static/app/icons/40x40.png",
+						"spotlight@2x": "static/app/icons/80x80.png"
+					},
+					"iphone": {
+						"app@2x": "static/app/icons/120x120.png",
+						"app@3x": "static/app/icons/180x180.png",
+						"notification@2x": "static/app/icons/40x40.png",
+						"notification@3x": "static/app/icons/60x60.png",
+						"settings@2x": "static/app/icons/58x58.png",
+						"settings@3x": "static/app/icons/87x87.png",
+						"spotlight@2x": "static/app/icons/80x80.png",
+						"spotlight@3x": "static/app/icons/120x120.png"
+					}
+				}
+			}
+		},
+		"compatible": {
+			"ignoreVersion": true
+		}
+	},
+	"quickapp": {},
+	"mp-weixin": {
+		"appid": "wx1ec429bacbbdae09",
+		"setting": {
+			"urlCheck": false
+		},
+		"usingComponents": true,
+		"optimization": {
+			"subPackages": true
+		}
+	},
+	"mp-alipay": {
+		"usingComponents": true,
+		"appid": "2021001181693966",
+		"styleIsolation": "shared"
+	},
+	"mp-baidu": {
+		"usingComponents": true
+	},
+	"mp-toutiao": {
+		"usingComponents": true
+	},
+	"uniStatistics": {
+		"enable": false
+	},
+	"vueVersion": "3",
+	"h5": {
+		"router": {
+			"base": "",
+			"mode": "history"
+		}
+	}
 }

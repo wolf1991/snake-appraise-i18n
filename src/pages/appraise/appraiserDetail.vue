@@ -154,7 +154,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShow } from '@dcloudio/uni-app';
 import {
   getAppraiseAppraiserDoItApi,
   getAppraiseAppraiserGiveUpApi,
@@ -176,14 +176,23 @@ const modalShow = ref(false);
 const type = ref('');
 const listIndex = ref(-1);
 
+const isReplace = ref(false);
+
 onLoad((options) => {
   type.value = options?.type || '';
-  listIndex.value = options.listIndex;
+  listIndex.value = Number(options.listIndex === undefined ? -1 : options.listIndex);
 
   if (options.orderId) {
     orderId.value = options.orderId;
     getDetail();
     getDictValue();
+  }
+});
+
+onShow(() => {
+  if (isReplace.value) {
+    isReplace.value = false;
+    replaceDetail();
   }
 });
 
@@ -283,25 +292,29 @@ const grabOrderHandle = async () => {
 
 // 替换详情
 const replaceDetail = async () => {
-  let orderLsit = uni.$u.getHistoryPage(-1)?.myList?.orderList || [];
-  let length = orderLsit.length - 1;
-  const loadingType = uni.$u.getHistoryPage(-1)?.myList?.loadingType;
-  if (loadingType !== 'noMore' && listIndex.value === length) {
-    await uni.$u.getHistoryPage(-1)?.loadMyList();
-    orderLsit = uni.$u.getHistoryPage(-1)?.myList?.orderList || [];
-    length = orderLsit.length - 1;
+  let orderLsit = uni.$u.getHistoryPage(-1)?.orderList;
+
+  let length = (orderLsit?.value?.length || 0) - 1;
+
+  const loadingStatus = uni.$u.getHistoryPage(-1)?.loadingStatus;
+
+  if (loadingStatus.value !== 'nomore' && listIndex.value === length) {
+    await uni.$u.getHistoryPage(-1)?.getMyOrderList();
+    orderLsit = uni.$u.getHistoryPage(-1)?.orderList.value || [];
+    length = orderLsit.value.length - 1;
   }
+
   if (listIndex.value < length) {
     const index = listIndex.value + 1;
-    const orderId = orderLsit[index]?.id;
-    orderId && uni.$u.navTo(`/pages/identifier/orderdetail?orderId=${orderId}&listIndex=${index}`, 'redirectTo');
+    const orderId = orderLsit.value?.[index]?.id;
+    orderId && uni.$u.navTo(`/pages/appraise/appraiserDetail?orderId=${orderId}&listIndex=${index}`, 'redirectTo');
   } else {
     getDetail();
   }
 };
 
 defineExpose({
-  replaceDetail,
+  isReplace,
 });
 </script>
 

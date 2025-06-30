@@ -29,7 +29,12 @@ export default defineManifestConfig({
       delay: 0,
     },
     /* 模块配置 */
-    modules: {},
+    modules: {
+      Camera: {},
+      Push: {},
+      Payment: {},
+      Share: {},
+    },
     /* 应用发布信息 */
     distribute: {
       /* android打包配置 */
@@ -144,7 +149,7 @@ export default defineManifestConfig({
     optimization: {
       subPackages: true,
     },
-    __usePrivacyCheck__: true,
+    // __usePrivacyCheck__: true,
   },
   'mp-alipay': {
     appid: VITE_ALI_APPID,

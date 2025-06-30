@@ -301,7 +301,7 @@ export default {
       // 获取客户端唯一的推送标识
       uni.getPushClientId({
         success: async (res) => {
-          const response = await postPushBind({
+          await postPushBind({
             appid: appBaseInfo.appId,
             deviceId: deviceInfo.deviceId,
             deviceType: deviceInfo.deviceBrand,

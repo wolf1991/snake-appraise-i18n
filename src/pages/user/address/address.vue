@@ -47,8 +47,8 @@ export default {
       editAddress: null,
     };
   },
-  onLoad(option) {
-    this.source = parseInt(option.source || 0, 10);
+  onLoad(options) {
+    this.source = parseInt(options.source || 0, 10);
   },
   onShow() {
     this.getAddressList();
