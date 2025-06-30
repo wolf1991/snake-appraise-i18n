@@ -122,7 +122,7 @@ export const postAppraisePayDoPayApi = (params) => http.post('/appraise/pay/doPa
  * 抢单大厅
  */
 export const getAppraiseAppraiserOrderHallApi = (params) =>
-  http.get('/appraise/appraiser/ordersHall', {
+  http.get<IResPage>('/appraise/appraiser/ordersHall', {
     data: params,
   });
 
@@ -138,7 +138,7 @@ export const getAppraiseAppraiserDoItApi = (params) =>
  * 鉴别师自身鉴别单列表
  */
 export const getAppraiseAppraiserMyselfApi = (params) =>
-  http.get('/appraise/appraiser/myself', {
+  http.get<IResPage>('/appraise/appraiser/myself', {
     data: params,
   });
 
@@ -146,7 +146,7 @@ export const getAppraiseAppraiserMyselfApi = (params) =>
  * 获取我的鉴别详情
  */
 export const getAppraiseUserDetailApi = (params = {}) =>
-  http.get('/appraise/userDetail', {
+  http.get<{ optBtn: boolean }>('/appraise/userDetail', {
     data: params,
   });
 
