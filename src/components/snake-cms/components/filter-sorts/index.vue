@@ -190,7 +190,6 @@ export default {
     },
     // 打开筛选
     openFilter() {
-      this.$refs.dropMenuRef.colseAll();
       this.showDrawer = true;
       uni.hideTabBar({ animation: false });
     },

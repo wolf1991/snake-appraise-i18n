@@ -27,22 +27,20 @@
   </view>
 </template>
 
-<script lang="ts">
-export default {
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { dorpMenuItemProps } from './props';
+import { useParent } from '../composables/useParent';
+import { DROP_MENU_KEY } from '../snake-drop-menu/props';
+
+defineOptions({
   name: 'snake-drop-menu-item',
   options: {
     virtualHost: true,
     addGlobalClass: true,
     styleIsolation: 'shared',
   },
-};
-</script>
-
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-import { dorpMenuItemProps } from './props';
-import { useParent } from '../composables/useParent';
-import { DROP_MENU_KEY } from '../snake-drop-menu/props';
+});
 
 const props = defineProps(dorpMenuItemProps);
 const emit = defineEmits(['update:modelValue', 'change', 'open', 'close']);

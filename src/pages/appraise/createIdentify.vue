@@ -34,6 +34,7 @@
             :fileList="formData.imageList"
             :accept="accept"
             multiple
+            :maxSize="5 * 1024 * 1024"
             @afterRead="afterRead"
             @delete="deleteImg"
             @error="updateeError"></u-upload>
@@ -43,13 +44,8 @@
       <view class="flex flex-col mt-20rpx" v-if="isAppraiser">
         <view class="text-28rpx">鉴定结果</view>
         <view class="mt-20rpx">
-          <u-radio-group v-model="formData.status" @change="radioChange">
-            <u-radio
-              v-for="(item, index) in statusList"
-              :key="index"
-              :label="item.name"
-              :name="item.value"
-              v-if="showRadio"></u-radio>
+          <u-radio-group v-model="formData.status" @change="radioChange" v-if="showRadio">
+            <u-radio v-for="(item, index) in statusList" :key="index" :label="item.name" :name="item.value"></u-radio>
           </u-radio-group>
         </view>
       </view>
@@ -94,12 +90,13 @@ import { getAppraiseCategoryListApi, getAppraiserCheckApi, getBrandListApi, getC
 
 import uploader from '@/utils/uploader/uploader';
 import graceChecker from '@/utils/js/graceChecker';
+import type { UploadProps } from '@/uni_modules/uview-plus/types/comps/upload';
 
 const brandPickerShow = ref(false);
 const catePickerShow = ref(false);
 const isAppraiser = ref(false);
 const showRadio = ref(true);
-const accept = ref('image');
+const accept = ref<UploadProps['accept']>('image');
 const status = ref('');
 
 const uploadRef = ref();
@@ -220,8 +217,6 @@ const radioChange = (e) => {
     return;
   }
   status.value = e;
-  console.log('radioChange', e);
-  console.log('formData.valu', formData.value.status);
 };
 
 const scrolltolower = () => {
@@ -245,10 +240,6 @@ const afterRead = async (event) => {
 
   for (let i = 0; i < lists.length; i++) {
     const result = await uploader.uploadOss(lists[i].url);
-
-    console.log('uploadRef.value', uploadRef.value);
-
-    console.log('result', result);
     const item = formData.value.imageList[fileListLen];
     formData.value.imageList.splice(
       fileListLen,

@@ -47,13 +47,6 @@ export const dorpMenuItemProps = {
    */
   beforeToggle: Function,
   /**
-   * 自定义点击事件
-   */
-  beforeSelect: {
-    type: Function,
-    default: () => {},
-  },
-  /**
    * 选项对象中，value 对应的 key
    */
   valueKey: {

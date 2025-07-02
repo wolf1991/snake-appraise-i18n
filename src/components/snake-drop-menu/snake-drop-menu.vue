@@ -26,24 +26,20 @@
   </view>
 </template>
 
-<script lang="ts">
-export default {
+<script setup lang="ts">
+import { getRect } from '@/utils';
+import { dorpMenuProps, DROP_MENU_KEY } from './props';
+import { useChildren } from '../composables/useChildren';
+import { computed, ref, watch } from 'vue';
+
+defineOptions({
   name: 'snake-drop-menu',
   options: {
     virtualHost: true,
     addGlobalClass: true,
     styleIsolation: 'shared',
   },
-};
-</script>
-
-<script setup lang="ts">
-import { getRect } from '@/utils';
-import { dorpMenuProps, DROP_MENU_KEY } from './props';
-import { useChildren } from '../composables/useChildren';
-import { computed, onBeforeMount, ref, watch } from 'vue';
-
-const $u = uni.$u;
+});
 
 const props = defineProps(dorpMenuProps);
 
@@ -51,7 +47,6 @@ const emit = defineEmits([]);
 
 const dropMenuId = ref(`dropMenuId${uni.$u.guid(16)}`);
 const offset = ref(0);
-const windowHeight = ref(0);
 const overlayVisible = ref(false);
 let overlayTimer: ReturnType<typeof setTimeout> | null;
 
@@ -138,9 +133,6 @@ function handleClickOverlay() {
   }
 }
 
-onBeforeMount(() => {
-  windowHeight.value = uni.getSystemInfoSync().windowHeight;
-});
 defineExpose({ colseAll: handleClickOverlay, updateDropMenuRect });
 </script>
 
