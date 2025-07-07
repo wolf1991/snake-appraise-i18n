@@ -3,6 +3,8 @@ import { useUserStore } from '@/stores';
 import { postRefreshToken } from '@/api/user';
 import { HttpError, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-request';
 
+import config from '@/config/config';
+
 // 是否正在刷新token的标记
 let isRefreshing = false;
 // 重试请求队列
@@ -107,6 +109,7 @@ const refreshTokenHandle = async (refreshToken = '', userStore) => {
   try {
     const response = await postRefreshToken({
       refreshToken,
+      appId: config.appId,
     });
     if (response.success) {
       userStore.setUserInfo({

@@ -263,7 +263,7 @@ const confirmIdentify = async () => {
     // #ifdef APP-PLUS
     payType,
     // #endif
-    buyerId: userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID'),
+    buyerId: userStore?.userInfo?.openid || uni.getStorageSync('__SK_OPENID'),
     categoryId: brandDetail.value.categoryId,
     brandId: brandDetail.value.brandId,
     productName: brandDetail.value.brandName,

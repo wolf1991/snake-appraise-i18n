@@ -17,6 +17,9 @@ export const useUserStore = defineStore('user', {
     setUserInfo(val: IUserInfo) {
       this.userInfo = val;
       uni.setStorageSync('token', this.userInfo.token);
+      if (this.userInfo.openid) {
+        uni.setStorageSync('__SK_OPENID', this.userInfo.openid);
+      }
     },
     clearUserInfo() {
       this.userInfo = {};
