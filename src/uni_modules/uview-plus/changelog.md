@@ -1,3 +1,132 @@
+## 3.4.45（2025-07-01）
+fix: 修复picker-data组件缺少name
+
+fix: 优化picker高度单位
+
+## 3.4.44（2025-06-30）
+fix: 修复indexList中stikcy属性写死的问题(always true)
+
+feat: 搜索框添加新的右侧插槽
+
+fix: 修复indexList中丢失的select event
+
+fix: 解决因为层级问题导致点击picker选择器无法正常弹出
+
+## 3.4.43（2025-06-16）
+feat: table2支持header插槽
+
+## 3.4.42（2025-06-12）
+fix: 修复qrcode中默认id问题及canvas2时App无法绘制二维码 感谢@jiaruiyan
+
+## 3.4.41（2025-06-11）
+feat: qrcode支持 新参数useRootHeightAndWidth 是否使用根节点的宽高 感谢@YJR
+
+feat: toast支持设置zIndex层级
+
+
+
+## 3.4.40（2025-06-06）
+fix: 升级二维码 canvas -> canvas2 感谢@yjr
+
+## 3.4.39（2025-05-31）
+fix: 修改步骤条微信小程序下的布局 感谢@jiaruiyan
+
+fix: u-tabs在屏幕尺寸发生变化时滑块位置没有发生变化 感谢@aqzhft
+
+fix: 鸿蒙平台不支持plus.runtime.openWeb 感谢@aqzhft
+
+## 3.4.38（2025-05-30）
+fix: 修复picker-data快捷组件缺少index
+
+fix: 修复picker组件双向绑定初始化及取消后复原再次打开后的当前项目
+
+## 3.4.37（2025-05-29）
+feat: modal支持设置动画时间
+
+fix: DatetimePicker v-model 绑定异步设置无效 (#803)
+
+## 3.4.36（2025-05-28）
+fix: lazy-load图片为空时显示错误
+
+## 3.4.35（2025-05-28）
+feat: 进度条支持从右往左加载
+
+## 3.4.34（2025-05-28）
+feat: table2支持自定义标题和单元格样式
+
+## 3.4.33（2025-05-27）
+fix: 修复小程序cate-tab第一次切换时没反应 感谢@jiaruiyan
+
+fix: 修复datetimepicker传入空字符串时导致组件崩溃 感谢@jiaruiyan
+
+fix: 修复album带单位的字符串参与计算导致的计算数据错误 感谢@jiaruiyan
+
+## 3.4.32（2025-05-26）
+feat: 增加状态栏独立颜色配置支持支付宝小程序状态栏对背景色识别的不友好的情况
+
+fix: 抖音二维码兼容修复
+
+feat: cate-tab组件增加rightTop插槽 #715
+
+fix: 修改 test.promise(res) 预期结果不一致
+
+## 3.4.31（2025-05-17）
+fix: 修复parse富文本组件导致鸿蒙运行白屏
+
+fix: 去除演示项目中uni.$u用法便于兼容鸿蒙
+
+feat: modal新增popupBottom插槽适用类似关闭按钮与内容区域分离的场景
+
+## 3.4.30（2025-05-16）
+feat: 新增pagination分页器组件
+
+feat: popup新增bottom插槽适用类似关闭按钮与内容区域分离的场景
+
+## 3.4.29（2025-05-15）
+fix: 修复table2横向滚动样式
+
+fix: 修复table2组件宽度兼容
+
+fix: 修复image显示png图片时默认背景色问题
+
+feat: cate-tab新增height参数便于设置组件高度
+
+feat: 在index.js种导出digit.js便于使用
+
+fix: 修复tag组件缺失iconColor属性
+
+fix: 优化index-list的setValueForTouch方法逻辑 #708
+
+feat: number-box支持change事件返回变动是点击了增加还是减少按钮
+
+fix: 修复table2在小程序下部分情形不显示表格
+
+## 3.4.28（2025-05-12）
+feat: 新增table表格组件
+
+feat: 新增element-plus风格的table2组件
+
+## 3.4.27（2025-05-06）
+fix: 修复card组件props
+
+## 3.4.26（2025-05-06）
+fix: 修复test工具引入
+
+feat: card组件支持全局设置props默认值
+
+fix: 修复image在加载错误情况下高度和宽度不正确问题
+
+fix: 修复picker-data快捷组件默认picker选中
+
+fix: 修复日历month子组件缺失emits定义
+
+## 3.4.25（2025-04-27）
+fix: up-form编译在微信小程序里样式缺失 #640
+
+fix: number-box输入为空时自动设为最小值
+
+feat: picker与datetimepicke组件hasInput模式支持inputProps属性
+
 ## 3.4.24（2025-04-25）
 fix: 修复upload上传逻辑(感谢@semdy)
 

@@ -51,6 +51,7 @@
 				</view>
 				<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
 			</view>
+			<slot name="bottom"></slot>
 		</u-transition>
 	</view>
 </template>
@@ -245,7 +246,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-popup-flex:1 !default;
 	$u-popup-content-background-color: #fff !default;
 

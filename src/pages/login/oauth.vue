@@ -70,7 +70,7 @@
           open-type="getAuthorize"
           @getAuthorize="phonenumberHandle"
           scope="phoneNumber"
-          style="background-color: #06d290; border-color: #06d290; height: 96rpx; font-size: 32rpx; font-weight: bold">
+          style="background-color: #0f1113; border-color: #0f1113; height: 96rpx; font-size: 32rpx; font-weight: bold">
           手机号快捷登录
         </button>
         <!-- #endif -->

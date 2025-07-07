@@ -34,6 +34,7 @@ export default {
     return {
       orderId: '',
       status: '',
+      catId: '',
       fromOrigin: '',
       reasonList: [],
       selectedList: [],

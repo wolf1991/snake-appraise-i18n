@@ -1,5 +1,5 @@
 <template>
-	<view class="u-cate-tab">
+	<view class="u-cate-tab" :style="{ height: addUnit(height) }">
 		<view class="u-cate-tab__wrap">
 			<scroll-view class="u-cate-tab__view u-cate-tab__menu-scroll-view"
                 scroll-y scroll-with-animation :scroll-top="scrollTop"
@@ -14,8 +14,10 @@
 			</scroll-view>
 			<scroll-view :scroll-top="scrollRightTop" scroll-with-animation
 				scroll-y class="u-cate-tab__right-box" @scroll="rightScroll">
+				<slot name="rightTop" :tabList="tabList">
+                </slot>
 				<view class="u-cate-tab__page-view">
-					<view class="u-cate-tab__page-item" :id="'item' + index" 
+					<view class="u-cate-tab__page-item" :id="'item' + index"
 						v-for="(item , index) in tabList" :key="index">
                         <slot name="itemList" :item="item">
                         </slot>
@@ -41,9 +43,14 @@
 	</view>
 </template>
 <script>
+	import { addUnit } from '../../libs/function/index';
 	export default {
 		name: 'up-cate-tab',
         props: {
+			height: {
+                type: String,
+                default: '100%'
+            },
             tabList: {
                 type: Array,
                 default: () => {
@@ -96,6 +103,7 @@
 			}
 		},
 		methods: {
+			addUnit,
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if(this.arr.length == 0) {
@@ -159,7 +167,7 @@
 			},
 			// 获取右边菜单每个item到顶部的距离
 			getMenuItemTop() {
-				new Promise(resolve => {
+				return new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery().in(this);
 					selectorQuery.selectAll('.u-cate-tab__page-item').boundingClientRect((rects) => {
 						// 如果节点尚未生成，rects值为[](因为用selectAll，所以返回的是数组)，循环调用执行
@@ -173,8 +181,8 @@
 						rects.forEach((rect) => {
 							// 这里减去rects[0].top，是因为第一项顶部可能不是贴到导航栏(比如有个搜索框的情况)
 							this.arr.push(rect.top - rects[0].top);
-							resolve();
 						})
+                        resolve();
 					}).exec()
 				})
 			},

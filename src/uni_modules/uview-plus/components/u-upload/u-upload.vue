@@ -171,7 +171,7 @@
 		<up-popup
 			mode="center"
 			v-model:show="popupShow">
-			<video id="myVideo"
+			<video id="myVideo" v-if="popupShow"
 				:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
 				@error="videoErrorCallback" show-center-play-btn
 				object-fit='cover' show-fullscreen-btn='true'
@@ -319,7 +319,7 @@
 								}
 							})
 						}
- 
+
 						// Capture the first frame
 						setInterval(() => {
 							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr);
@@ -701,7 +701,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	$u-upload-preview-border-radius: 2px !default;
 	$u-upload-preview-margin: 0 8px 8px 0 !default;
 	$u-upload-image-width:80px !default;

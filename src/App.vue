@@ -36,7 +36,7 @@ onLaunch((options) => {
     uni.setStorageSync('__SK_CHANNEL', query.sk_channel);
   }
 
-  if (query['snake-inviter'] || query.si) {
+  if (query && (query['snake-inviter'] || query.si)) {
     const inviter = query['snake-inviter'] || query.si;
     userStore.setInviter(inviter);
   }
@@ -239,5 +239,9 @@ const pushBind = () => {
 @import '@/uni_modules/uview-plus/index.scss';
 page {
   background-color: #f6f6f6;
+}
+
+::v-deep .u-tabs__wrapper__nav {
+  width: 100% !important;
 }
 </style>

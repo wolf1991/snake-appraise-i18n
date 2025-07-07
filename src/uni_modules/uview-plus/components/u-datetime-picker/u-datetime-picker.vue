@@ -1,16 +1,13 @@
 <template>
     <view class="u-datetime-picker">
         <view v-if="hasInput" class="u-datetime-picker__has-input"
-            @click="onShowByClickInput" 
+            @click="onShowByClickInput"
         >
             <slot name="trigger" :value="inputValue">
 				<up-input
-					:placeholder="placeholder"
 					:readonly="!!showByClickInput"
-					:border="inputBorder"
 					v-model="inputValue"
-					:disabled="disabled"
-					:disabledColor="disabledColor"
+					v-bind="inputPropsInner"
 				></up-input>
 				<div class="input-cover">
 				</div>
@@ -134,7 +131,17 @@
 		computed: {
 			// 如果以下这些变量发生了变化，意味着需要重新初始化各列的值
 			propsChange() {
-				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, ]
+				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, this.modelValue]
+			},
+			// input的props
+			inputPropsInner() {
+				return {
+					border: this.inputBorder,
+            		placeholder: this.placeholder,
+					disabled: this.disabled,
+					disabledColor: this.disabledColor,
+					...this.inputProps
+				}
 			}
 		},
 		mounted() {
@@ -429,7 +436,10 @@
 			},
 			// 根据minDate、maxDate、minHour、maxHour等边界值，判断各列的开始和结束边界值
 			getBoundary(type, innerValue) {
-			    const value = new Date(innerValue)
+			    let value = new Date(innerValue)
+                if(isNaN(value.getTime())){
+                    value = new Date()
+                }
 			    const boundary = new Date(this[`${type}Date`])
 			    const year = dayjs(boundary).year()
 			    let month = 1
@@ -468,14 +478,13 @@
 				if(!this.disabled){
 					this.showByClickInput = !this.showByClickInput
 				}
-				
+
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	.u-datetime-picker {
 		flex: 1;
         &__has-input {

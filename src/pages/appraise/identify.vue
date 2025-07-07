@@ -44,7 +44,7 @@
         </view>
       </view>
 
-      <view class="border-t-#e8e8e8 border-t-1px border-t-solid my-20rpx" style="box"></view>
+      <view class="border-t-#e8e8e8 border-t-1px border-t-solid my-20rpx"></view>
 
       <view class="mt-20rpx">
         <u-textarea
@@ -53,6 +53,7 @@
           count
           :maxlength="70"
           :cursorSpacing="200"
+          placeholderClass="text-#888891"
           border="none"></u-textarea>
       </view>
     </view>
@@ -334,6 +335,9 @@ const confirmIdentify = async () => {
   background: #f6f6f6 !important;
 }
 ::v-deep .u-textarea__count {
+  background: #f6f6f6 !important;
+}
+::v-deep .u-textarea__field {
   background: #f6f6f6 !important;
 }
 </style>

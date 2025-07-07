@@ -17,6 +17,7 @@
 			:show="show"
 			:columns="optionsInner"
 			:keyName="labelKey"
+			:defaultIndex="defaultIndex"
 			@confirm="select"
 			@cancel="cancel">
 		</up-picker>
@@ -25,6 +26,7 @@
 
 <script>
 export default {
+	name: 'u-picker-data',
     props: {
 		modelValue: {
 			type: [String, Number],
@@ -57,13 +59,15 @@ export default {
         return {
 			show: false,
 			current: '',
+			defaultIndex: [],
         }
     },
     created() {
 		if (this.modelValue) {
-			this.options.forEach((ele) => {
+			this.options.forEach((ele, index) => {
 				if (ele[this.valueKey] == this.modelValue) {
 					this.current = ele[this.labelKey]
+					this.defaultIndex = [index]
 				}
 			})
 		}
@@ -71,9 +75,10 @@ export default {
 	watch: {
 		modelValue() {
 			if (this.modelValue) {
-				this.options.forEach((ele) => {
+				this.options.forEach((ele, index) => {
 					if (ele[this.valueKey] == this.modelValue) {
 						this.current = ele[this.labelKey]
+						this.defaultIndex = [index]
 					}
 				})
 			}
@@ -101,8 +106,9 @@ export default {
 			this.show = false;
 			// console.log(value);
             this.$emit('update:modelValue', value[0][this.valueKey]);
+			this.defaultIndex = columnIndex;
 			this.current = value[0][this.labelKey];
-        },
+        }
     }
 }
 </script>
@@ -117,6 +123,7 @@ export default {
 				left: 0;
 				right: 0;
 				bottom: 0;
+				z-index:10;
 			}
 		}
 	}

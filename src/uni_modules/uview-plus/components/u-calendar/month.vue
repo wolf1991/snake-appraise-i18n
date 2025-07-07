@@ -292,6 +292,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ['monthSelected', 'updateMonthTop'],
 		methods: {
 			init() {
 				// 初始化默认选中
@@ -480,7 +481,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-calendar-month-wrapper {
 		margin-top: 4px;

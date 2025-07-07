@@ -1,79 +1,102 @@
 <template>
-  <u-sticky bg-color="#fff">
-    <u-tabs
-      :list="tabList"
-      :current="tabCurrent"
-      lineColor="#0F1113"
-      :scrollable="false"
-      keyName="label"
-      :activeStyle="{ fontWeight: 600, fontSize: '32rpx', color: '#0F1113' }"
-      :inactiveStyle="{ fontSize: '28rpx' }"
-      @change="tabsChange"></u-tabs>
+  <view>
+    <u-sticky bg-color="#fff">
+      <u-tabs
+        :list="tabList"
+        :current="tabCurrent"
+        lineColor="#0F1113"
+        :scrollable="false"
+        keyName="label"
+        :activeStyle="{ fontWeight: 600, fontSize: '32rpx', color: '#0F1113' }"
+        :inactiveStyle="{ fontSize: '28rpx' }"
+        @change="tabsChange"></u-tabs>
 
-    <view class="px-24rpx py-10rpx flex-items-center">
-      <u-search
-        v-model="keyText"
-        placeholder="请输入订单号/商品名称/货号/品牌"
-        :showAction="false"
-        customStyle="margin-right: 20rpx"
-        @search="refreshList"></u-search>
-      <u-select
-        v-model:current="fromOrigin"
-        label="筛选"
-        :options="filterList"
-        labelName="label"
-        keyName="value"
-        @select="refreshList">
-        <template #optionItem="{ item }">
-          <view class="text-center text-26rpx text-#888891" :class="[{ '!text-#26273a font-bold': fromOrigin === item.value }]">
-            {{ item.label }}
-          </view>
-        </template>
-      </u-select>
+      <view class="px-24rpx py-10rpx flex-items-center">
+        <u-search
+          v-model="keyText"
+          placeholder="请输入订单号/商品名称/货号/品牌"
+          :showAction="false"
+          customStyle="margin-right: 20rpx"
+          @search="refreshList"></u-search>
+        <!-- #ifndef MP-ALIPAY -->
+        <u-select
+          v-model:current="fromOrigin"
+          label="筛选"
+          :options="filterList"
+          labelName="label"
+          keyName="value"
+          @select="refreshList">
+          <template #optionItem="{ item }">
+            <view class="text-center text-26rpx text-#888891" :class="[{ '!text-#26273a font-bold': fromOrigin === item.value }]">
+              {{ item.label }}
+            </view>
+          </template>
+        </u-select>
+        <!-- #endif -->
+
+        <!-- #ifdef MP-ALIPAY -->
+        <!-- 支付宝插槽显示有问题 -->
+        <selectFilter
+          v-model:current="fromOrigin"
+          label="筛选"
+          :options="filterList"
+          labelName="label"
+          keyName="value"
+          @select="refreshList">
+          <template #optionItem="{ item }">
+            <view class="text-center text-26rpx text-#888891" :class="[{ '!text-#26273a font-bold': fromOrigin === item.value }]">
+              {{ item.label }}
+            </view>
+          </template>
+        </selectFilter>
+        <!-- #endif -->
+      </view>
+      <view class="flex-center h-60rpx bg-#f1f1f1 text-24rpx" @click="refreshList">点击刷新</view>
+      <u-tabs
+        v-if="tabCurrent === 1"
+        :list="statusList"
+        :current="statusCurrent"
+        lineColor="#0F1113"
+        keyName="label"
+        :activeStyle="{ fontSize: '24rpx', color: '#0F1113' }"
+        :inactiveStyle="{ fontSize: '24rpx', color: '#707184' }"
+        customClass="bg-white"
+        @change="statusChange"></u-tabs>
+    </u-sticky>
+    <view class="h-88rpx" v-if="tabCurrent === 1"></view>
+
+    <template v-for="(item, index) in orderList" :key="item.id">
+      <orderHallItem
+        :item="item"
+        v-if="tabCurrent === 0"
+        @click="$u.navTo(`/pages/appraise/appraiserDetail?orderId=${item.id}&type=orderHall`)"
+        @clickOperate="operatehandle(item, index)" />
+      <myOrderItem
+        :item="item"
+        v-if="tabCurrent === 1"
+        @click="$u.navTo(`/pages/appraise/appraiserDetail?orderId=${item.id}&listIndex=${index}`)" />
+    </template>
+    <u-empty
+      icon="https://cdn.puresnake.com/caas/d7fc1bd2ec6d485f9716f93b4dfe1f60.png"
+      margin-top="160rpx"
+      text="暂无数据~"
+      v-if="orderList.length === 0"></u-empty>
+    <u-loadmore :status="loadingStatus" customStyle="padding-bottom: 20rpx" v-if="orderList.length"></u-loadmore>
+
+    <view class="pos-fixed right-48rpx bottom-360rpx" @click="$u.navTo('/pages/examPaper/examPaperList')" v-if="tabCurrent === 1">
+      <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-black">
+        <text>刷题</text>
+        <text>任务</text>
+      </view>
     </view>
-    <view class="flex-center h-60rpx bg-#f1f1f1 text-24rpx" @click="refreshList">点击刷新</view>
-    <u-tabs
-      v-if="tabCurrent === 1"
-      :list="statusList"
-      :current="statusCurrent"
-      lineColor="#0F1113"
-      keyName="label"
-      :activeStyle="{ fontSize: '24rpx', color: '#0F1113' }"
-      :inactiveStyle="{ fontSize: '24rpx', color: '#707184' }"
-      @change="statusChange"></u-tabs>
-  </u-sticky>
-
-  <template v-for="(item, index) in orderList" :key="item.id">
-    <orderHallItem
-      :item="item"
-      v-if="tabCurrent === 0"
-      @click="$u.navTo(`/pages/appraise/appraiserDetail?orderId=${item.id}&type=orderHall`)"
-      @clickOperate="operatehandle(item, index)" />
-    <myOrderItem
-      :item="item"
-      v-if="tabCurrent === 1"
-      @click="$u.navTo(`/pages/appraise/appraiserDetail?orderId=${item.id}&listIndex=${index}`)" />
-  </template>
-  <u-empty
-    icon="https://cdn.puresnake.com/caas/d7fc1bd2ec6d485f9716f93b4dfe1f60.png"
-    margin-top="160rpx"
-    text="暂无数据~"
-    v-if="orderList.length === 0"></u-empty>
-  <u-loadmore :status="loadingStatus" customStyle="padding-bottom: 20rpx" v-if="orderList.length"></u-loadmore>
-
-  <view class="pos-fixed right-48rpx bottom-360rpx" @click="$u.navTo('/pages/examPaper/examPaperList')" v-if="tabCurrent === 1">
-    <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-black">
-      <text>刷题</text>
-      <text>任务</text>
-    </view>
-  </view>
-  <view
-    class="pos-fixed right-48rpx bottom-200rpx"
-    @click="$u.navTo('/pages/appraise/onlineEditing')"
-    v-if="tabCurrent === 1 && isOptBtn">
-    <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-#06d290">
-      <text>状态</text>
-      <text>编辑</text>
+    <view
+      class="pos-fixed right-48rpx bottom-200rpx"
+      @click="$u.navTo('/pages/appraise/onlineEditing')"
+      v-if="tabCurrent === 1 && isOptBtn">
+      <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-#06d290">
+        <text>状态</text>
+        <text>编辑</text>
+      </view>
     </view>
   </view>
 </template>
@@ -91,6 +114,7 @@ import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMor
 
 import orderHallItem from './components/orderItems/orderHallItem.vue';
 import myOrderItem from './components/orderItems/myOrderItem.vue';
+import selectFilter from './components/select.vue';
 
 const $u = uni.$u;
 

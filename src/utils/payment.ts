@@ -203,7 +203,8 @@ export const requestPayment = (options) => {
       break;
     }
     case 'ALI_JSAPI':
-    case 'ALI_APP': {
+    case 'ALI_APP':
+    case 'ALIPAY_MA': {
       // 支付小程序支付参数示例：
       // payData:{"alipayTradeNo":"2025021022001423161413291704"}
       const aliPayload = Object.assign({}, JSON.parse(payData));

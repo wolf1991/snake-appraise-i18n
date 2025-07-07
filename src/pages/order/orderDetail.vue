@@ -133,7 +133,7 @@
         <view class="snake-font-regular w-200rpx text-#acacb7">鉴别单号</view>
         <view class="snake-font-medium font-500">{{ orderInfo.id || '无' }}</view>
         <button
-          class="m-0 p-0 px-16rpx ml-20rpx text-24rpx text-#707184 rounded-20rpx h-34rpx line-height-34rpx"
+          class="m-0 p-0 !px-16rpx !ml-20rpx text-24rpx text-#707184 rounded-20rpx h-34rpx line-height-34rpx"
           style="border: 1px solid #707184"
           @click="$u.copy(orderInfo.id)">
           复制

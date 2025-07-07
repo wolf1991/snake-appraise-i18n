@@ -185,7 +185,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-form-item {
 		@include flex(column);
@@ -240,10 +239,8 @@
 
 					&__slot {
 						flex: 1;
-						/* #ifndef MP */
 						@include flex;
 						align-items: center;
-						/* #endif */
 					}
 
 					&__icon {

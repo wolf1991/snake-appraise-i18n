@@ -45,7 +45,10 @@
 				v-if="showError && isError && !loading"
 				class="u-image__error"
 				:style="{
-					borderRadius: shape == 'circle' ? '50%' : addUnit(radius)
+					borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
+					backgroundColor: this.bgColor,
+					width: addUnit(width),
+					height: addUnit(height)
 				}"
 			>
 				<slot name="error">
@@ -132,12 +135,12 @@
 				// #endif
 				// #ifndef APP-NVUE
 				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
-					style.width = this.width;
+					style.width = addUnit(this.width);
 				} else {
 					style.width = 'fit-content';
 				}
 				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
-					style.height = this.height;
+					style.height = addUnit(this.height);
 				} else {
 					style.height = 'fit-content';
 				}
@@ -153,12 +156,12 @@
 				// #endif
 				// #ifndef APP-NVUE
 				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
-					style.width = this.width;
+					style.width = addUnit(this.width);
 				} else {
 					style.width = 'fit-content';
 				}
 				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
-					style.height = this.height;
+					style.height = addUnit(this.height);
 				} else {
 					style.height = 'fit-content';
 				}
@@ -220,17 +223,15 @@
 			// 移除图片的背景色
 			removeBgColor() {
 				// 淡入动画过渡完成后，将背景设置为透明色，否则png图片会看到灰色的背景
-				this.backgroundStyle = {
-					backgroundColor: this.bgColor || '#ffffff'
-				};
+				// this.backgroundStyle = {
+				// 	backgroundColor: this.bgColor || '#ffffff'
+				// };
 			}
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
-
 	$u-image-error-top:0px !default;
 	$u-image-error-left:0px !default;
 	$u-image-error-width:100% !default;

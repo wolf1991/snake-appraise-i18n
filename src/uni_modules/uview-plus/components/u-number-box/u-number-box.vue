@@ -311,13 +311,17 @@
 					value = ''
 				} = e.detail || {}
 				// 为空返回
-				if (value === '') return
+				if (value === '') {
+					// 为空自动设为最小值
+					this.emitChange(this.min)
+					return
+				}
 				let formatted = this.filter(value)
 				// https://github.com/ijry/uview-plus/issues/613
 				this.emitChange(value);
 				// 最大允许的小数长度
 				if (this.decimalLength !== null && formatted.indexOf('.') !== -1) {
-					const pair = formatted.split('.');
+					const pair = formatted.split('.')
 					formatted = `${pair[0]}.${pair[1].slice(0, this.decimalLength)}`
 				}
 				formatted = this.format(formatted)
@@ -327,8 +331,8 @@
 				// #endif 
 			
 			},
-			// 发出change事件
-			emitChange(value) {
+			// 发出change事件，type目前只支持点击时有值，手动输入不支持。
+			emitChange(value, type = '') {
 				// 如果开启了异步变更值，则不修改内部的值，需要用户手动在外部通过v-model变更
 				if (!this.asyncChange) {
 					this.$nextTick(() => {
@@ -345,6 +349,7 @@
 				this.$emit('change', {
 					value,
 					name: this.name,
+					type: type // 当前变更类型
 				});
 			},
 			onChange() {
@@ -356,7 +361,7 @@
 				}
 				const diff = type === 'minus' ? -this.step : +this.step
 				const value = this.format(this.add(+this.currentValue, diff))
-				this.emitChange(value)
+				this.emitChange(value, type)
 				this.$emit(type)
 			},
 			// 对值扩大后进行四舍五入，再除以扩大因子，避免出现浮点数操作的精度问题
@@ -402,8 +407,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
-
 	$u-numberBox-hover-bgColor: #E6E6E6 !default;
 	$u-numberBox-disabled-color: #c8c9cc !default;
 	$u-numberBox-disabled-bgColor: #f7f8fa !default;
