@@ -156,7 +156,7 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
   try {
     if (url.startsWith('http')) {
       uni[linkType]({
-        url: `/pages/common/webview?url=${encodeURIComponent(url)}`,
+        url: `/pages/custom/webview?url=${encodeURIComponent(url)}`,
       });
       return;
     }
@@ -206,7 +206,7 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
 
       // #ifdef APP-PLUS || H5
       uni[linkType]({
-        url: `/pages/common/webview?url=${queryUrl}`,
+        url: `/pages/custom/webview?url=${queryUrl}`,
       });
       // #endif
 
@@ -266,7 +266,7 @@ export const navTo = (url: string, linkType: string = 'navigateTo') => {
 export const toWebviewPage = (url: string) => {
   const webviewUrl = `https://m.puresnake.com/2nd${url}`;
   uni.navigateTo({
-    url: `/pages/common/webview?url=${encodeURIComponent(webviewUrl)}`,
+    url: `/pages/custom/webview?url=${encodeURIComponent(webviewUrl)}`,
   });
 };
 

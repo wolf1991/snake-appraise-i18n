@@ -19,7 +19,7 @@ watch(
     // 监听hash变化，用于/d 页面跳转逻辑
     const location = window.location;
     if (location.pathname === '/d') {
-      uni.$u.navTo(`/pages/appraise/dyDetail${location?.search || ''}`);
+      uni.$u.navTo(`/pages/custom/dydetail${location?.search || ''}`);
     }
   },
   { immediate: true },

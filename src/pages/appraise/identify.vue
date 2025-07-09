@@ -16,7 +16,7 @@
     <view class="bg-white mt-20rpx py-34rpx px-24rpx">
       <view class="flex-items-center justify-between pb-36rpx">
         <view class="text-32rpx font-bold">添加鉴别图片(必填)</view>
-        <view class="text-24rpx text-#FE0832 flex-items-center" @click="$u.navTo(`/pages/common/cms?pageId=${cmsId || 861}`)">
+        <view class="text-24rpx text-#FE0832 flex-items-center" @click="$u.navTo(`/pages/custom/cms?pageId=${cmsId || 861}`)">
           <view class="mr-2rpx">新手必看</view>
           <view class="flex-center w-24rpx h-24rpx border border-solid border-1px rounded-50%">?</view>
         </view>

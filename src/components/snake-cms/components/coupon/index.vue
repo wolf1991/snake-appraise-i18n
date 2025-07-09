@@ -118,7 +118,7 @@ export default {
             timestamp: Date.now(),
           },
           success: (res) => {
-            uni.navigateTo({ url: `/pages/common/webview?url=${this.datas.afterUrl}&back=true` });
+            uni.navigateTo({ url: `/pages/custom/webview?url=${this.datas.afterUrl}&back=true` });
             uni.hideLoading();
           },
           fail(res) {

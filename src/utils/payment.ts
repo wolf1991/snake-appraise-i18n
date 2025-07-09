@@ -165,7 +165,7 @@ export const requestPayment = (options) => {
 
               if (wxPayload?.payId) {
                 params.id = config.miniProgramOrgId;
-                params.path = `pages/common/cashier?payId=${wxPayload.payId}&price=${wxPayload.price}&requestUri=`;
+                params.path = `pages/custom/cashier?payId=${wxPayload.payId}&price=${wxPayload.price}&requestUri=`;
               }
 
               wxx.launchMiniProgram({

@@ -23,7 +23,6 @@ const navigateToInterceptor = {
     console.log('args', args);
 
     if (!args.url.includes('http')) {
-      args.url = args.url.replace('custom', 'common');
 
       if (args.url.includes('pages/identify/range2')) {
         args.url = args.url.replace('pages/identify/range2', 'pages/appraise/selectBrand');
@@ -45,10 +44,6 @@ const navigateToInterceptor = {
       }
       if (args.url.includes('pages/identifier/identifierorder')) {
         args.url = args.url.replace('pages/identifier/identifierorder', 'pages/appraise/appraiser');
-      }
-
-      if (args.url.includes('pages/custom/dydetail')) {
-        args.url = args.url.replace('pages/custom/dydetail', 'pages/appraise/dyDetail');
       }
     }
 
