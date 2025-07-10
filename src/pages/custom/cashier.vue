@@ -79,9 +79,9 @@ export default {
               this.$u.toast('支付成功');
               this.disburse = !this.disburse;
             })
-            .catch((err) => {
+            .catch(() => {
               this.cancellation = !this.cancellation;
-              this.$u.toast(err.errMsg || '支付失败');
+              this.$u.toast('支付失败');
             });
         } else {
           this.$u.toast(response.msg);
