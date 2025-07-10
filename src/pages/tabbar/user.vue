@@ -45,11 +45,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import { onLoad } from '@dcloudio/uni-app';
 import { useUserStore } from '@/stores/modules/user';
 import { getMenuListApi } from '@/api/appraise';
 import config from '@/config/config';
 import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
-import { onLoad } from '@dcloudio/uni-app';
 
 const $u = uni.$u;
 

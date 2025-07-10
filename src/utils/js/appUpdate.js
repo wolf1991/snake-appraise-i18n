@@ -1,7 +1,7 @@
 // #ifdef APP-PLUS
 import config from '@/config/config';
 
-let requestUrl = uni.getStorageSync('baseUrl');
+let requestUrl = uni.getStorageSync('BASE_URL');
 const defaultUrl = config.baseUrl;
 requestUrl = requestUrl || defaultUrl;
 

@@ -7,16 +7,16 @@
         style="box-shadow: 0 4px 20px 0 #a4a8b618"
         mode="widthFix"></image>
       <view class="text-32rpx mt-40rpx" v-if="version">当前版本 V{{ version }}</view>
-      <!-- #ifndef H5  -->
-      <!-- <view class="mt-16rpx">
-				<u-button
-					plain
-					shape="circle"
-					customStyle="width: 168rpx; color: #000; border: 2rpx solid #E7E7E7;"
-					@click="checkForUpdate">
-					检查更新
-				</u-button>
-			</view> -->
+      <!-- #ifndef H5 || MP -->
+      <view class="mt-16rpx">
+        <u-button
+          plain
+          shape="circle"
+          customStyle="width: 168rpx; color: #000; border: 2rpx solid #E7E7E7;"
+          @click="checkForUpdate">
+          检查更新
+        </u-button>
+      </view>
       <!-- #endif -->
     </view>
     <u-cell-group :border="false">
@@ -39,6 +39,7 @@
 import { postLogout } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
 import { isProd } from '@/utils/request/util';
+import { getCurrentNo, appUpdate } from '@/utils/js/appUpdate';
 export default {
   data() {
     return {
@@ -48,13 +49,18 @@ export default {
   },
   onLoad() {
     const systemInfo = uni.getSystemInfoSync();
+
+    console.log('systemInfo', systemInfo);
     const appVersion = +systemInfo.appVersionCode;
     // #ifdef MP
     const accountInfo = uni.getAccountInfoSync();
     this.version = accountInfo.miniProgram.version; // 小程序 版本号
     // #endif
     // #ifndef MP
-    this.version = appVersion;
+    // this.version = +systemInfo.appVersion;
+    getCurrentNo((res) => {
+      this.version = res.versionName;
+    });
     // #endif
   },
   methods: {
@@ -74,6 +80,9 @@ export default {
     checkForUpdate() {
       // #ifdef MP
       this.mpUpdate();
+      // #endif
+      // #ifdef APP-PLUS
+      appUpdate(true);
       // #endif
     },
     mpUpdate() {

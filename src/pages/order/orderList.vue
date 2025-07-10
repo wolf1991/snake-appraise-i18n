@@ -64,7 +64,7 @@
     </view>
   </view>
   <!-- 空白页 -->
-  <u-empty v-if="orderList.length === 0"></u-empty>
+  <u-empty margin-top="120" v-if="orderList.length === 0"></u-empty>
   <u-loadmore v-if="orderList.length" :status="loadingStatus"></u-loadmore>
 </template>
 

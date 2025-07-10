@@ -63,7 +63,9 @@
         customClass="bg-white"
         @change="statusChange"></u-tabs>
     </u-sticky>
+    <!-- #ifdef MP-ALIPAY -->
     <view class="h-88rpx" v-if="tabCurrent === 1"></view>
+    <!-- #endif -->
 
     <template v-for="(item, index) in orderList" :key="item.id">
       <orderHallItem

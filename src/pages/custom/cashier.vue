@@ -27,6 +27,7 @@
 <script>
 import { postAppraisePayDoPayApi } from '@/api/appraise';
 import { wxPay } from '@/utils/payment';
+import { useUserStore } from '@/stores/modules/user';
 export default {
   data() {
     return {
@@ -60,7 +61,8 @@ export default {
         });
     },
     async wxPayPayment() {
-      const openid = userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID');;
+      const userStore = useUserStore();
+      const openid = userStore?.userInfo?.openid || uni.getStorageSync('userInfo')?.openid || uni.getStorageSync('__SK_OPENID');
       this.cancellation = false;
       const params = {
         openid,

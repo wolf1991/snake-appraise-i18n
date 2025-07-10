@@ -400,6 +400,17 @@ export function getRect(selector, all) {
       .exec();
   });
 }
+export const debounce = (func, delay) => {
+  let timer = null; // 借助闭包
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      func.apply(this, arguments);
+    }, delay); // 简化写法
+  };
+};
 
 export default {
   ensureDecodeURIComponent,
@@ -415,4 +426,5 @@ export default {
   numFormat,
   getHistoryPage,
   getRect,
+  debounce,
 };

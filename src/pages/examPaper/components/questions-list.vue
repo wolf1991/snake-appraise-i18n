@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import util from '@/utils';
+import { debounce } from '@/utils';
 export default {
   props: {
     dataList: {
@@ -164,7 +164,7 @@ export default {
         });
       });
     },
-    submit: util.debounce(function () {
+    submit: debounce(function () {
       const result = this.formSubmitData.findIndex((item) => !item.userAnswer);
       if (result !== -1) {
         uni.showModal({
@@ -203,7 +203,7 @@ export default {
       this.currentIndex = index - 1;
     },
     // 下一题
-    next: util.debounce(function (index, j) {
+    next: debounce(function (index, j) {
       this.$emit('next', this.formSubmitData[index]);
       if (this.currentIndex + 1 >= this.totalNum) return false;
       this.currentIndex = index + 1;

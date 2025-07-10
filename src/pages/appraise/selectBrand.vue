@@ -93,7 +93,8 @@ export default {
       };
       const response = await getCategoryBrandListApi(params);
       if (response.success) {
-        this.brandVals = response.data || {};
+        console.log('response', response);
+        this.brandVals = response?.data || {};
       } else {
         this.$u.toast(response.msg);
       }

@@ -204,7 +204,8 @@ export const requestPayment = (options) => {
     }
     case 'ALI_JSAPI':
     case 'ALI_APP':
-    case 'ALIPAY_MA': {
+    case 'ALIPAY_MA':
+    case 'ALIPAY': {
       // 支付小程序支付参数示例：
       // payData:{"alipayTradeNo":"2025021022001423161413291704"}
       const aliPayload = Object.assign({}, JSON.parse(payData));
@@ -229,7 +230,7 @@ export const requestPayment = (options) => {
 
         // page=pages/index/index  跳转到支付宝小程序页面的页面路径
         alipayUrl = `${alipayUrl}&page=${query.page}&thirdPartSchema=${encodeURIComponent('snake://')}`;
-        console.log(alipayUrl);
+
         // 唤起支付宝
         let error = null;
         plus.runtime.openURL(alipayUrl, (res) => {

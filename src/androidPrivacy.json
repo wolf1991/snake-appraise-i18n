@@ -1,0 +1,14 @@
+{
+    "version": "1",
+    "prompt": "template",
+    "title": "服务协议和隐私政策",
+    "message": "　　SNAKE鉴别为了更好地保护您的隐私和信息安全，根据国家相关法律规定和国家标准更新了<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=865\">《SNAKE鉴别隐私政策》</a>&<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=866\">《SNAKE鉴别用户协议》</a>，特向您说明：<br/><b>为向您提供基本服务，我们会遵循正当、合法、必要的原则收集和使用必要的信息。</b><br/><b>未经您的授权同意，我们不会将您的信息共享给第三方或用于您未授权的其他用途。</b><br/><b>我们会采用业界先进的安全措施保护您的信息安全。</b><br/>您在点击同意前，请您务必审慎阅读，并充分理解协议条款内容，确认同意后即可开启SNAKE鉴别服务。如您不同意<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=865\">《SNAKE鉴别隐私政策》</a>&<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=866\">《SNAKE鉴别用户协议》</a>，请不要开启服务。",
+    "buttonAccept": "同意",
+    "buttonRefuse": "暂不同意",
+    "second": {
+        "title": "温馨提示",
+        "message": "您需要同意<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=865\">《SNAKE鉴别隐私政策》</a>&<a href=\"https://m.puresnake.com/pages/custom/cms?pageId=866\">《SNAKE鉴别用户协议》</a>，才能继续使用我们的服务喔。",
+        "buttonAccept": "去同意",
+        "buttonRefuse": "暂不"
+    }
+}

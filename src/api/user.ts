@@ -5,24 +5,24 @@
  * @param  encryptedData 加密数据
  * @param  iv            加密数据签名
  */
-export const postLogin = (params) => uni.$u.http.post('/app/token', params);
+export const postLogin = (params) => uni?.$u?.http?.post('/app/token', params);
 
 /**
  * 退出登录
  */
-export const postLogout = () => uni.$u.http.post('/app/logout');
+export const postLogout = () => uni?.$u?.http?.post('/app/logout');
 
 /**
  * 刷新token
  * @param  refreshToken  token
  */
-export const postRefreshToken = (params) => uni.$u.http.post<IUserInfo>('/app/refresh', params);
+export const postRefreshToken = (params) => uni?.$u?.http?.post<IUserInfo>('/app/refresh', params);
 
 /**
  * 地址列表
  */
 export const getAddressList = (params) =>
-  uni.$u.http.get('/app/user/address/list', {
+  uni?.$u?.http?.get('/app/user/address/list', {
     data: params,
   });
 
@@ -31,13 +31,13 @@ export const getAddressList = (params) =>
  * @param {string} type 类型，default 设置默认，new 新增地址，update 修改地址
  * @param {Object} params 接口请求参数
  */
-export const postAddressSave = (type, params) => uni.$u.http.post(`/app/user/address/save/${type}`, params);
+export const postAddressSave = (type, params) => uni?.$u?.http?.post(`/app/user/address/save/${type}`, params);
 
 /**
  * 获取地址详情
  */
 export const getAddressGet = (params) =>
-  uni.$u.http.get('/app/user/address/get', {
+  uni?.$u?.http?.get('/app/user/address/get', {
     data: params,
   });
 
@@ -45,15 +45,15 @@ export const getAddressGet = (params) =>
  * 获取默认地址
  */
 export const getAddressGetIsDefault = (params) =>
-  uni.$u.http.get('/app/user/address/getIsDefault', {
+  uni?.$u?.http?.get('/app/user/address/getIsDefault', {
     data: params,
   });
 
 // 获取字典表参数
-export const getAppDictValue = (params) => uni.$u.http.get(`/app/dict/${params.type}/${params.value}`);
+export const getAppDictValue = (params) => uni?.$u?.http?.get(`/app/dict/${params.type}/${params.value}`);
 
 // 获取验证码
-export const getCaptchCode = (params) => uni.$u.http.post('/app/code', params);
+export const getCaptchCode = (params) => uni?.$u?.http?.post('/app/code', params);
 
 // 绑定推送id
-export const postPushBind = (params) => uni.$u.http.post('https://a.puresnake.comc/push/bind', params);
+export const postPushBind = (params) => uni?.$u?.http?.post('https://a.puresnake.comc/push/bind', params);

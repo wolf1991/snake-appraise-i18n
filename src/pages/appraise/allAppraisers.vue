@@ -13,7 +13,9 @@
         customClass="bg-white"
         @change="catChange"></u-tabs>
     </u-sticky>
+    <!-- #ifdef MP-ALIPAY -->
     <view class="h-88rpx"></view>
+    <!-- #endif -->
 
     <view class="flex flex-wrap justify-between m-24rpx">
       <template v-for="item in appraisersList" :key="item.id">

@@ -61,8 +61,6 @@ import config from '@/config/config';
 import { postLogin } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
 
-const userStore = useUserStore();
-
 export default {
   name: 'snake-login-popup',
   props: {
@@ -171,6 +169,7 @@ export default {
         if (response.success) {
           this.closeOrRefresh();
           uni.$u.toast('登录成功');
+          const userStore = useUserStore();
           userStore.setUserInfo({
             ...response.data,
             token: response.token,

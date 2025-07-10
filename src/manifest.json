@@ -53,9 +53,19 @@
         "permissionPhoneState": {
           "request": "none",
           "prompt": "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
-        }
+        },
+        "schemes": "hbuilder,snake"
       },
       "ios": {
+        "urltypes": [
+          {
+            "urlidentifier": "com.app.snaker",
+            "urlschemes": [
+              "hbuilder",
+              "snake"
+            ]
+          }
+        ],
         "privacyDescription": {
           "NSPhotoLibraryUsageDescription": "选择需要上传的图片，用于鉴别您的装备",
           "NSCameraUsageDescription": "拍照并上传，用于鉴别您的装备",
@@ -92,34 +102,40 @@
       },
       "icons": {
         "android": {
-          "hdpi": "static/app/icons/72x72.png",
-          "xhdpi": "static/app/icons/96x96.png",
-          "xxhdpi": "static/app/icons/144x144.png",
-          "xxxhdpi": "static/app/icons/192x192.png"
+          "hdpi": "src/static/app/icons/72x72.png",
+          "xhdpi": "src/static/app/icons/96x96.png",
+          "xxhdpi": "src/static/app/icons/144x144.png",
+          "xxxhdpi": "src/static/app/icons/192x192.png"
         },
         "ios": {
-          "appstore": "static/app/icons/1024x1024.png",
+          "appstore": "src/static/app/icons/1024x1024.png",
           "ipad": {
-            "app": "static/app/icons/76x76.png",
-            "app@2x": "static/app/icons/152x152.png",
-            "notification": "static/app/icons/20x20.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "proapp@2x": "static/app/icons/167x167.png",
-            "settings": "static/app/icons/29x29.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            "spotlight": "static/app/icons/40x40.png",
-            "spotlight@2x": "static/app/icons/80x80.png"
+            "app": "src/static/app/icons/76x76.png",
+            "app@2x": "src/static/app/icons/152x152.png",
+            "notification": "src/static/app/icons/20x20.png",
+            "notification@2x": "src/static/app/icons/40x40.png",
+            "proapp@2x": "src/static/app/icons/167x167.png",
+            "settings": "src/static/app/icons/29x29.png",
+            "settings@2x": "src/static/app/icons/58x58.png",
+            "spotlight": "src/static/app/icons/40x40.png",
+            "spotlight@2x": "src/static/app/icons/80x80.png"
           },
           "iphone": {
-            "app@2x": "static/app/icons/120x120.png",
-            "app@3x": "static/app/icons/180x180.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "notification@3x": "static/app/icons/60x60.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            "settings@3x": "static/app/icons/87x87.png",
-            "spotlight@2x": "static/app/icons/80x80.png",
-            "spotlight@3x": "static/app/icons/120x120.png"
+            "app@2x": "src/static/app/icons/120x120.png",
+            "app@3x": "src/static/app/icons/180x180.png",
+            "notification@2x": "src/static/app/icons/40x40.png",
+            "notification@3x": "src/static/app/icons/60x60.png",
+            "settings@2x": "src/static/app/icons/58x58.png",
+            "settings@3x": "src/static/app/icons/87x87.png",
+            "spotlight@2x": "src/static/app/icons/80x80.png",
+            "spotlight@3x": "src/static/app/icons/120x120.png"
           }
+        }
+      },
+      "splashscreen": {
+        "iosStyle": "storyboard",
+        "ios": {
+          "storyboard": "src/static/app/CustomStoryboard.zip"
         }
       }
     },
@@ -153,6 +169,8 @@
     "enable": false
   },
   "vueVersion": "3",
+  "locale": "zh-Hans",
+  "fallbackLocale": "zh-Hans",
   "h5": {
     "router": {
       "base": "",

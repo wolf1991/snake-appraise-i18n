@@ -1,5 +1,3 @@
-const { http } = uni.$u;
-
 interface ICmsInfoRes {
   id: string;
   page: object;
@@ -17,5 +15,5 @@ interface ICmsInfoRes {
 export const getCmsInfo = (params: { id?: string; pageType?: string }) => {
   const path = params.pageType ? `/app/cms/${params.pageType}` : '/app/cms/comm';
   const queryParams = params.pageType ? {} : { data: params };
-  return http.get<ICmsInfoRes>(path, queryParams);
+  return uni?.$u?.http?.get<ICmsInfoRes>(path, queryParams);
 };

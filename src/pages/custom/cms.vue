@@ -33,11 +33,12 @@ export default {
   onLoad(options) {
     let q = options?.q || '';
     // #ifdef MP-ALIPAY
-    q = my.getLaunchOptionsSync().query.qrCode;
+    q = my.getLaunchOptionsSync()?.query?.qrCode;
     // #endif
     // 扫普通二维码进入参数 {"q":"https%253A%252F%252Fxy.puresnake.com%252Fs%253Fp%253D60201715","scancode_time":"1603866721"}
     q = uni.$u.getQueryParams(decodeURIComponent(q));
     options = { ...options, ...q };
+    console.log('/appraise/code/purchase', options);
     this.pageId = options.pageId;
     if (this.pageId) {
       this.getPageData();
@@ -84,6 +85,10 @@ export default {
     },
     // 获取cms组件数据
     async getPageData() {
+      uni.showLoading({
+        title: '加载中...',
+        mask: true,
+      });
       const response = await getCmsInfo({ id: this.pageId });
       if (response.success) {
         this.pageInfo = response.data.page || {};
@@ -100,7 +105,9 @@ export default {
           },
           // #endif
         });
+        uni.hideLoading();
       } else {
+        uni.hideLoading();
         uni.$u.toast(response.msg);
       }
     },

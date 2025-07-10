@@ -81,7 +81,7 @@ const $u = {
     color,
     platform
 }
-
+ uni.$u = $u
 export const mount$u = function() {
     uni.$u = $u
 }

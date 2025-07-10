@@ -1,9 +1,10 @@
 import { useUserStore } from '@/stores';
 
-import { postRefreshToken } from '@/api/user';
 import { HttpError, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-request';
 
 import config from '@/config/config';
+
+import { postRefreshToken } from '@/api/user';
 
 // 是否正在刷新token的标记
 let isRefreshing = false;

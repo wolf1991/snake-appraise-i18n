@@ -8,7 +8,7 @@ import '@/styles/index.scss';
 // 引入全局uview-plus
 import uviewPlus from '@/uni_modules/uview-plus';
 // 引入pinia状态管理库
-import pinia from './stores';
+import pinia from '@/stores';
 // 引入路由拦截器
 import { routeInterceptor } from './interceptors';
 // 引入全局方法
@@ -46,5 +46,6 @@ export function createApp() {
 
   return {
     app,
+    pinia,
   };
 }

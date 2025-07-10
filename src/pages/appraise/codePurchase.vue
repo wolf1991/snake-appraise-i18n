@@ -92,7 +92,6 @@ import { requestPayment } from '@/utils/payment';
 
 import { useUserStore } from '@/stores/modules/user';
 
-const userStore = useUserStore();
 export default {
   data() {
     return {
@@ -183,6 +182,7 @@ export default {
         type: this.type,
         payType: 'alipay',
       };
+      const userStore = useUserStore();
 
       // #ifdef H5
       params.payType = 'alipay_h5';

@@ -58,6 +58,9 @@ export const requestInterceptors = () => {
       if (uni.$u.os() === 'android') {
         config.header.platform = 'android';
       }
+      const appChannel = typeof plus === 'object' ? (plus.os.name === 'Android' ? plus.runtime.channel : 'IOSApp') : 'snakeapp';
+      config.header['snake-channel'] = appChannel;
+      config.header.appId = 202310111401;
       // #endif
       return config;
     },

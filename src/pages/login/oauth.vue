@@ -93,7 +93,6 @@ import graceChecker from '@/utils/js/graceChecker';
 
 import { isProd } from '@/utils/request/util';
 
-const userStore = useUserStore();
 export default {
   data() {
     return {
@@ -115,7 +114,7 @@ export default {
     };
   },
   onLoad(options) {
-    // #ifdef H5
+    // #ifdef H5 || APP-PLUS
     this.isPhoneCode = true;
     // #endif
 
@@ -240,6 +239,7 @@ export default {
         const response = await postLogin(params);
         if (response.success) {
           uni.$u.toast('登录成功');
+          const userStore = useUserStore();
           userStore.setUserInfo({
             ...response.data,
             token: response.token,
@@ -292,6 +292,7 @@ export default {
       this.codeText = text;
     },
     pushBind() {
+      const userStore = useUserStore();
       if (!userStore.userInfo.uid) {
         return;
       }

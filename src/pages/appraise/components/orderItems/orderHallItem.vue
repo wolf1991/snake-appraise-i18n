@@ -1,11 +1,14 @@
 <template>
-  <view class="bg-white mx-24rpx mt-20rpx px-24rpx rounded-8rpx" @click="emit('click', item)">
-    <view class="flex-items-center justify-between py-12rpx" style="border-bottom: 1px solid #eeeef6">
+  <view class="bg-white mx-24rpx mt-20rpx px-24rpx rounded-8rpx">
+    <view
+      class="flex-items-center justify-between py-12rpx"
+      style="border-bottom: 1px solid #eeeef6"
+      @click="emit('click', item)">
       <text class="text-black text-24rpx font-600">{{ item.userName || '' }}</text>
       <text v-if="item.rangeRemark" class="text-#707184 text-24rpx">{{ item.rangeRemark }}</text>
       <text v-else class="text-#707184 text-24rpx">{{ item.brandName || '' }} {{ item.rangeName || '' }}</text>
     </view>
-    <view class="flex pt-24rpx pb-12rpx">
+    <view class="flex pt-24rpx pb-12rpx" @click="emit('click', item)">
       <view class="w-160rpx h-160rpx">
         <image class="w-160rpx h-160rpx" :src="$u.imageResize(item.image, 375)" lazy-load mode="aspectFill"></image>
       </view>
