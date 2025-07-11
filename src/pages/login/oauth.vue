@@ -79,8 +79,8 @@
     <view class="flex-center flex-wrap mt-40rpx mx-40rpx text-20rpx snake-gray" @click.stop="isAgreement = !isAgreement">
       <radio :checked="isAgreement" color="#0f1113" style="transform: scale(0.7)" @click.stop="isAgreement = !isAgreement" />
       <text>我已阅读，理解并接受以下规定</text>
-      <text class="text-primary" @click.stop="navTo(`/pages/custom/cms?pageId=${isProd ? 1009 : 857}`)">《用户协议》</text>
-      <text class="text-primary" @click.stop="navTo(`/pages/custom/cms?pageId=${isProd ? 1011 : 856}`)">《隐私协议》</text>
+      <text class="text-primary" @click.stop="navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)">《用户协议》</text>
+      <text class="text-primary" @click.stop="navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 856}`)">《隐私协议》</text>
     </view>
   </view>
 </template>

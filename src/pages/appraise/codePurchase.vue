@@ -32,7 +32,7 @@
       </view>
       <view class="flex justify-between mt-30rpx">
         <view class="flex-items-center font-600">其他扣(服/包/配饰等)</view>
-        <view>{{ num === 0 ? 0 : amount - num }}组</view>
+        <view>{{ amount - num }}组</view>
       </view>
     </view>
     <textarea
@@ -155,11 +155,6 @@ export default {
     async submitOrder() {
       if (uni.$u.test.empty(this.addressData)) {
         uni.$u.toast('请选择上门取件地址');
-        return;
-      }
-
-      if (this.num === 0) {
-        this.$u.toast('请选择扣类型');
         return;
       }
 
