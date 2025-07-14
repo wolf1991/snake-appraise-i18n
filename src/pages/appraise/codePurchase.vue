@@ -44,12 +44,17 @@
 
     <view class="bg-white flex-items-center justify-between rounded-4rpx mt-20rpx mx-24rpx h-80rpx px-24rpx">
       <view>实付金额</view>
-      <view class="text-28rpx" style="font-family: DIN-Medium">¥{{ totalPrice.toFixed(2) }}</view>
+      <view class="text-28rpx snake-font-dinmedium">¥{{ totalPrice.toFixed(2) }}</view>
     </view>
-    <view class="text-#aaaaaa text-24rpx py-18rpx px-24rpx">
-      <view class="mt-10rpx">购买须知：</view>
-      <view class="mt-10rpx">1. 下单付款后，SNAKE平台将联系您并寄出商品邮费到付，请关注。</view>
-      <view class="mt-10rpx">2. 用户使用鉴别扣后，无需额外支付鉴别费用，一经售出不退不换。</view>
+    <view class="text-#909399 text-24rpx py-18rpx px-24rpx">
+      <view class="text-26rpx mt-10rpx">购买须知：</view>
+      <view class="mt-10rpx">1.下单付款后，SNAKE平台将联系您并寄出商品，邮费到付，请关注。</view>
+      <view class="mt-10rpx">2.鉴别扣一经售出不退不换，请悉知。</view>
+      <view class="mt-10rpx">3.用户使用鉴别扣下单，无需额外支付鉴别费用。</view>
+      <view class="mt-10rpx">4.在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。</view>
+      <view class="mt-10rpx">
+        5.结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+      </view>
     </view>
 
     <view class="h-152rpx pb-safe"></view>
@@ -58,7 +63,7 @@
       <view class="text-24rpx bg-white pt-12rpx" @click="checkAgreement">
         <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click.stop="checkAgreement" />
         <text class="text-24rpx text-#0f1113">我已阅读并同意</text>
-        <text class="snake-font-medium text-24rpx text-#0f1113" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
+        <text class="snake-font-medium fw-500 text-24rpx text-green" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
           《鉴别扣服务协议》
         </text>
       </view>

@@ -97,7 +97,8 @@ export default defineConfig({
   theme: {
     colors: {
       primary: '#0f1113',
-      info: "#909399"
+      info: '#909399',
+      green: '#06d290',
     },
   },
 });

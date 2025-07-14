@@ -38,7 +38,6 @@ export default {
     // 扫普通二维码进入参数 {"q":"https%253A%252F%252Fxy.puresnake.com%252Fs%253Fp%253D60201715","scancode_time":"1603866721"}
     q = uni.$u.getQueryParams(decodeURIComponent(q));
     options = { ...options, ...q };
-    console.log('/appraise/code/purchase', options);
     this.pageId = options.pageId;
     if (this.pageId) {
       this.getPageData();

@@ -56,6 +56,16 @@
           placeholderClass="text-#888891"
           border="none"></u-textarea>
       </view>
+
+      <view class="text-#909399 text-24rpx py-18rpx">
+        <view class="text-26rpx mt-10rpx">图片鉴别声明：</view>
+        <view class="mt-10rpx">
+          1.在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
+        </view>
+        <view class="mt-10rpx">
+          2.鉴别结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+        </view>
+      </view>
     </view>
 
     <snake-pay-select ref="paySelectRef"></snake-pay-select>

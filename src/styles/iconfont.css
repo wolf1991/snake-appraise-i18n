@@ -1,154 +1,159 @@
 /* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-	font-family: 'next-iconfont';
-	/* Project id 2254282 */
-	src:
-		url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff2?t=1740994274224') format('woff2'),
-		url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff?t=1740994274224') format('woff'),
-		url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.ttf?t=1740994274224') format('truetype');
+  font-family: 'next-iconfont';
+  /* Project id 2254282 */
+  src:
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff2?t=1740994274224') format('woff2'),
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.woff?t=1740994274224') format('woff'),
+    url('https://at.alicdn.com/t/c/font_2254282_rro2i1on0ll.ttf?t=1740994274224') format('truetype');
 }
 
 .next-icons {
-	font-family: 'next-iconfont';
-	font-style: normal;
+  font-family: 'next-iconfont';
+  font-style: normal;
 }
 
 .icon-qrbelt::before {
-	content: '\e654';
+  content: '\e654';
 }
 
 .icon-amount::before {
-	content: '\e6ce';
+  content: '\e6ce';
 }
 
 .icon-address::before {
-	content: '\e680';
+  content: '\e680';
 }
 
 .icon-kf::before {
-	content: '\e60a';
+  content: '\e60a';
 }
 
 .icon-setting::before {
-	content: '\e67f';
+  content: '\e67f';
 }
 
 .icon-selected::before {
-	content: '\e62f';
+  content: '\e62f';
 }
 
 .icon-notselected::before {
-	content: '\e657';
+  content: '\e657';
 }
 
 .icon-countdown::before {
-	content: '\e6a4';
+  content: '\e6a4';
 }
 
 .icon-edit:before {
-	content: '\e61e';
+  content: '\e61e';
 }
 
 .icon-checkMark::before {
-	content: '\e6a9';
+  content: '\e6a9';
 }
 
 .icon-banzhu:before {
-	content: '\e602';
+  content: '\e602';
 }
 
 .icon-pen:before {
-	content: '\e6b8';
+  content: '\e6b8';
 }
 
 /* 箭头 */
 .icon-arrow-left::before {
-	content: '\e662';
+  content: '\e662';
 }
 
 .icon-arrow-right::before {
-	content: '\e683';
+  content: '\e683';
 }
 
 .icon-arrow-up::before {
-	content: '\e665';
+  content: '\e665';
 }
 
 .icon-arrow-down::before {
-	content: '\e664';
+  content: '\e664';
 }
 
 /* 查看更多 */
 .icon-more:before {
-	content: '\e614';
+  content: '\e614';
 }
 
 /* 升序 */
 .icon-asc::before {
-	content: '\e6c4';
+  content: '\e6c4';
 }
 
 /* 降序 */
 .icon-desc::before {
-	content: '\e6c5';
+  content: '\e6c5';
 }
 
 /* 筛选 */
 .icon-filter::before {
-	content: '\e6c6';
+  content: '\e6c6';
 }
 
 /*  我的模块 */
 
 /* meun list */
 .icon-goodsreceived:before {
-	content: '\e69c';
+  content: '\e69c';
 }
 
 .icon-file::before {
-	content: '\e687';
+  content: '\e687';
 }
 
 .icon-jianding::before {
-	content: '\e6a8';
+  content: '\e6a8';
 }
 
 .icon-buckle:before {
-	content: '\e6a8';
+  content: '\e6a8';
 }
 
 .icon-user:before {
-	content: '\e6aa';
+  content: '\e6aa';
 }
 
 @font-face {
-	font-family: 'codesign-icon';
-	src: url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.eot?t=602335adf3ab6d0c6d49e28ba8578841');
-	/* IE9 */
-	src:
-		url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.eot?t=602335adf3ab6d0c6d49e28ba8578841#iefix') format('embedded-opentype'),
-		/* IE6-IE8 */
-		url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.woff?t=602335adf3ab6d0c6d49e28ba8578841') format('woff2'),
-		url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.woff?t=602335adf3ab6d0c6d49e28ba8578841') format('woff'),
-		/* chromeã€firefox */
-		url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.ttf?t=602335adf3ab6d0c6d49e28ba8578841') format('truetype'),
-		/* chromeã€firefoxã€operaã€Safari, Android, iOS 4.2+*/
-		url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.svg?t=602335adf3ab6d0c6d49e28ba8578841#iconfont') format('svg');
-	/* iOS 4.1- */
+  font-family: 'codesign-icon';
+  src: url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.eot?t=602335adf3ab6d0c6d49e28ba8578841');
+  /* IE9 */
+  src:
+    url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.eot?t=602335adf3ab6d0c6d49e28ba8578841#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */
+      url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.woff?t=602335adf3ab6d0c6d49e28ba8578841')
+      format('woff2'),
+    url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.woff?t=602335adf3ab6d0c6d49e28ba8578841')
+      format('woff'),
+    /* chromeã€firefox */
+      url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.ttf?t=602335adf3ab6d0c6d49e28ba8578841')
+      format('truetype'),
+    /* chromeã€firefoxã€operaã€Safari, Android, iOS 4.2+*/
+      url('https://cdn2.codesign.qq.com/icons/3KnYqZLbOp9PGem/latest/iconfont.svg?t=602335adf3ab6d0c6d49e28ba8578841#iconfont')
+      format('svg');
+  /* iOS 4.1- */
 }
 
 .codesign-icon {
-	font-family: 'codesign-icon' !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-family: 'codesign-icon' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-zhifubaoicon:before {
-	content: '\e014';
+  content: '\e014';
 }
 
 .icon-weixinzhifu:before {
-	content: '\e015';
+  content: '\e015';
 }
