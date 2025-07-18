@@ -12,7 +12,6 @@
       </view>
       <view class="flex-center flex-col">
         <template v-if="isLogined">
-          <!-- <view class="fw-500 mb-10rpx snake-ellipse-2">{{ userInfo.nickname || '' }}</view> -->
           <u-text color="#000" size="36rpx" format="encrypt" mode="phone" bold :text="userInfo.mobile"></u-text>
         </template>
         <template v-else>
@@ -28,7 +27,7 @@
       <block v-for="item in menuList" :key="item.value">
         <u-cell isLink :border="false" @click="clickNavTo(item.hrefUrl)">
           <template v-slot:icon>
-            <view :class="[`next-icons ${item.icon} snake-fs-48`]"></view>
+            <view :class="[`next-icons ${item.icon} text-38rpx`]"></view>
           </template>
           <template v-slot:title>
             <view class="fs-36rpx snake-font-din">{{ item.label }}</view>
@@ -54,7 +53,6 @@ import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
 const $u = uni.$u;
 
 const userStore = useUserStore();
-
 const { userInfo, isLogined } = storeToRefs(userStore);
 
 const menuList = ref();

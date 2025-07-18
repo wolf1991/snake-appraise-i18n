@@ -211,7 +211,7 @@ const confirmIdentify = async () => {
   const params = {
     requestId: en,
     id: appraiseId.value,
-    suggestion: suggestion.value || '无',
+    suggestion: suggestion.value || null,
     remark: remark.value || null,
     status: null,
     hintImageList: null,

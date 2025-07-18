@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 interface IUserState {
-  userInfo: IUserInfo;
+  userInfo: Partial<IUserInfo>;
   inviter: string | number;
 }
 

@@ -69,13 +69,13 @@
         </view>
 
         <image
-          class="pos-absolute right-34rpx bottom-257rpx w-168rpx h-168rpx"
+          class="pos-absolute right-20rpx bottom-257rpx w-168rpx h-168rpx"
           :src="`https://cdn.puresnake.com/xy-web/appraise/appraise_${orderInfo.stamp}.png`"
           mode="widthFix"></image>
 
         <view class="flex-center flex-col mt-10rpx" v-if="orderInfo.status === 'need_img' && orderInfo.extraImageRmd">
-          <view class="snake-f14 snake-font-medium">补图意见</view>
-          <view class="snake-f12 snake-mt4" style="color: rgba(136, 136, 145, 1); padding: 0 49rpx">
+          <view class="text-28rpx snake-font-medium">补图意见</view>
+          <view class="text-24rpx mt-4rpx px-50rpx" style="color: rgba(136, 136, 145, 1)">
             {{ orderInfo.extraImageRmd }}
           </view>
         </view>

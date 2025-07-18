@@ -51,6 +51,7 @@
           v-model="description"
           placeholder="您可以在这里介绍更多装备信息"
           count
+          height="80rpx"
           :maxlength="70"
           :cursorSpacing="200"
           placeholderClass="text-#888891"
@@ -60,10 +61,10 @@
       <view class="text-#909399 text-24rpx py-18rpx">
         <view class="text-26rpx mt-10rpx">图片鉴别声明：</view>
         <view class="mt-10rpx">
-          1.在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
+          1. 在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
         </view>
         <view class="mt-10rpx">
-          2.鉴别结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+          2. 鉴别结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
         </view>
       </view>
     </view>
@@ -348,6 +349,7 @@ const confirmIdentify = async () => {
   background: #f6f6f6 !important;
 }
 ::v-deep .u-textarea__field {
+  font-size: 26rpx;
   background: #f6f6f6 !important;
 }
 </style>

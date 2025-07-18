@@ -25,7 +25,7 @@
             lazy-load
             mode="aspectFill"></image>
 
-          <view class="flex-center text-30rpx mn-8rpxsnake-font-medium" v-if="orderInfo.appraiseCode">
+          <view class="flex-center text-30rpx mt-8rpx snake-font-medium" v-if="orderInfo.appraiseCode">
             鉴别扣码：{{ orderInfo.appraiseCode }}
           </view>
 

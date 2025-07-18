@@ -6,7 +6,6 @@ import path from 'node:path';
 import UnoCSS from 'unocss/vite';
 import ViteRestart from 'vite-plugin-restart';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { copyNativeRes } from './vite-plugins/copyNativeRes';
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -61,8 +60,6 @@ export default ({ command, mode }) => {
           gzipSize: true,
           brotliSize: true,
         }),
-      // 只有在 app 平台时才启用 copyNativeRes 插件
-      UNI_PLATFORM === 'app' && (copyNativeRes() as any),
     ],
     resolve: {
       alias: {

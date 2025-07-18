@@ -21,16 +21,16 @@ declare global {
 
   // 用户信息
   interface IUserInfo {
-    userId?: string | number;
-    mobile?: string;
-    username?: string;
-    nickname?: string;
-    logo?: string;
+    userId: string | number;
+    mobile: string;
+    username: string;
+    nickname: string;
+    logo: string;
     /** 微信的 openid，非微信没有这个字段 */
-    openid?: string;
-    token?: string;
-    refreshToken?: string;
-    expire?: number;
+    openid: string;
+    token: string;
+    refreshToken: string;
+    expire: number;
     [key: string]: any;
   }
 }

@@ -59,9 +59,9 @@ export default {
   },
   async onLoad(option) {
     this.current = Number(option?.current || 0);
-    this.appraiserId = option.appraiserId || '';
-    this.catId = option.cat_id || '';
-    this.appraiseCode = option.appraiseCode || '';
+    this.appraiserId = option?.appraiserId || '';
+    this.catId = option?.cat_id || '';
+    this.appraiseCode = option?.appraiseCode || '';
 
     const pages = getCurrentPages();
     const page = pages.find((item) => item.route.includes('pages/custom/dydetail'));
@@ -87,13 +87,12 @@ export default {
         this.brandVals = {};
       }
       const params = {
-        catId: this.catId,
-        code: this.appraiseCode,
+        catId: this.catId || '',
+        code: this.appraiseCode || '',
         price: this.price || '',
       };
       const response = await getCategoryBrandListApi(params);
       if (response.success) {
-        console.log('response', response);
         this.brandVals = response?.data || {};
       } else {
         this.$u.toast(response.msg);

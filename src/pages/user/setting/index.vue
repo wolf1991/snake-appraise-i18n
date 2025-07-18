@@ -39,7 +39,9 @@
 import { postLogout } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
 import { isProd } from '@/utils/request/util';
+// #ifdef APP-PLUS
 import { getCurrentNo, appUpdate } from '@/utils/js/appUpdate';
+// #endif
 export default {
   data() {
     return {
@@ -48,16 +50,11 @@ export default {
     };
   },
   onLoad() {
-    const systemInfo = uni.getSystemInfoSync();
-
-    console.log('systemInfo', systemInfo);
-    const appVersion = +systemInfo.appVersionCode;
     // #ifdef MP
     const accountInfo = uni.getAccountInfoSync();
     this.version = accountInfo.miniProgram.version; // 小程序 版本号
     // #endif
-    // #ifndef MP
-    // this.version = +systemInfo.appVersion;
+    // #ifdef APP-PLUS
     getCurrentNo((res) => {
       this.version = res.versionName;
     });

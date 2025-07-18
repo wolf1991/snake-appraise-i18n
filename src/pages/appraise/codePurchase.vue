@@ -48,12 +48,14 @@
     </view>
     <view class="text-#909399 text-24rpx py-18rpx px-24rpx">
       <view class="text-26rpx mt-10rpx">购买须知：</view>
-      <view class="mt-10rpx">1.下单付款后，SNAKE平台将联系您并寄出商品，邮费到付，请关注。</view>
-      <view class="mt-10rpx">2.鉴别扣一经售出不退不换，请悉知。</view>
-      <view class="mt-10rpx">3.用户使用鉴别扣下单，无需额外支付鉴别费用。</view>
-      <view class="mt-10rpx">4.在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。</view>
+      <view class="mt-10rpx">1. 下单付款后，SNAKE平台将联系您并寄出商品，邮费到付，请关注。</view>
+      <view class="mt-10rpx">2. 鉴别扣一经售出不退不换，请悉知。</view>
+      <view class="mt-10rpx">3. 用户使用鉴别扣下单，无需额外支付鉴别费用。</view>
       <view class="mt-10rpx">
-        5.结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+        4. 在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
+      </view>
+      <view class="mt-10rpx">
+        5. 结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
       </view>
     </view>
 
