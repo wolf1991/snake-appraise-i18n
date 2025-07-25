@@ -102,7 +102,7 @@
     </form>
     <snake-city-picker
       :show="showCityPicker"
-      :defaultName="defaultNames"
+      :defaultNames="defaultNames"
       closeOnClickOverlay
       @cancel="showCityPicker = false"
       @confirm="confirmCityPicker"></snake-city-picker>

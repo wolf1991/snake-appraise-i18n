@@ -32,17 +32,17 @@ export default {
       default: false,
     },
     // 各列的默认索引
-    defaultIndex: {
+    defaultIndexs: {
       type: Array,
       default: () => [0, 0, 0],
     },
     // 各列的名称
-    defaultName: {
+    defaultNames: {
       type: Array,
       default: () => [],
     },
     // 各列的code
-    defaultCode: {
+    defaultCodes: {
       type: Array,
       default: () => [],
     },
@@ -84,19 +84,19 @@ export default {
   watch: {
     defaultIndex(n) {
       if (n.length) {
-        this.defaultIndexValue = this.defaultIndex;
+        this.defaultIndexValue = this.defaultIndexs;
       }
     },
-    defaultName: {
+    defaultNames: {
       immediate: true,
       handler() {
-        this.defaultName.length && this.queryIndex('text');
+        this.defaultNames.length && this.queryIndex('text');
       },
     },
-    defaultCode: {
+    defaultCodes: {
       immediate: true,
       handler() {
-        this.defaultCode.length && this.queryIndex('code');
+        this.defaultCodes.length && this.queryIndex('code');
       },
     },
   },
@@ -179,15 +179,19 @@ export default {
      */
     queryIndex(type) {
       const isText = type === 'text';
-      const [provinceValue, cityValue, areaValue] = isText ? this.defaultName : this.defaultCode;
+      const [provinceValue, cityValue, areaValue] = isText ? this.defaultNames : this.defaultCodes;
+
       // 查找特定值并返回其索引 如果未找到返回0
       const getValue = (arr, value, useText = true) => {
         const index = arr.findIndex((e) => (useText ? e.text : e.code) === value);
         return index === -1 ? 0 : index;
       };
-      this.$set(this.defaultIndexValue, 0, getValue(this.provinces, provinceValue, isText));
-      this.$set(this.defaultIndexValue, 1, getValue(this.provinces, cityValue, isText));
-      this.$set(this.defaultIndexValue, 2, getValue(this.provinces, areaValue, isText));
+      const provinceIndex = getValue(this.provinces, provinceValue, isText);
+      this.$set(this, 'defaultIndexValue', [provinceIndex, 0, 0]);
+      const cityIndex = getValue(this.citys, cityValue, isText);
+      this.$set(this, 'defaultIndexValue', [provinceIndex, cityIndex, 0]);
+      const areaIndex = getValue(this.areas, areaValue, isText);
+      this.$set(this, 'defaultIndexValue', [provinceIndex, cityIndex, areaIndex]);
     },
   },
 };
