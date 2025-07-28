@@ -5,7 +5,9 @@
         <text class="text-24rpx py-2rpx px-7rpx rounded-4rpx bg-#7A3BFF mr-10rpx" v-if="item.highRisk">风险</text>
         <text class="text-24rpx py-2rpx px-7rpx rounded-4rpx bg-#FF525D mr-10rpx" v-if="item.overTimeFlag">超时</text>
         <text class="text-24rpx py-2rpx px-7rpx rounded-4rpx bg-#3688ff mr-10rpx" v-if="item.needImgFlag">补图</text>
+        <text class="text-24rpx py-2rpx px-7rpx rounded-4rpx bg-#f37b1d mr-10rpx" v-if="item.coAppraiseFlag">复检</text>
         <text class="text-24rpx font-600 text-#000">{{ item.userName || '' }}</text>
+        <text class="text-24rpx font-600 text-#000" v-if="item.fromOrigin">-{{ item.fromOrigin || '' }}</text>
       </view>
       <text v-if="item.rangeRemark" class="text-#707184 text-24rpx">{{ item.rangeRemark }}</text>
       <text v-else class="text-#707184 text-24rpx">{{ item.brandName || '' }} {{ item.rangeName || '' }}</text>
@@ -15,13 +17,19 @@
         <image class="w-160rpx h-160rpx" :src="$u.imageResize(item.image, 375)" lazy-load mode="aspectFill"></image>
       </view>
       <view class="pl-20rpx flex flex-col justify-between flex-1">
-        <view class="font-500 text-28rpx">{{ item.productName || '' }}</view>
-        <view class="text-24rpx">
-          <view class="text-#FF525D font-600" v-if="item.deadline">截止时间：{{ item.deadline }}</view>
-          <view class="flex-items-center justify-between mt-10rpx">
-            <view class="text-#707184">来源：{{ item.fromOrigin || '无' }}</view>
-            <view class="text-#FF525D text-32rpx font-500">{{ item.statusName }}</view>
+        <view class="font-500 text-28rpx line-clamp-2">{{ item.productName || '' }}</view>
+
+        <view class="flex-items-center justify-between mt-10rpx">
+          <view class="flex-items-center fw-600 text-28rpx" v-if="item.expireTime && item.expireTime > Date.now()">
+            <text class="snake-font-medium text-#06d290">处理中：</text>
+            <snake-count-down
+              :timer="$u.formatTime(item.expireTime)"
+              splitorColor="#06d290"
+              border="2px solid #06d290"
+              borderColor="#06d290"
+              fontColor="#06d290"></snake-count-down>
           </view>
+          <view class="text-#FF525D text-32rpx font-500 flex-1 flex justify-end">{{ item.statusName }}</view>
         </view>
       </view>
     </view>
@@ -40,4 +48,13 @@ defineProps({
 const $u = uni.$u;
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .snake-countdown-numbers {
+  font-weight: 600;
+}
+
+::v-deep .snake-countdown-splitor {
+  font-weight: 600;
+  margin: 0 4rpx;
+}
+</style>

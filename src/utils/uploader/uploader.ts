@@ -53,7 +53,9 @@ class Uploader {
             reject(response);
           }
         })
-        .catch(reject);
+        .catch(() => {
+          reject(new Error('上传失败，请重新上传'));
+        });
     });
   }
 }

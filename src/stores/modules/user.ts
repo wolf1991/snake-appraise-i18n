@@ -23,6 +23,8 @@ export const useUserStore = defineStore('user', {
     },
     clearUserInfo() {
       this.userInfo = {};
+      uni.setStorageSync('token', '');
+      uni.setStorageSync('__SK_OPENID', '');
     },
     setInviter(val: IUserState['inviter']) {
       this.inviter = val;
