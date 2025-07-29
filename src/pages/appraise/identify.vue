@@ -22,9 +22,12 @@
         </view>
       </view>
 
-      <view class="flex flex-wrap justify-between">
+      <view class="flex flex-wrap">
         <template v-for="(model, index) in modelList" :key="index">
-          <view class="w-156rpx h-156rpx mb-20rpx" v-if="model.id !== 0 || model.closeable">
+          <view
+            class="w-156rpx h-156rpx mr-10rpx mb-20rpx"
+            :class="{ '!mr-0': index % 4 === 3 }"
+            v-if="model.id !== 0 || model.closeable">
             <image
               class="w-156rpx h-156rpx"
               :src="model.image"

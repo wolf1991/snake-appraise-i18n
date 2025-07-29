@@ -11,8 +11,8 @@ export default defineManifestConfig({
   name: VITE_APP_TITLE,
   appid: VITE_UNI_APPID,
   description: '',
-  versionName: '1.0.26',
-  versionCode: '1026',
+  versionName: '1.0.27',
+  versionCode: '1027',
   transformPx: false,
   locale: 'zh-Hans',
   fallbackLocale: 'zh-Hans',
@@ -41,8 +41,8 @@ export default defineManifestConfig({
     distribute: {
       /* android打包配置 */
       android: {
-        minSdkVersion: 30,
-        targetSdkVersion: 30,
+        minSdkVersion: 29,
+        targetSdkVersion: 36,
         abiFilters: ['armeabi-v7a', 'arm64-v8a'],
         permissions: [
           '<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>',
@@ -100,13 +100,13 @@ export default defineManifestConfig({
         },
         share: {
           weixin: {
-            appid: 'wxbeba1e607ea90901',
+            appid: 'wx8247eea146157b64',
             UniversalLinks: 'https://m.puresnake.com/ulink/',
           },
         },
         oauth: {
           weixin: {
-            appid: 'wxbeba1e607ea90901',
+            appid: 'wx8247eea146157b64',
             UniversalLinks: 'https://m.puresnake.com/ulink/',
           },
         },

@@ -108,6 +108,8 @@ const brandKey = ref('');
 const page = ref(1);
 const loadingStatus = ref('loadmore');
 
+const uploadling = ref(false);
+
 const brandList = ref([]);
 const categoryList = ref([]);
 const statusList = ref([
@@ -226,6 +228,7 @@ const scrolltolower = () => {
 };
 
 const afterRead = async (event) => {
+  uploadling.value = true;
   // 当设置 multiple 为 true 时, file 为数组格式，否则为对象格式
   let lists = [];
   lists = lists.concat(event.file);
@@ -241,6 +244,7 @@ const afterRead = async (event) => {
   for (let i = 0; i < lists.length; i++) {
     const result = await uploader.uploadOss(lists[i].url);
     const item = formData.value.imageList[fileListLen];
+
     formData.value.imageList.splice(
       fileListLen,
       1,
@@ -254,6 +258,7 @@ const afterRead = async (event) => {
   }
   await uni.$u.sleep(100);
   uploadRef.value.chooseFile();
+  uploadling.value = false;
 };
 
 const deleteImg = (event) => {
@@ -282,6 +287,11 @@ const catePickerConfirm = (e) => {
 };
 
 const submit = async () => {
+  if (uploadling.value) {
+    uni.$u.toast('正在上传图片，请稍后提交');
+    return;
+  }
+
   const checkRes = graceChecker.check(formData.value, rule);
   if (checkRes) {
     const formdata = {

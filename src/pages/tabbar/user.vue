@@ -53,7 +53,8 @@ import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
 const $u = uni.$u;
 
 const userStore = useUserStore();
-const { userInfo, clearUserInfo, isLogined } = storeToRefs(userStore);
+
+const { userInfo, isLogined } = storeToRefs(userStore);
 
 const menuList = ref();
 
@@ -151,7 +152,7 @@ const changeBaseUrl = () => {
             // 设置环境地址
             uni.setStorageSync('BASE_URL', baseUrl);
             setConfig();
-            clearUserInfo();
+            userStore.clearUserInfo();
 
             // #ifdef H5
             uni.$u.toast('切换成功2秒后重启', 3000);
