@@ -19,6 +19,11 @@ export const postLogout = () => uni?.$u?.http?.post('/app/logout');
 export const postRefreshToken = (params) => uni?.$u?.http?.post<IUserInfo>('/app/refresh', params);
 
 /**
+ * 注销账号
+ */
+export const postDestroy = () => uni?.$u?.http?.post('/app/user/destroy');
+
+/**
  * 地址列表
  */
 export const getAddressList = (params) =>

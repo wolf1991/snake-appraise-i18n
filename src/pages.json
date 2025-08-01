@@ -56,6 +56,12 @@
           }
         },
         {
+          "path": "setting/cancelAccount",
+          "style": {
+            "navigationBarTitleText": "注销账号"
+          }
+        },
+        {
           "path": "devConfig",
           "style": {
             "navigationBarTitleText": "开发配置"

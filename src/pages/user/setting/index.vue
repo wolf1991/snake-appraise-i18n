@@ -21,11 +21,8 @@
     </view>
     <u-cell-group :border="false">
       <u-cell title="用户服务协议" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
-      <u-cell
-        title="隐私协议"
-        isLink
-        :border="false"
-        @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
+      <u-cell title="隐私协议" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
+      <u-cell title="注销账号" isLink :border="false" @click="$u.navTo('/pages/user/setting/cancelAccount')"></u-cell>
     </u-cell-group>
     <view class="snake-fixed-bottom px-24rpx">
       <view class="py-12rpx">

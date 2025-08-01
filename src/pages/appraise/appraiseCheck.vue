@@ -3,7 +3,7 @@
     <view class="bg-white px-24rpx">
       <view class="py-16rpx flex-items-center justify-between" style="border-bottom: 1px solid #eaeaeb">
         <text class="text">是否需要补图</text>
-        <switch class="" color="#06D290" @change="switchChange" style="transform: scale(0.8)" />
+        <switch color="#06D290" @change="switchChange" style="transform: scale(0.8)" />
       </view>
       <view class="status-select" style="border-bottom: 1px solid #eaeaeb" v-if="!needImgSwtich">
         <view class="text-28rpx font-600 flex-center">鉴别师根据相关信息选择鉴别结果！</view>
@@ -30,7 +30,7 @@
         </view>
       </view>
 
-      <template v-if="selectStatus == '' || selectStatus == 'finish' || selectStatus == 'outrange'">
+      <template v-if="selectStatus == 'need_img' || selectStatus == 'finish' || selectStatus == 'outrange'">
         <view class="pt-20rpx pos-relative">
           <textarea
             class="py-24rpx px-20rpx bg-#f6f6f6 w-100% h-160rpx text-28rpx box-border"
@@ -160,8 +160,8 @@ onLoad((options) => {
 });
 
 const switchChange = (e) => {
-  selectStatus.value = '';
   needImgSwtich.value = e.detail.value;
+  selectStatus.value = needImgSwtich.value ? 'need_img' : '';
 };
 const setStatusHandle = (status) => {
   selectStatus.value = status;

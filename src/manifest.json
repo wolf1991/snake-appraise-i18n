@@ -2,8 +2,8 @@
   "name": "SNAKE鉴别",
   "appid": "__UNI__0BF2711",
   "description": "",
-  "versionName": "1.0.27",
-  "versionCode": "1027",
+  "versionName": "1.0.28",
+  "versionCode": "1028",
   "transformPx": false,
   "app-plus": {
     "usingComponents": true,
