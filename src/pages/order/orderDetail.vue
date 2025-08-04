@@ -69,7 +69,7 @@
         </view>
 
         <image
-          class="pos-absolute right-20rpx bottom-257rpx w-168rpx h-168rpx"
+          class="pos-absolute right-20rpx bottom-257rpx w-168rpx h-168rpx z-12"
           :src="`https://cdn.puresnake.com/xy-web/appraise/appraise_${orderInfo.stamp}.png`"
           mode="widthFix"></image>
 
@@ -240,8 +240,9 @@ const hideCharacters = (name) => {
   background-size: 100% 100%;
   margin: 0 48rpx;
   height: 640rpx;
-  position: relative;
   box-sizing: border-box;
+  position: relative;
+
   .needImg_bg {
     background: url('https://cdn.puresnake.com/xy-web/appraise/bg_card2.png') no-repeat !important;
     background-size: 100% 100% !important;

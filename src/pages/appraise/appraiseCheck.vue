@@ -139,6 +139,7 @@ const stateMap = {
   fake: '鉴别为假',
   outrange: '不在鉴别范围',
   need_img: '待补图',
+  '': '', // 默认值
 };
 
 const submitDisabled = computed(() => {
