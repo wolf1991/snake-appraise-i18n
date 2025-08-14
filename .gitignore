@@ -24,3 +24,4 @@ dist
 # 忽略特定文件
 stats.html
 package-lock.json
+uniCloud-aliyun

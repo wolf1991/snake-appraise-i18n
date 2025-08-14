@@ -49,12 +49,15 @@ import { useUserStore } from '@/stores/modules/user';
 import { getMenuListApi } from '@/api/appraise';
 import config from '@/config/config';
 import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
+import { useLogin } from '@/hooks/useLogin';
 
 const $u = uni.$u;
 
 const userStore = useUserStore();
 
 const { userInfo, isLogined } = storeToRefs(userStore);
+
+const { univerifyLogin } = useLogin();
 
 const menuList = ref();
 
@@ -88,10 +91,16 @@ const getMenuList = async () => {
   }
 };
 
-const loginHandle = () => {
+const loginHandle = async () => {
+  // #ifdef APP-PLUS
+  await univerifyLogin();
+  // #endif
+
+  // #ifndef APP-PLUS
   if (!isLogined.value) {
     uni.$u.navTo('/pages/login/oauth');
   }
+  // #endif
 };
 
 const clickNavTo = (url: string) => {

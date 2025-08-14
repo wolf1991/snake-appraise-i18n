@@ -19,7 +19,8 @@
       "Camera": {},
       "Push": {},
       "Payment": {},
-      "Share": {}
+      "Share": {},
+      "OAuth": {}
     },
     "distribute": {
       "android": {

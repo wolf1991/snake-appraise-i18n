@@ -5,7 +5,7 @@
  * @param  encryptedData 加密数据
  * @param  iv            加密数据签名
  */
-export const postLogin = (params) => uni?.$u?.http?.post('/app/token', params);
+export const postLogin = (params) => uni?.$u?.http?.post<IUserInfo>('/app/token', params);
 
 /**
  * 退出登录

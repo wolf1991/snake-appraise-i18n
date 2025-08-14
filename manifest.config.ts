@@ -36,6 +36,7 @@ export default defineManifestConfig({
       Push: {},
       Payment: {},
       Share: {},
+      OAuth: {},
     },
     /* 应用发布信息 */
     distribute: {

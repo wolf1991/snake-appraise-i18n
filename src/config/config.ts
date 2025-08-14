@@ -16,6 +16,9 @@ let config = {
   // #ifdef MP-ALIPAY
   appId: 999217, // 后端维护的应用appId，可对应查找小程序appid
   // #endif
+  // #ifdef APP-PLUS
+  appId: 999233, // 后端维护的应用appId，用以一键登录的appId
+  // #endif
 };
 
 if (VITE_USER_NODE_ENV === 'development') {
