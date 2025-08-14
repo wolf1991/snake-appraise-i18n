@@ -106,10 +106,7 @@ export default defineManifestConfig({
           },
         },
         oauth: {
-          weixin: {
-            appid: 'wx8247eea146157b64',
-            UniversalLinks: 'https://m.puresnake.com/ulink/',
-          },
+          univerify: {},
         },
       },
       /* 图标配置 */
