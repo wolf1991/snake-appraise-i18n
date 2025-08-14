@@ -5,6 +5,7 @@ import { HttpError, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-requ
 import config from '@/config/config';
 
 import { postRefreshToken } from '@/api/user';
+import { useLogin } from '@/hooks/useLogin';
 
 // 是否正在刷新token的标记
 let isRefreshing = false;
@@ -167,8 +168,15 @@ const canRetry = () => {
 /**
  * 跳转到登录页面
  */
-const redirectToLogin = () => {
+const redirectToLogin = async () => {
+  // #ifdef APP-PLUS
+  const { univerifyLogin } = useLogin();
+  await univerifyLogin();
+  // #endif
+
+  // #ifndef APP-PLUS
   uni.navigateTo({
     url: '/pages/login/oauth',
   });
+  // #endif
 };
