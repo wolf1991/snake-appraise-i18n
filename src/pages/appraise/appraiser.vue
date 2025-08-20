@@ -167,7 +167,15 @@ const filterList = ref([
 
 const { statusCurrent, statusList, statusChange, getMyOrderList } = useMyOrder();
 
-onLoad(() => {
+onLoad((options) => {
+  tabCurrent.value = Number(options?.tabCurrent || 0);
+
+  if (options?.statusCurrent) {
+    statusChange({
+      index: Number(options?.statusCurrent || 0),
+    });
+  }
+
   refreshList();
 });
 

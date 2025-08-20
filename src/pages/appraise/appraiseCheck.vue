@@ -5,6 +5,7 @@
         <text class="text">是否需要补图</text>
         <switch color="#06D290" @change="switchChange" style="transform: scale(0.8)" />
       </view>
+
       <view class="status-select" style="border-bottom: 1px solid #eaeaeb" v-if="!needImgSwtich">
         <view class="text-28rpx font-600 flex-center">鉴别师根据相关信息选择鉴别结果！</view>
         <view class="status-group">
@@ -72,6 +73,7 @@
         </text>
       </view>
     </view>
+
     <u-modal
       :show="modalShow"
       showCancelButton
