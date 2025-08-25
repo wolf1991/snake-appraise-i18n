@@ -88,6 +88,7 @@ export const useLogin = () => {
         fail: (err) => {
           // 预登录失败
           // console.log('预登录失败', err);
+          uni.hideLoading();
           reject(err);
           uni.navigateTo({
             url: '/pages/login/oauth',
