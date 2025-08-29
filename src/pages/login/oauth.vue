@@ -31,7 +31,6 @@
             placeholder="请输入验证码"
             placeholder-style="color: #8E8E93;;font-size:14px;">
             <template v-slot:suffix>
-              <up-code :seconds="seconds" ref="uCodeRef" @change="codeChange"></up-code>
               <text class="text-28rpx" @tap="getCode">{{ codeText }}</text>
             </template>
           </u-input>
@@ -84,6 +83,8 @@
         </view>
       </view>
     </view>
+
+    <up-code :seconds="seconds" ref="uCodeRef" @change="codeChange"></up-code>
 
     <!-- #ifdef APP-PLUS -->
     <!-- <view class="w-full px-44rpx box-border">
@@ -275,7 +276,7 @@ export default {
         uni.$u.toast('请填写正确手机号码');
         return false;
       }
-      if (this.$refs.uCodeRef.canGetCode) {
+      if (this.$refs?.uCodeRef?.canGetCode) {
         // 模拟向后端请求验证码
         uni.showLoading({
           title: '正在获取验证码',
