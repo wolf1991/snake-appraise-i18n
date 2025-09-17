@@ -97,6 +97,12 @@ async function uploadFile({ tempFilePath, formData, data, error, loading }, pref
     },
     success: (uploadFileRes) => {
       // data.value = uploadFileRes.data;
+      if (uploadFileRes.data.includes('Your proposed upload exceeds the maximum allowed size')) {
+        uni.$u.toast('上传失败，图片不能超过5M');
+        loading.value = false;
+        return;
+      }
+
       if (uploadFileRes.statusCode === 200) {
         data.value = `${config.ossCdnUrl}/${fileName}`;
       }

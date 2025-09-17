@@ -144,6 +144,10 @@ export default {
     box-sizing: border-box;
     height: 180rpx;
     border-radius: 4rpx;
+
+    textarea {
+      font-size: 28rpx;
+    }
   }
 }
 </style>
