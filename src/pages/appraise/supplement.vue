@@ -18,8 +18,10 @@
     <view class="px-24rpx">
       <block v-for="(image, index) in imageList" :key="index">
         <view class="pos-relative my-40rpx" @click="previewImage(imageList, index)">
-          <image class="w-702rpx h-702rpx" :src="image" mode="aspectFill"></image>
-          <u-icon class="pos-absolute top-[-18rpx] right-[-18rpx]" size="44rpx" name="close" @click="clearImage(index)" />
+          <image class="w-702rpx h-702rpx" :src="$u.imageResize(image, 702)" mode="aspectFill"></image>
+          <view class="pos-absolute top-[-18rpx] right-[-18rpx]" @click.stop="clearImage(index)">
+            <u-icon size="44rpx" name="close" />
+          </view>
         </view>
       </block>
       <view class="flex-center h-88rpx" style="border: 1px solid rgba(246, 242, 242, 1)" @click="chooseImage()">
@@ -53,7 +55,7 @@ const orderInfo = ref(null);
 
 const imageList = ref([]);
 
-const { loading, data, run: chooseImage } = useUpload();
+const { data, run: chooseImage } = useUpload();
 
 watchEffect(() => {
   if (data.value) {
@@ -79,7 +81,7 @@ const getDetail = async () => {
   }
 };
 
-const clearImage = (index) => {
+const clearImage = (index: number) => {
   imageList.value.splice(index, 1);
 };
 

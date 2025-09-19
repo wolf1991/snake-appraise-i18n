@@ -82,6 +82,11 @@ async function uploadFile({ tempFilePath, formData, data, error, loading }, pref
     uni.$u.toast('获取上传签名失败, 请稍后重试');
     return;
   }
+  uni.showLoading({
+    title: '上传中...',
+    mask: true,
+  });
+
   const fileName = `${stsInfo.data.dir + uni.$u.timeFormat(new Date(), 'yyyymm')}/${uni.$u.guid(10)}.png`;
   uni.uploadFile({
     url: stsInfo.data.host,
@@ -96,10 +101,8 @@ async function uploadFile({ tempFilePath, formData, data, error, loading }, pref
       signature: stsInfo.data.signature,
     },
     success: (uploadFileRes) => {
-      // data.value = uploadFileRes.data;
-      if (uploadFileRes.data.includes('Your proposed upload exceeds the maximum allowed size')) {
+      if (uploadFileRes?.data?.includes?.('Your proposed upload exceeds the maximum allowed size')) {
         uni.$u.toast('上传失败，图片不能超过5M');
-        loading.value = false;
         return;
       }
 
@@ -113,6 +116,7 @@ async function uploadFile({ tempFilePath, formData, data, error, loading }, pref
     },
     complete: () => {
       loading.value = false;
+      uni.hideLoading();
     },
   });
 }
