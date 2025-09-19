@@ -2,7 +2,7 @@
   <view class="p-20rpx text-28rpx">
     <view class="flex-items-center">
       <text class="pr-10rpx">开发域名</text>
-      <u-input v-model="baseUrl" placeholder="请输入开发域名"></u-input>
+      <u-input v-model="baseUrl" placeholder="请输入开发域名" clearable></u-input>
       <u-button
         type="primary"
         color="#007aff"
@@ -14,7 +14,7 @@
 
     <view class="flex-items-center mt-20rpx">
       <text class="pr-10rpx">页面路径</text>
-      <u-textarea v-model="pageUrl" placeholder="请输入页面路径"></u-textarea>
+      <u-textarea v-model="pageUrl" placeholder="请输入页面路径" clearable></u-textarea>
     </view>
     <view class="flex-items-center mt-20rpx">
       <u-button
@@ -32,11 +32,11 @@
 
     <view class="mt-20rpx">
       <view class="mb-20rpx">页面分享参数</view>
-      <u-input v-model="shareParams.title" placeholder="请输入分享名称"></u-input>
+      <u-input v-model="shareParams.title" placeholder="请输入分享名称" clearable></u-input>
       <view class="mt-20rpx"></view>
-      <u-input v-model="shareParams.imageUrl" placeholder="请输入图片地址"></u-input>
+      <u-input v-model="shareParams.imageUrl" placeholder="请输入图片地址" clearable></u-input>
       <view class="mt-20rpx"></view>
-      <u-textarea v-model="shareParams.path" placeholder="请输入分享路径，不填默认首页"></u-textarea>
+      <u-textarea v-model="shareParams.path" placeholder="请输入分享路径，不填默认首页" clearable></u-textarea>
     </view>
     <view class="mt-20rpx">
       <u-button type="primary" plain color="#007aff" custom-style="height: 74rpx;" @click="openSelectRoute('shareParams.path')">
@@ -148,9 +148,9 @@ const openSelectRoute = (key) => {
 
 const routeConfirm = (e) => {
   if (variable.value === 'pageUrl') {
-    pageUrl.value = e.value[0].path + '?=';
+    pageUrl.value = e.value[0].path;
   } else {
-    shareParams.value.path = e.value[0].path + '?=';
+    shareParams.value.path = e.value[0].path;
   }
   routeShow.value = false;
 };

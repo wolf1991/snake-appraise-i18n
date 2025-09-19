@@ -1,7 +1,7 @@
 <template>
   <view class="header-bg">
     <view class="flex-center flex-col pos-absolute top-124rpx left-50%" style="transform: translateX(-50%)" @tap="loginHandle">
-      <view class="mb-28rpx rounded-50%" style="border: 2px solid #ffffff">
+      <view class="rounded-50%" style="border: 2px solid #ffffff">
         <u-image
           width="150rpx"
           height="150rpx"
@@ -10,12 +10,12 @@
           :src="userInfo.logo || 'https://s.qiuxietang.com/swan-home/user/default-profile.png'"
           mode="widthFix"></u-image>
       </view>
-      <view class="flex-center flex-col">
+      <view class="flex-center flex-col mt-28rpx">
         <template v-if="isLogined">
           <u-text color="#000" size="36rpx" format="encrypt" mode="phone" bold :text="userInfo.mobile"></u-text>
         </template>
         <template v-else>
-          <text class="fs-30rpx fw-bold snake-black">登录/注册</text>
+          <text class="fs-36rpx fw-bold snake-black">登录/注册</text>
         </template>
       </view>
     </view>
