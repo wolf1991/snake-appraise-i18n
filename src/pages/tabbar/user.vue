@@ -1,10 +1,10 @@
 <template>
   <view class="header-bg">
     <view class="flex-center flex-col pos-absolute top-124rpx left-50%" style="transform: translateX(-50%)" @tap="loginHandle">
-      <view class="rounded-50%" style="border: 2px solid #ffffff">
+      <view class="w-150rpx h-150rpx rounded-50%" style="border: 2px solid #ffffff">
         <u-image
-          width="150rpx"
-          height="150rpx"
+          width="100%"
+          height="100%"
           :radius="100"
           :fade="false"
           :src="userInfo.logo || 'https://s.qiuxietang.com/swan-home/user/default-profile.png'"
@@ -54,7 +54,6 @@ import { useLogin } from '@/hooks/useLogin';
 const $u = uni.$u;
 
 const userStore = useUserStore();
-
 const { userInfo, isLogined } = storeToRefs(userStore);
 
 const { univerifyLogin } = useLogin();

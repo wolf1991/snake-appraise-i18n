@@ -1,6 +1,9 @@
 <template>
   <view class="flex flex-wrap">
-    <view v-for="item in orderList" :key="item.id" class="flex flex-col bg-white w-100% m-24rpx p-20rpx pt-0 rounded-10rpx">
+    <view
+      v-for="item in orderList"
+      :key="item.id"
+      class="flex flex-col bg-white w-100% mx-24rpx mt-24rpx p-20rpx pt-0 rounded-10rpx">
       <!-- top -->
       <view class="flex-items-center justify-between py-20rpx" style="border-bottom: 1px solid #eeeef6">
         <text class="text-24rpx text-#626772">{{ $u.formatTime(item.gmtCreate) }}</text>

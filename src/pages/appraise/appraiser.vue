@@ -169,13 +169,11 @@ const { statusCurrent, statusList, statusChange, getMyOrderList } = useMyOrder()
 
 onLoad((options) => {
   tabCurrent.value = Number(options?.tabCurrent || 0);
-
   if (options?.statusCurrent) {
     statusChange({
       index: Number(options?.statusCurrent || 0),
     });
   }
-
   refreshList();
 });
 
@@ -227,12 +225,18 @@ const getOrderHallList = async (type = '') => {
     orderList.value = [];
   }
 
+  uni.showLoading({
+    title: '加载中...',
+    mask: true,
+  });
+
   const response = await getAppraiseAppraiserOrderHallApi({
     page: page.value,
     size: 20,
     key: keyText.value,
     fromOrigin: fromOrigin.value,
   });
+
   if (response.success) {
     const newList = response.data?.items || [];
     orderList.value = orderList.value.concat(newList);
@@ -243,7 +247,9 @@ const getOrderHallList = async (type = '') => {
       loadingStatus.value = 'loading';
       page.value++;
     }
+    uni.hideLoading();
   } else {
+    uni.hideLoading();
     uni.$u.toast(response.msg);
   }
 };
@@ -299,6 +305,10 @@ function useMyOrder() {
       page.value = 1;
       orderList.value = [];
     }
+    uni.showLoading({
+      title: '加载中...',
+      mask: true,
+    });
 
     const response = await getAppraiseAppraiserMyselfApi({
       page: page.value,
@@ -317,7 +327,9 @@ function useMyOrder() {
         loadingStatus.value = 'loading';
         page.value++;
       }
+      uni.hideLoading();
     } else {
+      uni.hideLoading();
       uni.$u.toast(response.msg);
     }
   };
