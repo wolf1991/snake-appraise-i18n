@@ -1,6 +1,6 @@
 <template>
   <view>
-    <u-empty text="暂无试题" v-if="!examQuestionList.length"></u-empty>
+    <u-empty text="暂无试题" marginTop="60" v-if="!examQuestionList.length"></u-empty>
     <questions-list :dataList="examQuestionList" :currentValue="current" @submit="submit" @next="next" v-else></questions-list>
   </view>
 </template>
@@ -75,10 +75,11 @@ export default {
       });
       if (response.success) {
         this.questionsDetail = response.data || {};
-        this.examQuestionList = response.data?.examQuestionDtoList || [];
-        this.examQuestionList?.forEach((item) => {
+        const examQuestionList = response.data?.examQuestionDtoList || [];
+        examQuestionList?.forEach((item) => {
           item.questionImage = item?.questionImage?.split?.(',');
         });
+        this.examQuestionList = [...examQuestionList];
       } else {
         uni.$u.toast(response.msg);
       }

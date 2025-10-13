@@ -65,12 +65,12 @@
           </view>
         </view>
       </template>
-      <u-empty v-else></u-empty>
+      <u-empty marginTop="60" v-else></u-empty>
     </view>
     <view class="h-104rpx pb-safe"></view>
     <view
       class="snake-fixed-bottom"
-      v-if="questionsDetail.answerDate > curTimestamp && ['fail', 'pass'].includes(questionsDetail.status)">
+      v-if="questionsDetail.answerDate > curTimestamp && ['ing', 'pending'].includes(questionsDetail.status)">
       <view class="py-12rpx px-24rpx">
         <u-button
           type="primary"

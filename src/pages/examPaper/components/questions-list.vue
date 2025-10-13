@@ -15,8 +15,8 @@
               <view class="header">{{ index + 1 }} / {{ totalNum }}</view>
               <view class="content">
                 <view class="content-title">
-                  <text class="textl">{{ index + 1 }}、</text>
-                  <text class="textr">{{ item.questionName }}</text>
+                  <text class="text">{{ index + 1 }}、</text>
+                  <text>{{ item.questionName }}</text>
                 </view>
                 <view class="boxbody" v-for="(self, idxs) in item.optionsMapList" :key="idxs">
                   <view class="selectItem" @click="selectChange(index, idxs)">
@@ -45,7 +45,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <uni-popup type="bottom" :show="showPopup" @change="popupChange">
+    <u-popup :show="showPopup" @close="showPopup = false" :z-index="99">
       <view class="questions">
         <view class="header">
           <text>{{ currentIndex + 1 }} / {{ totalNum }}</text>
@@ -61,7 +61,7 @@
           </view>
         </scroll-view>
       </view>
-    </uni-popup>
+    </u-popup>
   </view>
 </template>
 
@@ -99,12 +99,11 @@ export default {
   },
   watch: {
     dataList: {
-      deep: true,
       immediate: true,
       handler(newArr) {
         if (newArr.length) {
-          this.newQuestionsAnswer = newArr;
-          this.totalNum = newArr.length;
+          this.newQuestionsAnswer = [...newArr];
+          this.totalNum = this.newQuestionsAnswer.length;
           this.setEmptyData();
         }
       },
@@ -208,9 +207,6 @@ export default {
       if (this.currentIndex + 1 >= this.totalNum) return false;
       this.currentIndex = index + 1;
     }, 500),
-    popupChange(e) {
-      this.showPopup = e.show;
-    },
     currentChange(index) {
       this.currentIndex = index;
       this.showPopup = false;
@@ -252,7 +248,7 @@ export default {
     .content-title {
       padding-bottom: 32rpx;
 
-      &.textl {
+      .text {
         width: 50rpx;
         height: 34rpx;
       }

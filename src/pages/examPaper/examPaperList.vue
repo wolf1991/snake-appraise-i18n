@@ -79,7 +79,7 @@ export default {
         size: 20,
       });
       if (response.success) {
-        const newList = response.data.items;
+        const newList = response.data?.items || [];
         this.examPaperList = this.examPaperList.concat(newList);
         // 分页
         if (newList.length < 20) {
