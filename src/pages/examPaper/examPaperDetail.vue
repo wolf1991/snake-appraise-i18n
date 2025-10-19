@@ -52,7 +52,7 @@
             <scroll-view scroll-x class="scroll-view w-634rpx">
               <view class="imageList">
                 <block v-for="(imgItem, imgIndex) in item.questionImage" :key="imgIndex">
-                  <view class="image" @click="previewImageHandler(item.questionImage, imgIndex)">
+                  <view class="image" @click="previewImage(item.questionImage, imgIndex)">
                     <image :src="imgItem" mode="aspectFill"></image>
                   </view>
                 </block>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import { previewImage } from '@/utils';
 import { getAppraiseExamQuestionDetailApi } from '@/api/appraise';
 export default {
   data() {
@@ -104,6 +105,7 @@ export default {
     },
   },
   methods: {
+    previewImage,
     async getExamQuestionList() {
       const response = await getAppraiseExamQuestionDetailApi({
         examPaperId: this.examPaperId,

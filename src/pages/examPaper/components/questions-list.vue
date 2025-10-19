@@ -28,7 +28,7 @@
               </view>
               <view class="imageList">
                 <block v-for="(imgItem, imgIndex) in item.questionImage" :key="imgIndex">
-                  <view class="image" @click="previewImageHandler(item.questionImage)">
+                  <view class="image" @click="previewImage(item.questionImage)">
                     <image :src="imgItem" lazy-load mode="aspectFill"></image>
                   </view>
                 </block>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { debounce } from '@/utils';
+import { debounce, previewImage } from '@/utils';
 export default {
   props: {
     dataList: {
@@ -123,6 +123,7 @@ export default {
     }, 100);
   },
   methods: {
+    previewImage,
     async init() {
       const pageHeight = (await this.queryRect('.swiper-card'))?.height || 0;
       const footerHeight = (await this.queryRect('.footer-btn'))?.height || 0;
