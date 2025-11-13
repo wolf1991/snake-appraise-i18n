@@ -43,6 +43,8 @@ import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { getCmsInfo } from '@/api/cms';
 import { getAppraiseUserListApi } from '@/api/appraise';
 
+const $u = uni.$u;
+
 const { navTo, numFormat } = uni.$u;
 
 const pageInfo = ref({});
