@@ -260,7 +260,7 @@ export default {
                 url: this.result
             }, e)
         },
-        async longpress() {
+        async toTempFilePath({success, fail}) {
             if (this.context) {
                 this.ctx.toTempFilePath(
                     0,
@@ -272,14 +272,15 @@ export default {
                     "",
                     1,
                     res => {
-                        this.$emit('longpressCallback', res.tempFilePath)
+                        success(res)
                     }
                 );
             }
             else {
-
                 // #ifdef MP-TOUTIAO || H5
-                this.$emit('longpressCallback', this.ctx.canvas.toDataURL("image/png", 1));
+                success({
+                    tempFilePath: this.ctx.canvas.toDataURL("image/png", 1)
+                })
                 // #endif
 
                 // #ifdef APP-PLUS
@@ -287,30 +288,35 @@ export default {
                     {
                         canvasId: this.cid,
                         success :res => {
-                            this.$emit('longpressCallback', res.tempFilePath)
+                            success(res)
                         },
-                        fail: err =>{
-                        }
+                        fail: fail
                     },
                     this)
                 // #endif
 
                 // #ifndef MP-TOUTIAO || H5 || APP-PLUS
-                const canvas = await this.getNode(this.cId,true);
+                const canvas = await this.getNode(this.cid,true);
                 uni.canvasToTempFilePath(
                     {
                         canvas,
                         success :res => {
-                            this.$emit('longpressCallback', res.tempFilePath)
+                            success(res)
                         },
-                        fail: err =>{
-                        }
+                        fail: fail
                     },
                     this)
                 // #endif
-
             }
-
+        },
+        async longpress() {
+            this.toTempFilePath({
+                success: res => {
+                    this.$emit('longpressCallback', res.tempFilePath)
+                },
+                fail: err => {
+                }
+            })
         },
 
         /**

@@ -42,6 +42,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle } from '../../libs/function/index';
+	import fontUtil from './util';
 	/**
 	 * icon 图标
 	 * @description 基于字体的图标集，包含了大多数常见场景的图标。
@@ -71,54 +72,9 @@
 	export default {
 		name: 'u-icon',
 		beforeCreate() {
-			
-			// #ifdef APP-NVUE
-			// nvue通过weex的dom模块引入字体，相关文档地址如下：
-			// https://weex.apache.org/zh/docs/modules/dom.html#addrule
-			const domModule = weex.requireModule('dom');
-			domModule.addRule('fontFace', {
-				'fontFamily': "uicon-iconfont",
-				'src': `url('${config.iconUrl}')`
-			});
-			if (config.customIcon.family) {
-				domModule.addRule('fontFace', {
-					'fontFamily': config.customIcon.family,
-					'src': `url('${config.customIcon.url}')`
-				});
+			if (!fontUtil.params.loaded) {
+				fontUtil.loadFont();
 			}
-			// #endif
-			// #ifdef APP || H5 || MP-WEIXIN || MP-ALIPAY
-			uni.loadFontFace({
-				family: 'uicon-iconfont',
-				source: 'url("' + config.iconUrl + '")',
-				success() {
-					// console.log('内置字体图标加载成功');
-				},
-				fail() {
-					console.error('内置字体图标加载出错');
-				}
-			});
-			if (config.customIcon.family) {
-				uni.loadFontFace({
-					family: config.customIcon.family,
-					source: 'url("' + config.customIcon.url + '")',
-					success() {
-						// console.log('扩展字体图标加载成功');
-					},
-					fail() {
-						console.error('扩展字体图标加载出错');
-					}
-				});
-			}
-			// #endif
-			// #ifdef APP-NVUE
-			if (this.customFontFamily) {
-				domModule.addRule('fontFace', {
-					'fontFamily': `${this.customPrefix}-${this.customFontFamily}`,
-					'src': `url('${this.customFontUrl}')`
-				})
-			}
-        	// #endif
     	},
 		data() {
 			return {
@@ -197,7 +153,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 	// 变量定义
 	$u-icon-primary: $u-primary !default;
 	$u-icon-success: $u-success !default;
@@ -206,7 +161,7 @@
 	$u-icon-error: $u-error !default;
 	$u-icon-label-line-height:1 !default;
 
-	/* #ifdef MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
+	/* #ifdef APP || MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
 	// 2025/04/09在App/微信/支付宝/鸿蒙元服务已改用uni.loadFontFace加载字体
 	@font-face {
 		font-family: 'uicon-iconfont';

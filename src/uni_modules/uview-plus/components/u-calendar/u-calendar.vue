@@ -2,9 +2,10 @@
 	<u-popup
 		:show="show"
 		mode="bottom"
-		closeable
+		:closeable="!pageInline"
 		@close="close"
 		:round="round"
+		:pageInline="pageInline"
 		:closeOnClickOverlay="closeOnClickOverlay"
 	>
 		<view class="u-calendar">
@@ -17,7 +18,7 @@
 			></uHeader>
 			<scroll-view
 				:style="{
-                    height: addUnit(listHeight)
+                    height: addUnit(listHeight, 'px')
                 }"
 				scroll-y
 				@scroll="onScroll"
@@ -44,6 +45,7 @@
 					:allowSameDay="allowSameDay"
 					:forbidDays="forbidDays"
 					:forbidDaysToast="forbidDaysToast"
+					:monthFormat="monthFormat"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="updateMonthTop"
@@ -71,11 +73,11 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import { props } from './props.js'
 import util from './util.js'
-import dayjs from 'dayjs/esm/index'
+import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 import Calendar from '../../libs/util/calendar.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
-import { addUnit, range, error, padZero } from '../../libs/function/index';
+import { addUnit, getPx, range, error, padZero } from '../../libs/function/index';
 import test from '../../libs/function/test';
 /**
  * Calendar 日历
@@ -186,9 +188,11 @@ export default {
 		subtitle() {
 			// 初始化时，this.months为空数组，所以需要特别判断处理
 			if (this.months.length) {
-				return `${this.months[this.monthIndex].year}年${
-					this.months[this.monthIndex].month
-				}月`
+				if (uni.getLocale() == 'zh-Hans' || uni.getLocale() == 'zh-Hant') {
+					return this.months[this.monthIndex].year + '年' + (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '月'
+				} else {
+					return (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '/' + this.months[this.monthIndex].year
+				}
 			} else {
 				return ''
 			}
@@ -246,7 +250,13 @@ export default {
 				return error('maxDate不能小于minDate时间')
 			}
 			// 滚动区域的高度
-			this.listHeight = this.rowHeight * 5 + 30
+			let bottomPadding = 0;
+			if (this.pageInline) {
+				bottomPadding = 0
+			} else {
+				bottomPadding = 30
+			}
+			this.listHeight = this.rowHeight * 5 + bottomPadding
 			this.setMonth()
 		},
 		close() {

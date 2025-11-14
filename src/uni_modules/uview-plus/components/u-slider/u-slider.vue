@@ -7,9 +7,7 @@
 			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
 				@onTouchStart="onTouchStart2($event, 1)" @touchmove="onTouchMove2($event, 1)"
 				@touchend="onTouchEnd2($event, 1)" @touchcancel="onTouchEnd2($event, 1)"
-				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
-					height: (isRange && showValue) ? (getPx(blockSize) + 24) + 'px' : (getPx(blockSize)) + 'px',
-				}"
+				:class="[disabled ? 'u-slider--disabled' : '']" :style="innerStyleCpu"
 			>
 				<view ref="u-slider__base"
 					class="u-slider__base"
@@ -149,26 +147,40 @@
 			// #ifdef VUE3
 			modelValue(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
-				if(this.status == 'end') this.updateValue(this.modelValue, false);
+				if (this.status == 'end') {
+					const $crtFmtValue = this.updateValue(this.modelValue, false);
+					this.$emit('change', $crtFmtValue);
+				}
 			},
 			// #endif
 			// #ifdef VUE2
 			value(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
-				if(this.status == 'end') this.updateValue(this.value, false);
+				if (this.status == 'end') {
+					const $crtFmtValue = this.updateValue(this.value, false);
+					this.$emit('change', $crtFmtValue);
+				}
 			},
 			// #endif
 			rangeValue:{
             	handler(n){
-					if(this.status == 'end'){
+					if (this.status == 'end') {
 						this.updateValue(this.rangeValue[0], false, 0);
 						this.updateValue(this.rangeValue[1], false, 1);
+						this.$emit('change', this.rangeValue);
 					}
             	},
             	deep:true
         	}
 		},
 		created() {
+		},
+		computed: {
+			innerStyleCpu() {
+				let style = this.innerStyle;
+				style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				return style;
+			}
 		},
 		async mounted() {
 			// 获取滑块条的尺寸信息

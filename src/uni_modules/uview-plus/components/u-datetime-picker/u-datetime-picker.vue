@@ -9,13 +9,13 @@
 					v-model="inputValue"
 					v-bind="inputPropsInner"
 				></up-input>
-				<div class="input-cover">
-				</div>
+				<cover-view class="input-cover">
+				</cover-view>
 			</slot>
         </view>
         <u-picker
             ref="picker"
-            :show="show || (hasInput && showByClickInput)"
+            :show="pageInline || show || (hasInput && showByClickInput)"
             :popupMode="popupMode"
             :closeOnClickOverlay="closeOnClickOverlay"
             :columns="columns"
@@ -29,6 +29,7 @@
             :cancelColor="cancelColor"
             :confirmColor="confirmColor"
             :toolbarRightSlot="toolbarRightSlot"
+			:pageInline="pageInline"
             @close="close"
             @cancel="cancel"
             @confirm="confirm"
@@ -58,7 +59,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import dayjs from 'dayjs/esm/index';
+	import dayjs from './dayjs.esm.min.js';
 	import { range, error, padZero } from '../../libs/function/index';
 	import test from '../../libs/function/test';
 	/**
@@ -109,6 +110,12 @@
 		watch: {
 			show(newValue, oldValue) {
 				if (newValue) {
+					// #ifdef VUE3
+					this.innerValue = this.correctValue(this.modelValue)
+					// #endif
+					// #ifdef VUE2
+					this.innerValue = this.correctValue(this.value)
+					// #endif
 					this.updateColumnValue(this.innerValue)
 				}
 			},
@@ -169,6 +176,9 @@
 								break;
 							case 'year-month':
 								format = 'YYYY-MM'
+								break;
+							case 'datehour':
+								format = 'YYYY-MM-DD HH'
 								break;
 							case 'datetime':
 								format = 'YYYY-MM-DD HH:mm'

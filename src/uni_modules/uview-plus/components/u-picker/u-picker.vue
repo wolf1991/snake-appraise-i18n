@@ -11,12 +11,17 @@
 				v-model="inputLabel"
 				v-bind="inputPropsInner">
 			</up-input>
-			<div class="input-cover"></div>
+			<cover-view class="input-cover"></cover-view>
 		</view>
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
 			:mode="popupMode"
 			:zIndex="zIndex"
+			:bgColor="bgColor"
+			:round="round"
+			:duration="duration"
+			:pageInline="pageInline"
+			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
 		>
 			<view class="u-picker">
@@ -96,6 +101,10 @@
  * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器（默认 false ）
  * @property {Array}			defaultIndex		各列的默认索引
  * @property {Boolean}			immediateChange		是否在手指松开时立即触发change事件（默认 true ）
+ * @property {String | Number}	round				圆角值（默认 0）
+ * @property {String }	        bgColor				背景色值（默认 '' ）
+ * @property {String | Number}	duration			动画时长，单位ms （默认 300 ）
+ * @property {String | Number}	overlayDuration		遮罩层动画时长，单位ms （默认 350 ）
  * @event {Function} close		关闭选择器时触发
  * @event {Function} cancel		点击取消按钮触发
  * @event {Function} change		当选择值变化时触发
@@ -157,9 +166,12 @@ export default {
 					if (n != null) {
 						n.forEach((element, index) => {
 							let currentCols = this.getColumnValues(index)
-							if (currentCols && Object.prototype.toString.call(currentCols) === '[object Object]') {
+							if(!Array.isArray(currentCols) && currentCols.length===0) {
+								return
+							}
+							if (typeof currentCols[0] === 'object') {
 								currentCols.forEach((item, index2) => {
-									if (item[this.keyName] == element) {
+									if (item[this.valueName] == element) {
 										arr.push(index2)
 									}
 								})
@@ -308,7 +320,7 @@ export default {
 			// 通过对比前后两次的列索引，得出当前变化的是哪一列
 			for (let i = 0; i < value.length; i++) {
 				let item = value[i]
-				if (item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
+				if (item !== undefined && item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
 					// 设置columnIndex为当前变化列的索引
 					columnIndex = i
 					// index则为变化列中的变化项的索引
