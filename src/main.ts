@@ -31,8 +31,16 @@ export function createApp() {
   app.use(initRequest);
 
   // 全局方法挂载到uni对象上
-  // uni.$u.config.unit = 'rpx';
-  uni.$u.props.image.bgColor = 'transparent';
+  // setConfig({
+  //   config: {
+  //     unit: 'rpx',
+  //   },
+  //   props: {
+  //     image: {
+  //       bgColor: 'transparent',
+  //     },
+  //   },
+  // });
 
   uni.$u = {
     ...uni.$u,
