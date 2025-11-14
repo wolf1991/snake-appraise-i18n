@@ -211,7 +211,7 @@
 			border-radius: 16rpx;
 		}
 
-        width: 100%;
+        // width: 100%;
 		
 		&--small {
 			// width: 520rpx;

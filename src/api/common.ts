@@ -4,10 +4,11 @@ export interface IFileOssSign {
   accessid: string;
   policy: string;
   signature: string;
+  path: string;
 }
 
 /**
  * 获取oss签名
  * @param  prefix 目录
  */
-export const getFileOssSign = (prefix: string) => uni.$u.http.post<IFileOssSign>(`/app/file/${prefix}?type=sign`);
+export const getFileOssSign = (prefix: string) => uni.$u.http.post<IFileOssSign>(`/app/up/${prefix}?type=sign`);

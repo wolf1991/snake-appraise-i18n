@@ -16,7 +16,7 @@
           v-model="keyText"
           placeholder="请输入订单号/商品名称/货号/品牌"
           :showAction="false"
-          customStyle="margin-right: 20rpx"
+          :customStyle="{ 'margin-right': '20rpx' }"
           @search="refreshList"></u-search>
         <!-- #ifndef MP-ALIPAY -->
         <u-select

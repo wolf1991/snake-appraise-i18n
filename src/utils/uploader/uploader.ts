@@ -14,7 +14,7 @@ class Uploader {
         .then((response) => {
           if (response.success) {
             const stsInfo = response?.data || ({} as IFileOssSign);
-            const fileName = `${stsInfo.dir + uni.$u.timeFormat(new Date(), 'yyyymm')}/${uni.$u.guid(10)}.png`;
+            const fileName = `${stsInfo.dir}/${uni.$u.guid(10)}.png`;
             uni.uploadFile({
               url: stsInfo.host,
               filePath: imageSrc,

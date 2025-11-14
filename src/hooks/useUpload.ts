@@ -87,7 +87,7 @@ async function uploadFile({ tempFilePath, formData, data, error, loading }, pref
     mask: true,
   });
 
-  const fileName = `${stsInfo.data.dir + uni.$u.timeFormat(new Date(), 'yyyymm')}/${uni.$u.guid(10)}.png`;
+  const fileName = `${stsInfo.data.dir}/${uni.$u.guid(10)}.png`;
   uni.uploadFile({
     url: stsInfo.data.host,
     filePath: tempFilePath,
