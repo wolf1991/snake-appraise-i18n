@@ -3,7 +3,7 @@ import uni from '@dcloudio/vite-plugin-uni';
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest';
 import path from 'node:path';
 // @see https://uni-helper.js.org/vite-plugin-uni-layouts
-import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
+import UniLayouts from '@uni-helper/vite-plugin-uni-layouts';
 // @see https://unocss.dev/
 import UnoCSS from 'unocss/vite';
 import ViteRestart from 'vite-plugin-restart';
