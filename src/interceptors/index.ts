@@ -1,0 +1,1 @@
+export { routeInterceptor } from './route';
