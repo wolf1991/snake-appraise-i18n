@@ -9,8 +9,12 @@ import permissionListener from '@/utils/permission/permission-listener';
 
 import { useUserStore } from '@/stores/modules/user';
 import { onBeforeMount, watch } from 'vue';
+import { useGlobalStore } from '@/stores/modules/global';
+import { updateTabBarText } from '@/locales';
 
 const userStore = useUserStore();
+const globalStore = useGlobalStore();
+globalStore.initLocale();
 
 // #ifdef H5
 watch(
@@ -28,6 +32,12 @@ watch(
 
 onLaunch((options) => {
   console.log('App Launch');
+  
+  // 修改 tabBar 文字：应用启动后根据当前语言更新 tabBar 显示文字
+  // 延迟执行确保 tabBar 已经初始化完成
+  setTimeout(() => {
+    updateTabBarText();
+  }, 100);
 
   // 存储本地投放渠道
   const { query, referrerInfo } = options;
@@ -103,12 +113,12 @@ onShow(() => {
   const permissionEnums = {
     // 取android.permission.CAMERA后面那个
     CAMERA: {
-      name: '相机', // 当前权限的名称
-      explain: '便于您使用该功能拍照更换头像、意见反馈上传图片、与客服沟通、扫码识别等场景中发送拍摄图片。', // 权限说明
+      name: uni.$t('app.permission.cameraName'), // 当前权限的名称
+      explain: uni.$t('app.permission.cameraDescription'), // 权限说明
     },
     WRITE_EXTERNAL_STORAGE: {
-      name: '相册', // 当前权限的名称
-      explain: '便于您使用该功能上传您的照片/图片/视频及用于更换头像、意见反馈上传图片、与客服沟通中读取和写入相册和文件内容。', // 权限说明
+      name: uni.$t('app.permission.albumName'), // 当前权限的名称
+      explain: uni.$t('app.permission.albumDescription'), // 权限说明
     },
   };
 
@@ -168,8 +178,8 @@ const mpUpdate = () => {
     });
     updateManager.onUpdateReady((res) => {
       uni.showModal({
-        title: '更新提示',
-        content: '新版本已经准备好，是否马上重启小程序？',
+        title: uni.$t('app.update.modalTitle'),
+        content: uni.$t('app.update.modalContent'),
         success(res) {
           if (res.confirm) {
             // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
@@ -181,10 +191,10 @@ const mpUpdate = () => {
     updateManager.onUpdateFailed((res) => {
       // 新的版本下载失败
       uni.showModal({
-        title: '检测到新版本',
-        content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开',
+        title: uni.$t('app.update.failedTitle'),
+        content: uni.$t('app.update.failedContent'),
         showCancel: false,
-        confirmText: '知道了',
+        confirmText: uni.$t('app.mpUpdate.confirm'),
       });
     });
   }
@@ -197,9 +207,9 @@ const checkNotificationAuthorized = () => {
   const notificationAuthorized = uni.getAppAuthorizeSetting().notificationAuthorized;
   if (notificationAuthorized !== 'authorized') {
     uni.showModal({
-      title: '通知权限',
-      content: '您还没有开启通知权限，无法接收到消息通知，请前往设置！',
-      confirmText: '去设置',
+      title: uni.$t('app.permission.notificationTitle'),
+      content: uni.$t('app.permission.notificationContent'),
+      confirmText: uni.$t('app.permission.goSetting'),
       success: (res) => {
         if (res.confirm) {
           uni.openAppAuthorizeSetting();

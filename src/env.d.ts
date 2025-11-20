@@ -22,6 +22,10 @@ interface ImportMetaEnv {
   readonly VITE_APP_PROXY_PREFIX: string; // 一般是/api
   /** 是否清除console */
   readonly VITE_DELETE_CONSOLE: string;
+  /** 默认语言 */
+  readonly VITE_DEFAULT_LOCALE?: string;
+  /** 兜底语言 */
+  readonly VITE_FALLBACK_LOCALE?: string;
 }
 
 interface ImportMeta {

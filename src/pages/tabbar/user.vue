@@ -16,7 +16,7 @@
           <u-text color="#000" size="36rpx" format="encrypt" mode="phone" bold :text="userInfo.mobile"></u-text>
         </template>
         <template v-else>
-          <text class="fs-30rpx fw-bold snake-black">登录/注册</text>
+          <text class="fs-30rpx fw-bold snake-black">{{ $t('common.loginOrRegister') }}</text>
         </template>
       </view>
     </view>
@@ -72,13 +72,13 @@ const getMenuList = async () => {
     menuList.value = [
       ...newList.filter((item) => !black.includes(item.value)),
       {
-        label: '客服中心',
+        label: uni.$t('common.serviceCenter'),
         value: 'kf',
         hrefUrl: `https://m.puresnake.com/2nd/pages/custom/cms?pageId=${isProd ? 824 : 783}&isNavbar=false`,
         icon: 'icon-kf',
       },
       {
-        label: '设置',
+        label: uni.$t('common.settings'),
         value: 'setting',
         hrefUrl: '/pages/user/setting/index',
         icon: 'icon-setting',
@@ -99,18 +99,18 @@ const clickNavTo = (url: string) => {
   if (url) {
     uni.$u.navTo(url);
   } else {
-    uni.$u.toast('功能开发中~');
+    uni.$u.toast(uni.$t('common.featureDeveloping'));
   }
 };
 
 // 切换接口
 const changeBaseUrl = () => {
   uni.showModal({
-    title: '切换接口地址',
-    content: `当前是${isProd ? '正式' : '测试'}地址：${getBaseUrl()}`,
-    success: (modalRes) => {
-      if (modalRes.confirm) {
-        const itemList = ['获取用户信息', '手机号登录', '开发配置', ...config.baseUrlList];
+    title: uni.$t('common.switchApi'),
+    content: uni.$t('common.currentEnv', { env: isProd ? uni.$t('common.prod') : uni.$t('common.test'), url: getBaseUrl() }),
+      success: (modalRes) => {
+        if (modalRes.confirm) {
+          const itemList = [uni.$t('common.getUserInfo'), uni.$t('common.phoneLogin'), uni.$t('common.devConfig'), ...config.baseUrlList];
 
         uni.showActionSheet({
           itemList,
@@ -120,7 +120,7 @@ const changeBaseUrl = () => {
             }
             if (sheetRes.tapIndex === 0) {
               uni.showModal({
-                title: '用户信息',
+                title: uni.$t('common.userInfo'),
                 content: JSON.stringify(userInfo.value),
                 success: (res) => {
                   if (res.confirm) {
@@ -155,19 +155,19 @@ const changeBaseUrl = () => {
             setConfig();
 
             // #ifdef H5
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             location.reload();
             // #endif
 
             // #ifdef APP-PLUS
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             plus.runtime.restart();
             // #endif
 
             // #ifdef MP-WEIXIN
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             wx.restartMiniProgram({
               path: '/pages/tabbar/main',
@@ -175,10 +175,10 @@ const changeBaseUrl = () => {
             // #endif
 
             // #ifdef MP-ALIPAY
-            uni.$u.toast('切换成功', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccessOnly'), 3000);
             uni.showModal({
-              title: '确认重启',
-              content: '确定要重启小程序吗？',
+              title: uni.$t('common.confirmRestart'),
+              content: uni.$t('common.confirmRestartContent'),
               success: (res) => {
                 if (res.confirm) {
                   my.restartMiniProgram({

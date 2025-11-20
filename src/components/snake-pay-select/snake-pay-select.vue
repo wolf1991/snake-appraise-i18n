@@ -3,7 +3,7 @@
     <!-- 支付-模态层弹窗 -->
     <view class="pay-wrapper">
       <view class="pay-wrapper-title pos-relative">
-        <view class="text-32rpx">选择支付方式</view>
+        <view class="text-32rpx">{{ $t('payment.selectPaymentMethod') }}</view>
         <view class="pos-absolute top-0 right-28rpx" @click="close">
           <text class="next-icons icon-colse text-42rpx snake-deepblack"></text>
         </view>
@@ -33,19 +33,24 @@
         </view>
         <!-- #ifdef APP-PLUS -->
         <view class="folded-btn snake-font-regular flex-center" @click="openFolded" v-if="foldedShow">
-          <text>展开其他支付方式</text>
+          <text>{{ $t('payment.expandOtherPayments') }}</text>
           <text class="next-icons icon-arrow-down ml-2rpx"></text>
         </view>
         <!-- #endif -->
-        <button class="pay-btn" @click="toPayment">去支付</button>
+        <button class="pay-btn" @click="toPayment">{{ $t('payment.goPay') }}</button>
         <view class="pb-safe"></view>
       </view>
     </view>
   </u-popup>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 export default {
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   props: {
     father: {
       type: [Object, null],

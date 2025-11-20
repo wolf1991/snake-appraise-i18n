@@ -35,4 +35,15 @@ declare global {
   }
 }
 
+// 扩展 uni 对象，添加 $t 国际化方法
+declare module 'uview-plus' {
+  global {
+    namespace UniNamespace {
+      interface Uni {
+        $t: (key: string, params?: Record<string, any>) => string;
+      }
+    }
+  }
+}
+
 export {}; // 防止模块污染

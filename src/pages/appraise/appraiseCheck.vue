@@ -2,29 +2,29 @@
   <view>
     <view class="bg-white px-24rpx">
       <view class="py-16rpx flex-items-center justify-between" style="border-bottom: 1px solid #eaeaeb">
-        <text class="text">是否需要补图</text>
+        <text class="text">{{ $t('appraise.check.needSupplementImage') }}</text>
         <switch class="" color="#06D290" @change="switchChange" style="transform: scale(0.8)" />
       </view>
       <view class="status-select" style="border-bottom: 1px solid #eaeaeb" v-if="!needImgSwtich">
-        <view class="text-28rpx font-600 flex-center">鉴别师根据相关信息选择鉴别结果！</view>
+        <view class="text-28rpx font-600 flex-center">{{ $t('appraise.check.selectResult') }}</view>
         <view class="status-group">
           <view
             class="status"
             :class="[{ 'active active_finish': selectStatus === 'finish' }]"
             @click="setStatusHandle('finish')">
-            <text>鉴别为真</text>
+            <text>{{ $t('appraise.check.identifyTrue') }}</text>
             <view class="next-icons icon-selected"></view>
           </view>
           <view class="status" :class="[{ active: selectStatus === 'fake' }]" @click="setStatusHandle('fake')">
-            <text>鉴别为假</text>
+            <text>{{ $t('appraise.check.identifyFalse') }}</text>
             <view class="next-icons icon-selected"></view>
           </view>
           <view class="status" :class="[{ active: selectStatus === 'fail' }]" @click="setStatusHandle('fail')">
-            <text>无法鉴别</text>
+            <text>{{ $t('appraise.check.cannotIdentify') }}</text>
             <view class="next-icons icon-selected"></view>
           </view>
           <view class="status" :class="[{ active: selectStatus === 'outrange' }]" @click="setStatusHandle('outrange')">
-            <text>不在鉴别范围</text>
+            <text>{{ $t('appraise.check.outOfRange') }}</text>
             <view class="next-icons icon-selected"></view>
           </view>
         </view>
@@ -35,7 +35,7 @@
           <textarea
             class="py-24rpx px-20rpx bg-#f6f6f6 w-100% h-160rpx text-28rpx box-border"
             type="text"
-            placeholder="在这里输入鉴别师意见，用户不可见（选填）"
+            :placeholder="$t('appraise.check.suggestionPlaceholder')"
             :maxlength="80"
             v-model="suggestion"
             :disabled="needImgSwtich && fromOrigin === 'tb_yj'"
@@ -45,7 +45,7 @@
           </text>
         </view>
         <view class="pt-16rpx pb-30rpx" style="border-bottom: 1px solid #eaeaeb">
-          <view class="text-28rpx text-#999999">快捷意见</view>
+          <view class="text-28rpx text-#999999">{{ $t('appraise.check.quickSuggestion') }}</view>
           <view class="flex flex-wrap items-center">
             <text
               class="p-15rpx text-28rpx rounded-8rpx mt-24rpx mr-12rpx"
@@ -62,7 +62,7 @@
       <view class="pt-30rpx pb-16rpx pos-relative">
         <textarea
           class="py-24rpx px-20rpx bg-#f6f6f6 w-100% h-160rpx text-28rpx box-border"
-          placeholder="在这里输入备注信息，用户可见（选填）"
+          :placeholder="$t('appraise.check.remarkPlaceholder')"
           :maxlength="80"
           v-model="remark"
           type="text"
@@ -75,15 +75,15 @@
     <u-modal
       :show="modalShow"
       showCancelButton
-      content="请注意，鉴定图片已更新，请返回重新查看图片后再给出鉴定结果！"
+      :content="$t('app.update.noticeUpdate')"
       @confirm="modalConfirmHandle"
       @cancel="modalShow = false"></u-modal>
 
     <u-modal
       :show="checkResultShow"
       showCancelButton
-      title="请再次确认鉴定结果！"
-      :content="`当前鉴定结果【${stateMap[selectStatus]}】，请再次确认后提交结果！`"
+      :title="$t('appraise.check.confirmResult')"
+      :content="$t('appraise.check.confirmResultContent', { result: stateMap.value[selectStatus] })"
       @confirm="confirmIdentify"
       @cancel="checkResultShow = false"></u-modal>
 
@@ -96,7 +96,7 @@
           :loading="btnLoading"
           customStyle="border-radius: 16rpx; height: 88rpx; font-size: 28rpx"
           @click="checkResultConfirm">
-          提交
+          {{ $t('common.submit') }}
         </u-button>
       </view>
     </view>
@@ -132,14 +132,14 @@ const checkResultShow = ref(false);
 
 const btnLoading = ref(false);
 
-const stateMap = {
-  unappraised: '等待鉴别',
-  finish: '鉴别为真',
-  fail: '无法鉴别',
-  fake: '鉴别为假',
-  outrange: '不在鉴别范围',
-  need_img: '待补图',
-};
+const stateMap = computed(() => ({
+  unappraised: uni.$t('appraise.order.unappraised'),
+  finish: uni.$t('appraise.check.identifyTrue'),
+  fail: uni.$t('appraise.check.cannotIdentify'),
+  fake: uni.$t('appraise.check.identifyFalse'),
+  outrange: uni.$t('appraise.check.outOfRange'),
+  need_img: uni.$t('appraise.order.need_img'),
+}));
 
 const submitDisabled = computed(() => {
   if (needImgSwtich.value) {
@@ -181,7 +181,7 @@ const setStatusHandle = (status) => {
 const getAppraiseFastList = async () => {
   uni.showLoading({
     mask: true,
-    title: '加载中...',
+    title: uni.$t('common.loading'),
   });
   const response = await getAppraiseRmdReasonListApi({ id: appraiseId.value });
   uni.hideLoading();
@@ -220,10 +220,10 @@ const confirmIdentify = async () => {
   if (['fake', 'fail'].includes(selectStatus.value)) {
     params.suggestion = selectStatus.value === 'fake' ? manySelectedStr.value : oneSelectedStr.value;
     if (!params.suggestion) {
-      return uni.$u.toast('请选择原因');
+      return uni.$u.toast(uni.$t('appraise.check.pleaseSelectReason'));
     }
     if (selectStatus.value === 'fake' && !hintImageList.value.length) {
-      return uni.$u.toast('最少选择一张');
+      return uni.$u.toast(uni.$t('appraise.check.selectAtLeastOne'));
     }
     params.hintImageList = hintImageList.value;
   }
@@ -236,7 +236,7 @@ const confirmIdentify = async () => {
     const response = await postAppraiserDoAppraiseApi(params);
     checkResultShow.value = false;
     if (response.success) {
-      uni.$u.toast('鉴别完成');
+      uni.$u.toast(uni.$t('appraise.check.identifyComplete'));
       if (['fake', 'fail'].includes(selectStatus.value)) {
         // 清掉缓存
         uni.removeStorageSync(`fake_${catId.value}_reason_list`);

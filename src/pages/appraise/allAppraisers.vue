@@ -26,26 +26,28 @@
         <view class="flex items-center justify-between fw-300 text-#111 bg-#f6f6f6 h-97rpx">
           <view class="flex-1 w-80rpx">
             <text class="text-26rpx font-700 snake-font-dinBold">{{ item.appraiseCount }}</text>
-            <view class="text-18rpx text-#aaaaaa">排队人数</view>
+            <view class="text-18rpx text-#aaaaaa">{{ $t('appraise.overview.queueCount') }}</view>
           </view>
           <view class="w-1rpx h-48rpx bg-#e7e7e7"></view>
           <view class="flex-1 w-80rpx">
             <text class="text-26rpx font-700 snake-font-dinBold">{{ $u.numFormat(item.total) }}</text>
-            <view class="text-18rpx text-#aaaaaa">累计战绩</view>
+            <view class="text-18rpx text-#aaaaaa">{{ $t('appraise.overview.totalRecord') }}</view>
           </view>
         </view>
       </view>
     </template>
   </view>
-  <u-empty v-if="appraisersList.length === 0" text="暂无数据"></u-empty>
+  <u-empty v-if="appraisersList.length === 0" :text="$t('common.noData')"></u-empty>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-
 import { onLoad } from '@dcloudio/uni-app';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { getAppraiseCategoryListApi, getAppraiseUserListApi } from '@/api/appraise';
 import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMore';
+
+usePageTitle('pages.allAppraisers');
 
 const $u = uni.$u;
 

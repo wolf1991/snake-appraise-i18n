@@ -1,7 +1,7 @@
 <template>
   <u-sticky bg-color="#fff">
     <u-tabs
-      :list="tabList"
+      :list="tabList.value"
       :current="tabCurrent"
       lineColor="#0F1113"
       :scrollable="false"
@@ -13,14 +13,14 @@
     <view class="px-24rpx py-10rpx flex-items-center">
       <u-search
         v-model="keyText"
-        placeholder="请输入订单号/商品名称/货号/品牌"
+        :placeholder="$t('appraise.appraiser.searchPlaceholder')"
         :showAction="false"
         customStyle="margin-right: 20rpx"
         @search="refreshList"></u-search>
       <u-select
         v-model:current="fromOrigin"
-        label="筛选"
-        :options="filterList"
+        :label="$t('appraise.appraiser.filter')"
+        :options="filterList.value"
         labelName="label"
         keyName="value"
         @select="refreshList">
@@ -31,7 +31,7 @@
         </template>
       </u-select>
     </view>
-    <view class="flex-center h-60rpx bg-#f1f1f1 text-24rpx" @click="refreshList">点击刷新</view>
+    <view class="flex-center h-60rpx bg-#f1f1f1 text-24rpx" @click="refreshList">{{ $t('appraise.appraiser.refresh') }}</view>
     <u-tabs
       v-if="tabCurrent === 1"
       :list="statusList"
@@ -57,14 +57,14 @@
   <u-empty
     icon="https://cdn.puresnake.com/caas/d7fc1bd2ec6d485f9716f93b4dfe1f60.png"
     margin-top="160rpx"
-    text="暂无数据~"
+    :text="$t('common.noData')"
     v-if="orderList.length === 0"></u-empty>
   <u-loadmore :status="loadingStatus" customStyle="padding-bottom: 20rpx" v-if="orderList.length"></u-loadmore>
 
   <view class="pos-fixed right-48rpx bottom-360rpx" @click="$u.navTo('/pages/examPaper/examPaperList')" v-if="tabCurrent === 1">
     <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-black">
-      <text>刷题</text>
-      <text>任务</text>
+      <text>{{ $t('appraise.appraiser.study') }}</text>
+      <text>{{ $t('appraise.appraiser.task') }}</text>
     </view>
   </view>
   <view
@@ -72,15 +72,16 @@
     @click="$u.navTo('/pages/appraise/onlineEditing')"
     v-if="tabCurrent === 1 && isOptBtn">
     <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-#06d290">
-      <text>状态</text>
-      <text>编辑</text>
+      <text>{{ $t('appraise.appraiser.status') }}</text>
+      <text>{{ $t('appraise.appraiser.edit') }}</text>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import {
   getAppraiseAppraiserDoItApi,
   getAppraiseAppraiserMyselfApi,
@@ -92,6 +93,8 @@ import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMor
 import orderHallItem from './components/orderItems/orderHallItem.vue';
 import myOrderItem from './components/orderItems/myOrderItem.vue';
 
+usePageTitle('pages.appraiser');
+
 const $u = uni.$u;
 
 const page = ref(1);
@@ -102,19 +105,19 @@ const isOptBtn = ref(false);
 
 const keyText = ref('');
 const tabCurrent = ref(0);
-const tabList = ref([
+const tabList = computed(() => [
   {
-    label: '抢单大厅',
+    label: uni.$t('appraise.appraiser.grabOrder'),
   },
   {
-    label: '我的鉴别',
+    label: uni.$t('appraise.appraiser.myAppraise'),
   },
 ]);
 
 const fromOrigin = ref('');
-const filterList = ref([
+const filterList = computed(() => [
   {
-    label: '全部',
+    label: uni.$t('appraise.appraiser.all'),
     value: '',
   },
   {
@@ -122,19 +125,19 @@ const filterList = ref([
     value: '2nd',
   },
   {
-    label: '潮盟',
+    label: uni.$t('appraise.appraiser.chaosMeng'),
     value: '潮盟',
   },
   {
-    label: '回收',
+    label: uni.$t('appraise.appraiser.recycle'),
     value: '回收',
   },
   {
-    label: '云鉴',
+    label: uni.$t('appraise.appraiser.yunJian'),
     value: 'tb_yj',
   },
   {
-    label: '入仓鉴定',
+    label: uni.$t('appraise.appraiser.warehouse'),
     value: 'rcjd',
   },
 ]);
@@ -219,7 +222,7 @@ const operatehandle = async (item, index) => {
     id: item.id,
   });
   if (response.success) {
-    uni.$u.toast('抢单成功!');
+    uni.$u.toast(uni.$t('appraise.appraiser.grabSuccess'));
     orderList.value.splice(index, 1);
   } else {
     uni.$u.toast(response.msg);
@@ -228,32 +231,32 @@ const operatehandle = async (item, index) => {
 
 function useMyOrder() {
   const statusCurrent = ref(0);
-  const statusList = [
+  const statusList = computed(() => [
     {
-      label: '等待鉴别',
+      label: uni.$t('appraise.appraiser.waitingAppraise'),
       value: 'unappraised',
     },
     {
-      label: '鉴别为真',
+      label: uni.$t('appraise.appraiser.identifyTrue'),
       value: 'finish',
     },
     {
-      label: '鉴别为假',
+      label: uni.$t('appraise.appraiser.identifyFalse'),
       value: 'fake',
     },
     {
-      label: '等待补图',
+      label: uni.$t('appraise.appraiser.waitingImage'),
       value: 'need_img',
     },
     {
-      label: '无法鉴别',
+      label: uni.$t('appraise.appraiser.cannotIdentify'),
       value: 'fail',
     },
     {
-      label: '全部',
+      label: uni.$t('appraise.appraiser.all'),
       value: 'all',
     },
-  ];
+  ]);
 
   const statusChange = (e) => {
     statusCurrent.value = e.index;
@@ -271,7 +274,7 @@ function useMyOrder() {
       size: 20,
       key: keyText.value,
       fromOrigin: fromOrigin.value,
-      status: statusList[statusCurrent.value].value,
+      status: statusList.value[statusCurrent.value].value,
     });
     if (response.success) {
       const newList = response.data?.items || [];
