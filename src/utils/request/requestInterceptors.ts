@@ -2,6 +2,7 @@ import appConfig from '@/config/config';
 import { useUserStore } from '@/stores';
 import { fromCode, processRequestParams } from './util';
 import { HttpRequestConfig, HttpResponse } from '@/uni_modules/uview-plus/libs/luch-request';
+import { getLocale } from '@/locales';
 
 /**
  * 请求拦截器
@@ -19,6 +20,21 @@ export const requestInterceptors = () => {
       // token的请求头
       if (userStore.userInfo?.token) {
         config.header.token = userStore.userInfo.token;
+      }
+
+      // 语言请求头，方便后端返回对应语言的内容
+      try {
+        const currentLocale = getLocale();
+        // 使用 Accept-Language header，这是标准的HTTP语言header
+        // 格式: zh-CN 或 en-US
+        config.header['Accept-Language'] = currentLocale;
+        // 也可以添加自定义header作为备用
+        config.header['X-Language'] = currentLocale;
+      } catch (error) {
+        // 如果获取语言失败，使用默认值
+        console.warn('Failed to get locale, using default:', error);
+        config.header['Accept-Language'] = 'zh-CN';
+        config.header['X-Language'] = 'zh-CN';
       }
 
       // 初始化接口参数，取出appid、timestamp和appSecret组成待签名参数

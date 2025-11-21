@@ -86,13 +86,13 @@ export const updateTabBarText = () => {
     // 修改第一个 tabBar（鉴别）
     uni.setTabBarItem({
       index: 0,
-      text: i18n.global.t('common.tabBar.identify'),
+      text: i18n.global.t('pages.main'),
     });
 
     // 修改第二个 tabBar（我的）
     uni.setTabBarItem({
       index: 1,
-      text: i18n.global.t('common.tabBar.mine'),
+      text: i18n.global.t('pages.user'),
     });
   } catch (error) {
     // 某些平台可能不支持动态修改 tabBar，静默失败
