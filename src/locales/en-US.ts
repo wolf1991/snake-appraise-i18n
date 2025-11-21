@@ -98,25 +98,47 @@ const enUS = {
     publish: 'Publish',
   },
   pages: {
+    // App name
+    appName: 'SNAKE Appraisal',
     // Main package pages
     main: 'Appraisal',
     user: 'Mine',
     // Login
     login: 'Login',
     // User related
+    address: 'Address',
     addressManage: 'Edit Address',
+    settings: 'Settings',
+    cancelAccount: 'Cancel Account',
+    devConfig: 'Dev Config',
     // Custom
     dydetail: 'Appraisal Detail',
     // Cashier
     cashier: 'Cashier',
+    // CMS and Webview
+    cms: 'CMS',
+    webview: 'Webview',
+    // Reason select
+    selectReason: 'Reason Select',
+    // Part image and brand select
+    selectImage: 'Part Image Select',
+    selectBrand: 'Brand Select',
+    // Identify info
+    identifyInfo: 'Identify Info',
+    selectIdentify: "Identify Info",
     // Appraisal related
     allAppraisers: 'Online Appraisers',
     appraiser: 'Appraiser List',
     appraiseCheck: 'Appraisal',
     dyDetail: 'Appraisal Detail',
+    appraiserStatus: 'Appraiser Status',
+    codePurchase: 'Code Purchase',
     supplement: 'Add Images',
+    appraiserDetail: 'Appraiser Detail',
     // Exam paper related
     examPaperList: 'Exam List',
+    examPaperDetail: 'Examination Detail',
+    answer: 'Examination',
     // Order related
     orderList: 'Order List',
     orderDetail: 'Order Detail',

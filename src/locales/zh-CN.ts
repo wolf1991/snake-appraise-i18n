@@ -98,25 +98,47 @@ const zhCN = {
     publish: '发布',
   },
   pages: {
+    // 应用名称
+    appName: 'SNAKE鉴别',
     // 主包页面
     main: '鉴别',
     user: '我的',
     // 登录
     login: '登录',
     // 用户相关
+    address: '地址',
     addressManage: '编辑地址',
+    settings: '设置',
+    cancelAccount: '注销账号',
+    devConfig: '开发配置',
     // 自定义
     dydetail: '鉴别详情',
     // 收银台
     cashier: '收银台',
+    // CMS 和 Webview
+    cms: 'CMS',
+    webview: '网页视图',
+    // 原因选择
+    selectReason: '原因选择',
+    // 部位图和品牌选择
+    selectImage: '部位图选择',
+    selectBrand: '品牌选择',
+    // 鉴别信息
+    identifyInfo: '鉴别信息',
+    selectIdentify: '鉴别信息',
     // 鉴别相关
     allAppraisers: '当前在线鉴别师',
     appraiser: '鉴定师列表',
     appraiseCheck: '鉴别',
     dyDetail: '鉴别详情',
+    appraiserStatus: '鉴定师状态',
+    codePurchase: '鉴别扣购买',
     supplement: '补图',
+    appraiserDetail: '鉴定详情',
     // 试卷相关
     examPaperList: '试卷列表',
+    examPaperDetail: '试卷详情',
+    answer: '答题',
     // 订单相关
     orderList: '鉴别订单列表',
     orderDetail: '鉴别订单详情',
