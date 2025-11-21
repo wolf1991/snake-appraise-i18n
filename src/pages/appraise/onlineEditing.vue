@@ -1,7 +1,7 @@
 <template>
   <view class="px-24rpx py-20rpx bg-white">
     <view class="flex-items-center justify-between">
-      <view>鉴定师当前是否在线</view>
+      <view>{{ $t('appraise.onlineEditing.isOnline') }}</view>
       <u-switch v-model="onLine" activeColor="#06D290" @change="showModal"></u-switch>
     </view>
     <u-modal :show="show" :content="content" :showCancelButton="true" @cancel="cancel" @confirm="getOnlineDoItChange"></u-modal>
@@ -47,10 +47,10 @@ export default {
     },
     showModal() {
       if (!this.onLine) {
-        this.content = '当前您的状态为在线，点击确认将关闭上线状态';
+        this.content = uni.$t('appraise.onlineEditing.closeOnlineStatus');
         this.show = true;
       } else {
-        this.content = '当前您的状态为下线，点击确认将开启上线状态';
+        this.content = uni.$t('appraise.onlineEditing.openOnlineStatus');
         this.show = true;
       }
     },

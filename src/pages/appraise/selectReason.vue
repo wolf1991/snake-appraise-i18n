@@ -8,10 +8,10 @@
           <text v-else class="next-icons icon-selected reason-item__icon"></text>
         </view>
         <view class="reason-item__textarea" v-if="item.checked && item.isOtherRemark">
-          <textarea v-model="item.otherRemark" placeholder="请输入其他问题" />
+          <textarea v-model="item.otherRemark" :placeholder="$t('appraise.selectReason.enterOtherIssue')" />
         </view>
       </block>
-      <u-empty :show="!reasonList.length" text="没有选项原因" margin-top="80"></u-empty>
+      <u-empty :show="!reasonList.length" :text="$t('appraise.selectReason.noReason')" margin-top="80"></u-empty>
     </view>
 
     <view class="h-124rpx pb-safe"></view>
@@ -19,7 +19,7 @@
     <view class="snake-fixed-bottom">
       <view class="py-12rpx px-24rpx">
         <u-button color="#000000" customStyle="border-radius: 16rpx;" @click="nextSelectImage">
-          {{ status === 'fail' ? '确定' : '下一步（选部位图）' }}
+          {{ status === 'fail' ? $t('common.confirm') : $t('appraise.selectReason.nextStep') }}
         </u-button>
       </view>
     </view>
@@ -59,7 +59,7 @@ export default {
     async getDictValue() {
       uni.showLoading({
         mask: false,
-        title: '加载中...',
+        title: uni.$t('common.loading'),
       });
 
       const valueKey =
@@ -99,7 +99,7 @@ export default {
         .map((el) => (el.isOtherRemark ? el.otherRemark : el.label))
         .join(',');
       if (!selectedStr) {
-        return this.$u.toast('请选择原因');
+        return this.$u.toast(uni.$t('appraise.check.pleaseSelectReason'));
       }
       uni.setStorageSync(`${this.status}_${this.catId}_reason_list`, this.reasonList);
       const key = this.status === 'fail' ? 'oneSelectedStr' : 'manySelectedStr';

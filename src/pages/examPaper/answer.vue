@@ -1,6 +1,6 @@
 <template>
   <view>
-    <u-empty text="暂无试题" marginTop="60" v-if="!examQuestionList.length"></u-empty>
+    <u-empty :text="$t('examPaper.noQuestions')" marginTop="60" v-if="!examQuestionList.length"></u-empty>
     <questions-list :dataList="examQuestionList" :currentValue="current" @submit="submit" @next="next" v-else></questions-list>
   </view>
 </template>
@@ -37,7 +37,7 @@ export default {
         examPaperId: this.examPaperId,
       });
       if (response.success) {
-        uni.$u.toast('开始答题');
+        uni.$u.toast(uni.$t('examPaper.startAnswer'));
       } else {
         uni.$u.toast(response.msg);
       }
@@ -48,7 +48,7 @@ export default {
         examPaperId: this.examPaperId,
       });
       if (response.success) {
-        uni.$u.toast('提交成功');
+        uni.$u.toast(uni.$t('examPaper.submitSuccess'));
         await uni.$u.sleep(500);
         uni.redirectTo({
           url: `/pages/examPaper/examPaperDetail?examPaperId=${this.examPaperId}`,

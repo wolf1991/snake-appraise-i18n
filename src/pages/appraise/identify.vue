@@ -15,9 +15,9 @@
 
     <view class="bg-white mt-20rpx py-34rpx px-24rpx">
       <view class="flex-items-center justify-between pb-36rpx">
-        <view class="text-32rpx font-bold">添加鉴别图片(必填)</view>
+        <view class="text-32rpx font-bold">{{ $t('appraise.identify.addImagesRequired') }}</view>
         <view class="text-24rpx text-#FE0832 flex-items-center" @click="$u.navTo(`/pages/custom/cms?pageId=${cmsId || 861}`)">
-          <view class="mr-2rpx">新手必看</view>
+          <view class="mr-2rpx">{{ $t('appraise.identify.newbieMustSee') }}</view>
           <view class="flex-center w-24rpx h-24rpx border border-solid border-1px rounded-50%">?</view>
         </view>
       </view>
@@ -52,7 +52,7 @@
       <view class="mt-20rpx">
         <u-textarea
           v-model="description"
-          placeholder="您可以在这里介绍更多装备信息"
+          :placeholder="$t('appraise.identify.moreInfoPlaceholder')"
           count
           height="80rpx"
           :maxlength="70"
@@ -62,12 +62,12 @@
       </view>
 
       <view class="text-#909399 text-24rpx py-18rpx">
-        <view class="text-26rpx mt-10rpx">图片鉴别声明：</view>
+        <view class="text-26rpx mt-10rpx">{{ $t('appraise.identify.imageIdentifyStatement.title') }}</view>
         <view class="mt-10rpx">
-          1. 在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
+          {{ $t('appraise.identify.imageIdentifyStatement.content1') }}
         </view>
         <view class="mt-10rpx">
-          2. 鉴别结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+          {{ $t('appraise.identify.imageIdentifyStatement.content2') }}
         </view>
       </view>
     </view>
@@ -80,12 +80,14 @@
       <view class="h-60rpx line-height-60rpx text-24rpx" @click="agreement = !agreement">
         <text v-if="agreement" class="next-icons icon-selected text-#06d290"></text>
         <text v-else class="next-icons icon-notselected text-#888891"></text>
-        我已阅读并同意
-        <text class="text-#06d290" @click="$u.navTo('/pages/custom/cms?pageId=863')">《鉴别服务协议》</text>
+        {{ $t('appraise.identify.agreementPrefix') }}
+        <text class="text-#06d290" @click="$u.navTo('/pages/custom/cms?pageId=863')">
+          {{ $t('appraise.identify.agreementLink') }}
+        </text>
       </view>
       <view class="flex-items-center justify-between pb-20rpx">
         <view class="flex-items-center">
-          <text>需支付</text>
+          <text>{{ $t('payment.needPay') }}</text>
           <view class="text-34rpx font-600 color-#ff3367">
             <text>￥</text>
             <text class="text-52rpx">{{ priceParts(identifyPrice).integer }}</text>
@@ -99,7 +101,7 @@
           :loading="payLoading"
           :throttleTime="500"
           @click="confirmIdentify">
-          去鉴别
+          {{ $t('payment.goIdentify') }}
         </u-button>
       </view>
     </view>
@@ -182,7 +184,7 @@ const chooseImageHandle = (modelId, i) => {
   const uploadFunc = async (filePath) => {
     try {
       uni.showLoading({
-        title: '上传中...',
+        title: uni.$t('common.uploadInProgress'),
         mask: true,
       });
       const result = await uploader.uploadOss(filePath);
@@ -191,7 +193,7 @@ const chooseImageHandle = (modelId, i) => {
         if (i === modelList.value.length) {
           const tempModel = {
             id: 0,
-            name: '其他补充',
+            name: uni.$t('appraise.identify.otherSupplement'),
             image: result.url,
             closeable: true,
           };
@@ -205,7 +207,7 @@ const chooseImageHandle = (modelId, i) => {
       uni.hideLoading({ noConflict: true });
     } catch (e) {
       uni.hideLoading({ noConflict: true });
-      uni.$u.toast(e?.errMsg || e?.msg || e?.message || '上传失败，请重试！');
+      uni.$u.toast(e?.errMsg || e?.msg || e?.message || uni.$t('common.uploadFailedRetry'));
     }
   };
 
@@ -237,14 +239,14 @@ const preparePayment = async () => {
         icon: 'icon-zhifubaoicon',
         color: '#01aaef',
         valid: true,
-        payChannelName: '支付宝支付',
+        payChannelName: uni.$t('payment.alipay'),
       },
       {
         payChannel: 'wx',
         icon: 'icon-weixinzhifu',
         color: '#36cb59',
         valid: true,
-        payChannelName: '微信支付',
+        payChannelName: uni.$t('payment.wechat'),
       },
     ],
     price: identifyPrice.value,
@@ -256,7 +258,7 @@ const preparePayment = async () => {
 // 支付
 const confirmIdentify = async () => {
   if (!agreement.value) {
-    return uni.$u.toast('请同意勾选鉴别服务协议');
+    return uni.$u.toast(uni.$t('appraise.identify.agreementToast'));
   }
 
   // #ifdef APP-PLUS
@@ -303,7 +305,7 @@ const confirmIdentify = async () => {
       const { payDataType, payData, type } = response.data;
 
       if (appraiseCode.value) {
-        uni.$u.toast('下单成功');
+        uni.$u.toast(uni.$t('payment.orderSuccess'));
         appraiseCode.value && uni.setStorageSync('appraiseCode', '');
         await uni.$u.sleep(1000);
         uni.$u.navTo('/pages/order/orderList');
@@ -320,7 +322,7 @@ const confirmIdentify = async () => {
             if (res?.isClick) {
               isClick.value = res.isClick;
             } else {
-              uni.$u.toast('支付成功');
+              uni.$u.toast(uni.$t('payment.paySuccess'));
               await uni.$u.sleep(1000);
               uni.$u.navTo('/pages/order/orderList');
             }

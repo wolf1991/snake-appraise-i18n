@@ -1,26 +1,26 @@
 <template>
   <view class="bg-white">
-    <view class="flex-center text-28rpx font-500 pt-16rpx pb-20rpx snake-font-medium">— 刷题列表 —</view>
+    <view class="flex-center text-28rpx font-500 pt-16rpx pb-20rpx snake-font-medium">— {{ $t('pages.examPaperList') }} —</view>
     <template v-for="item in examPaperList" :key="item.id">
       <view
         class="flex-items-center justify-between py-20rpx px-28rpx snake-border-b"
         @click="$u.navTo(`/pages/examPaper/examPaperDetail?examPaperId=${item.id}`)">
         <view>
           <view class="flex-items-center">
-            <view class="text-32rpx snake-font-medium">共{{ item.questionCount }}道题</view>
+            <view class="text-32rpx snake-font-medium">{{ $t('examPaper.totalQuestions', { count: item.questionCount }) }}</view>
             <view
               class="text-24rpx py-2rpx px-7rpx rounded-8rpx text-white bg-#ff525d mx-10rpx"
               v-if="['ing', 'pending'].includes(item.status)">
-              未完成
+              {{ $t('examPaper.incomplete') }}
             </view>
             <view
               class="text-24rpx py-2rpx px-7rpx rounded-8rpx text-white bg-#707184 mx-10rpx"
               v-if="item.answerDate < curTimestamp && ['ing', 'pending'].includes(item.status)">
-              已超时
+              {{ $t('examPaper.timeout') }}
             </view>
           </view>
           <view class="text-22rpx pt-10rpx snake-font-regular" v-if="item.correctCount || item.incorrectCount">
-            答对{{ item.correctCount || 0 }}道 答错{{ item.incorrectCount || 0 }}道
+            {{ $t('examPaper.answerStats', { correct: item.correctCount || 0, incorrect: item.incorrectCount || 0 }) }}
           </view>
           <view class="text-28rpx text-#707184 font-400 pt-10rpx snake-font-din-Regular">
             {{ $u.formatTime(item.answerDate) }}
@@ -71,7 +71,7 @@ export default {
         this.examPaperList = [];
       }
       uni.showLoading({
-        title: '加载中...',
+        title: uni.$t('common.loading'),
         mask: true,
       });
       const response = await getAppraiseExamPaperListApi({

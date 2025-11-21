@@ -9,9 +9,9 @@
         <text class="text-28rpx ml-16rpx">{{ orderInfo.appraiserName }}</text>
       </view>
       <view class="text-center py-60rpx">
-        <view class="text-56rpx font-600">待补图</view>
+        <view class="text-56rpx font-600">{{ $t('appraise.order.need_img') }}</view>
         <view class="mt-12rpx text-26rpx" v-if="orderInfo.status === 'need_img' && orderInfo.extraImageRmd">
-          鉴别师意见：{{ orderInfo.extraImageRmd }}
+          {{ $t('appraise.check.remarkPlaceholder') }}：{{ orderInfo.extraImageRmd }}
         </view>
       </view>
     </view>
@@ -29,13 +29,13 @@
           class="w-80rpx h-80rpx"
           src="https://s.qiuxietang.com/imgextra/appraise/template/other.png"
           mode="aspectFit"></image>
-        <text class="text-#ff3367 text-28rpx">添加图片</text>
+        <text class="text-#ff3367 text-28rpx">{{ $t('common.addImage') }}</text>
       </view>
     </view>
     <view class="h-104rpx pb-safe"></view>
     <view class="snake-fixed-bottom">
       <view class="px-24rpx py-12rpx">
-        <u-button type="primary" :throttle-time="600" @click="saveSupplement">发布</u-button>
+        <u-button type="primary" :throttle-time="600" @click="saveSupplement">{{ $t('common.publish') }}</u-button>
       </view>
     </view>
   </view>
@@ -87,24 +87,24 @@ const clearImage = (index: number) => {
 
 const saveSupplement = async () => {
   if (!imageList.value.length) {
-    uni.$u.toast('至少上传1张图片');
+    uni.$u.toast(uni.$t('appraise.supplement.minOneImage'));
     return;
   }
-  uni.showLoading({
-    title: '补图中',
-    mask: true,
-  });
+    uni.showLoading({
+      title: uni.$t('appraise.supplement.uploading'),
+      mask: true,
+    });
   const response = await postMoreImageApi({
     imageList: imageList.value,
     orderId: orderId.value,
   });
   uni.hideLoading();
   if (response.success) {
-    uni.$u.toast('补图完成');
+    uni.$u.toast(uni.$t('appraise.supplement.complete'));
     await uni.$u.sleep(1000);
     uni.navigateBack();
   } else {
-    uni.$u.toast(response?.msg || '补图失败，请重试');
+    uni.$u.toast(response?.msg || uni.$t('appraise.supplement.failed'));
   }
 };
 </script>

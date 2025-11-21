@@ -2,7 +2,7 @@
   <view>
     <u-empty
       src="https://cdn.puresnake.com/joker/static/empty/noPermission.png?a=1"
-      text="您无权限查看当前鉴定单"
+      :text="$t('appraise.appraiserDetail.noPermission')"
       width="90"
       margin-top="160"
       v-if="$u.test.empty(orderInfo)"></u-empty>
@@ -27,20 +27,20 @@
               mode="aspectFill"></image>
 
             <view class="flex-center text-30rpx mt-8rpx snake-font-medium" v-if="orderInfo.appraiseCode">
-              鉴别扣码：{{ orderInfo.appraiseCode }}
+              {{ $t('appraise.order.codeDeduction') }}：{{ orderInfo.appraiseCode }}
             </view>
 
             <view class="py-30rpx" v-if="orderInfo.status === 'need_img' && orderInfo.extraImageRmd">
               <view class="w-468rpx" style="border-bottom: 1px solid #eeeef6; margin: 0 auto"></view>
               <view class="mt-30rpx text-24rpx text-#ff3d3d" style="overflow-wrap: break-word">
-                补图意见：{{ orderInfo.extraImageRmd }}
+                {{ $t('appraise.check.remarkPlaceholder') }}：{{ orderInfo.extraImageRmd }}
               </view>
             </view>
 
             <view class="result-message" v-else-if="orderInfo.finalSuggestion">
               <view class="w-468rpx" style="border-bottom: 1px solid #eeeef6; margin: 0 auto"></view>
               <view class="mt-30rpx text-24rpx text-#ff3d3d" style="overflow-wrap: break-word">
-                鉴别师意见来自SNAKE：{{ orderInfo.finalSuggestion }}
+                {{ $t('appraise.appraiserDetail.appraiserOpinion') }}：{{ orderInfo.finalSuggestion }}
               </view>
             </view>
           </view>
@@ -58,25 +58,25 @@
             class="text-24rpx py-2rpx px-6rpx rounded-4rpx ml-10rpx"
             style="border: 1px solid red"
             v-if="orderInfo.preAppraise">
-            前置
+            {{ $t('appraise.appraiserDetail.preAppraise') }}
           </view>
           <text class="font-500 text-28rpx text-#666666 ml-10rpx">
-            | {{ $u.formatTime(orderInfo.gmtCreate, 'yyyy-mm-dd hh:MM') }}发布
+            | {{ $u.formatTime(orderInfo.gmtCreate, 'yyyy-mm-dd hh:MM') }}{{ $t('common.publish') }}
           </text>
         </view>
         <view class="text-#666666 font-300 text-24rpx pt-8rpx">
           <template v-if="type === 'orderHall'">
-            <view class="mt-14rpx break-all">装备名称：{{ orderInfo.productName || '无' }}</view>
-            <view class="mt-14rpx break-all">备　　注：{{ orderInfo.description || '无' }}</view>
-            <view class="mt-14rpx break-all">购入来源：{{ orderInfo.fromOrigin || '无' }}</view>
-            <view class="mt-14rpx break-all">发售年份：{{ orderInfo.releaseDate || '无' }}</view>
-            <view class="mt-14rpx break-all">购入价格：{{ orderInfo.buyPrice || '无' }}</view>
-            <view class="mt-14rpx break-all">鉴别单号：{{ orderInfo.id || '无' }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.equipmentName') }}：{{ orderInfo.productName || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.purchaseSource') }}：{{ orderInfo.fromOrigin || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.releaseYear') }}：{{ orderInfo.releaseDate || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.purchasePrice') }}：{{ orderInfo.buyPrice || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.order.orderId') }}：{{ orderInfo.id || $t('common.none') }}</view>
           </template>
           <template v-else>
-            <view class="mt-14rpx break-all">鉴别商品：{{ orderInfo.productName || '无' }}</view>
-            <view class="mt-14rpx break-all">备　　注：{{ orderInfo.description || '无' }}</view>
-            <view class="mt-14rpx break-all">鉴别单号：{{ orderInfo.id || '无' }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.appraiseProduct') }}：{{ orderInfo.productName || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">{{ $t('appraise.order.orderId') }}：{{ orderInfo.id || $t('common.none') }}</view>
           </template>
         </view>
       </view>
@@ -116,7 +116,7 @@
       <u-modal
         :show="modalShow"
         showCancelButton
-        content="请注意，鉴定图片已更新，请刷新查看图片后再给出鉴定结果！"
+        :content="$t('app.update.noticeUpdate')"
         @confirm="modalConfirmHandle"
         @cancel="modalShow = false"></u-modal>
 
@@ -129,7 +129,7 @@
             :throttle-time="600"
             custom-style="height: 88rpx; border-radius: 16rpx; margin: 0"
             @click="grabOrderHandle">
-            马上抢单
+            {{ $t('appraise.appraiser.grabOrderNow') }}
           </u-button>
 
           <template v-else>
@@ -140,7 +140,7 @@
               :throttle-time="600"
               custom-style="height: 88rpx; border: 1px solid #000; color:#000; border-radius: 16rpx 0 0 16rpx; margin: 0"
               @click="pickerShow = true">
-              取消抢单
+              {{ $t('appraise.appraiser.cancelGrabOrder') }}
             </u-button>
             <u-button
               type="primary"
@@ -148,7 +148,7 @@
               :throttle-time="600"
               custom-style="height: 88rpx; border-radius: 0 16rpx 16rpx 0; margin: 0"
               @click="identifyHandle">
-              马上鉴别
+              {{ $t('appraise.appraiser.identifyNow') }}
             </u-button>
           </template>
         </view>
@@ -236,7 +236,7 @@ const getDictValue = async () => {
 
 const selectPickerConfirm = async () => {
   if (!reasonValue.value) {
-    uni.$u.toast('请选择取消原因');
+    uni.$u.toast(uni.$t('appraise.appraiser.pleaseSelectCancelReason'));
     return;
   }
 
@@ -286,7 +286,7 @@ const grabOrderHandle = async () => {
     id: orderId.value,
   });
   if (response.success) {
-    uni.$u.toast('抢单成功!');
+    uni.$u.toast(uni.$t('appraise.appraiser.grabSuccess'));
     uni.$u.getHistoryPage(-1)?.refreshList?.();
     await uni.$u.sleep(1000);
     uni.navigateBack();

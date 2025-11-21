@@ -24,7 +24,7 @@
     <view class="h-124rpx pb-safe"></view>
     <view class="snake-fixed-bottom" style="background-color: #fff; z-index: unset">
       <view class="py-12rpx px-24rpx">
-        <u-button color="#000000" customStyle="border-radius: 16rpx;" @click="clickComplete">完成</u-button>
+        <u-button color="#000000" customStyle="border-radius: 16rpx;" @click="clickComplete">{{ $t('common.complete') }}</u-button>
       </view>
     </view>
   </view>
@@ -56,7 +56,7 @@ export default {
     async getDetail() {
       uni.showLoading({
         mask: true,
-        title: '加载中...',
+        title: uni.$t('common.loading'),
       });
       const params = {
         orderId: this.orderId,
@@ -112,7 +112,7 @@ export default {
     clickComplete() {
       const hintImageList = this.imageList.filter((item) => item.checked);
       if (!hintImageList.length) {
-        return this.$u.toast('最少选择一张');
+        return this.$u.toast(uni.$t('appraise.check.selectAtLeastOne'));
       }
       uni.setStorageSync('image_select_list', this.imageList);
       this.$u.getHistoryPage(-2).hintImageList.value = hintImageList;

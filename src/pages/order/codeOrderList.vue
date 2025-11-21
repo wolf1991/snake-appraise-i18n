@@ -20,7 +20,7 @@
             <view class="mt-10rpx text-22rpx text-#aaaaaa">{{ item.amountStr }}</view>
           </view>
           <view class="flex-items-center justify-between">
-            <view class="text-#06d290">物流单号：{{ item.expressNo || '暂无' }}</view>
+            <view class="text-#06d290">{{ $t('order.expressNo') }}：{{ item.expressNo || $t('common.noData') }}</view>
             <view class="text-28rpx snake-font-dinmedium">
               <text class="text-18rpx">￥</text>
               <text>{{ item.totalPriceStr }}</text>

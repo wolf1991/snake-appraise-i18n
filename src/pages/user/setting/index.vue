@@ -6,7 +6,7 @@
         src="@/static/logo.png"
         style="box-shadow: 0 4px 20px 0 #a4a8b618"
         mode="widthFix"></image>
-      <view class="text-32rpx mt-40rpx" v-if="version">当前版本 V{{ version }}</view>
+      <view class="text-32rpx mt-40rpx" v-if="version">{{ $t('common.currentVersion') }} V{{ version }}</view>
       <!-- #ifndef H5 || MP -->
       <view class="mt-16rpx">
         <u-button
@@ -14,19 +14,19 @@
           shape="circle"
           customStyle="width: 168rpx; color: #000; border: 2rpx solid #E7E7E7;"
           @click="checkForUpdate">
-          检查更新
+          {{ $t('common.checkUpdate') }}
         </u-button>
       </view>
       <!-- #endif -->
     </view>
     <u-cell-group :border="false">
-      <u-cell title="用户服务协议" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
-      <u-cell title="隐私协议" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
-      <u-cell title="注销账号" isLink :border="false" @click="$u.navTo('/pages/user/setting/cancelAccount')"></u-cell>
+      <u-cell :title="$t('common.userServiceAgreement')" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
+      <u-cell :title="$t('common.privacyAgreement')" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
+      <u-cell :title="$t('common.cancelAccount')" isLink :border="false" @click="$u.navTo('/pages/user/setting/cancelAccount')"></u-cell>
     </u-cell-group>
     <view class="snake-fixed-bottom px-24rpx">
       <view class="py-12rpx">
-        <u-button type="primary" shape="circle" plain customStyle="height: 88rpx;" @click="logout">退出登录</u-button>
+        <u-button type="primary" shape="circle" plain customStyle="height: 88rpx;" @click="logout">{{ $t('common.logout') }}</u-button>
       </view>
     </view>
   </view>
@@ -63,7 +63,7 @@ export default {
       if (response.success) {
         const userStore = useUserStore();
         userStore.clearUserInfo();
-        uni.$u.toast('退出登录成功');
+        uni.$u.toast(uni.$t('common.logoutSuccess'));
         await uni.$u.sleep(500);
         uni.navigateBack();
       } else {
@@ -89,13 +89,13 @@ export default {
         updateManager.onCheckForUpdate((res) => {
           // 请求完新版本信息的回调
           if (!res.hasUpdate) {
-            uni.$u.toast('当前暂无新版本!');
+            uni.$u.toast(uni.$t('app.update.noNewVersion'));
           }
         });
         updateManager.onUpdateReady(() => {
           uni.showModal({
-            title: '更新提示',
-            content: '新版本已经准备好，是否马上重启小程序？',
+            title: uni.$t('app.update.modalTitle'),
+            content: uni.$t('app.update.modalContent'),
             success(res) {
               if (res.confirm) {
                 // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
@@ -107,8 +107,8 @@ export default {
         updateManager.onUpdateFailed(() => {
           // 新的版本下载失败
           uni.showModal({
-            title: '检测到新版本',
-            content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开',
+            title: uni.$t('app.update.failedTitle'),
+            content: uni.$t('app.update.failedContent'),
             showCancel: false,
           });
         });

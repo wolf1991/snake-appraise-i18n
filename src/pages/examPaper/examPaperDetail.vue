@@ -14,12 +14,12 @@
                 <view
                   v-if="questionsDetail.answerDate < curTimestamp"
                   class="text-24rpx py-2rpx px-7rpx rounded-8rpx text-white bg-#ff525d mx-10rpx">
-                  已超时
+                  {{ $t('examPaper.timeout') }}
                 </view>
               </view>
-              <view class="text-28rpx mt-20rpx text-#888891">考题数量：{{ questionsDetail.questionCount }}</view>
-              <view class="text-28rpx mt-20rpx text-#888891">考试时间：{{ questionsDetail.examTime }}分钟</view>
-              <view class="text-28rpx mt-20rpx text-#888891">考题截至时间：{{ $u.formatTime(questionsDetail.answerDate) }}</view>
+              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.questionCount') }}：{{ questionsDetail.questionCount }}</view>
+              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.examTime') }}：{{ questionsDetail.examTime }}{{ $t('examPaper.minutes') }}</view>
+              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.deadline') }}：{{ $u.formatTime(questionsDetail.answerDate) }}</view>
             </view>
           </view>
         </view>
@@ -30,22 +30,22 @@
         <view class="flex-center w-670rpx h-322rpx" style="border: 2px solid #9f9f9f">
           <view class="flex-center w-636rpx h-294rpx" style="border: 1px solid #cccccc">
             <view class="flex-center flex-col">
-              <view class="text-60rpx text-#06d290 snake-font-medium" v-if="questionsDetail.status === 'pass'">及格</view>
-              <view class="text-60rpx text-#fd5b5b snake-font-medium" v-if="questionsDetail.status === 'fail'">不及格</view>
-              <view class="text-36rpx snake-font-medium">{{ questionsDetail.msg || '正确率0%' }}</view>
+              <view class="text-60rpx text-#06d290 snake-font-medium" v-if="questionsDetail.status === 'pass'">{{ $t('examPaper.pass') }}</view>
+              <view class="text-60rpx text-#fd5b5b snake-font-medium" v-if="questionsDetail.status === 'fail'">{{ $t('examPaper.fail') }}</view>
+              <view class="text-36rpx snake-font-medium">{{ questionsDetail.msg || $t('examPaper.accuracy0') }}</view>
               <view class="text-28rpx pt-20rpx text-#646471 snake-font-regular">
-                答对{{ questionsDetail.correctCount || 0 }}道题 答错{{ questionsDetail.incorrectCount || 0 }}道题
+                {{ $t('examPaper.answerStatsDetail', { correct: questionsDetail.correctCount || 0, incorrect: questionsDetail.incorrectCount || 0 }) }}
               </view>
             </view>
           </view>
         </view>
       </view>
-      <view class="flex-center text-28rpx pt-16rpx pb-20rpx snake-font-medium">— 错题 —</view>
+      <view class="flex-center text-28rpx pt-16rpx pb-20rpx snake-font-medium">— {{ $t('examPaper.wrongQuestions') }} —</view>
 
       <template v-if="examQuestionList.length && questionsDetail.status !== 'ing'">
         <view class="questionsItem" v-for="(item, index) in examQuestionList" :key="item.id">
           <view class="top snake-border-b">
-            <text class="snake-ellipsis snake-font-semibold text-28rpx max-w-520rpx">题干</text>
+            <text class="snake-ellipsis snake-font-semibold text-28rpx max-w-520rpx">{{ $t('examPaper.questionStem') }}</text>
             <text class="text-22rpx text-#626772 font-500">{{ index + 1 }}/{{ examQuestionList.length }}</text>
           </view>
           <view class="center">
@@ -60,8 +60,8 @@
             </scroll-view>
           </view>
           <view class="bottom flex-items-center justify-between snake-border-t">
-            <text class="snake-font-regular text-22rpx text-#888891 font-400">已选：{{ item.userAnswer || '未答题' }}</text>
-            <text class="snake-font-regular text-32rpx text-#2ebd7c font-600">答案：{{ item.answer || '' }}</text>
+            <text class="snake-font-regular text-22rpx text-#888891 font-400">{{ $t('examPaper.selected') }}：{{ item.userAnswer || $t('examPaper.notAnswered') }}</text>
+            <text class="snake-font-regular text-32rpx text-#2ebd7c font-600">{{ $t('examPaper.answer') }}：{{ item.answer || '' }}</text>
           </view>
         </view>
       </template>
@@ -76,7 +76,7 @@
           type="primary"
           custom-style="border-radius: 16rpx"
           @click="$u.navTo(`/pages/examPaper/answer?examPaperId=${examPaperId}&status=${questionsDetail.status}`)">
-          去刷题
+          {{ $t('examPaper.goStudy') }}
         </u-button>
       </view>
     </view>

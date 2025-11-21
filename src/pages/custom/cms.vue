@@ -42,7 +42,7 @@ export default {
     if (this.pageId) {
       this.getPageData();
     } else {
-      this.$u.toast('pageId不存在');
+      this.$u.toast(uni.$t('cms.pageIdNotExist'));
     }
   },
   onPageScroll(e) {
@@ -85,7 +85,7 @@ export default {
     // 获取cms组件数据
     async getPageData() {
       uni.showLoading({
-        title: '加载中...',
+        title: uni.$t('common.loading'),
         mask: true,
       });
       const response = await getCmsInfo({ id: this.pageId });

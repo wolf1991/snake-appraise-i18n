@@ -1,8 +1,8 @@
 <template>
   <view class="top">
-    <view class="top-title">收银台</view>
+    <view class="top-title">{{ $t('common.cashier') }}</view>
     <view style="padding-top: 54rpx">
-      <view class="top-amount">支付金额</view>
+      <view class="top-amount">{{ $t('common.paymentAmount') }}</view>
       <view class="flex-center">
         <view class="prices">￥</view>
         <view class="price">{{ price }}</view>
@@ -10,15 +10,15 @@
     </view>
     <view class="flex mt-168rpx" v-if="cancellation">
       <button class="return" open-type="launchApp" app-parameter="wechat">
-        <view class="return-size">返回商户</view>
+        <view class="return-size">{{ $t('common.returnMerchant') }}</view>
       </button>
       <button class="payment" @click="wxPays()">
-        <view class="payment-size">重新支付</view>
+        <view class="payment-size">{{ $t('common.repay') }}</view>
       </button>
     </view>
     <view class="flex-center mt-168rpx" v-if="disburse">
       <button class="return" open-type="launchApp" app-parameter="wechat">
-        <view class="return-size">返回商户</view>
+        <view class="return-size">{{ $t('common.returnMerchant') }}</view>
       </button>
     </view>
   </view>
@@ -52,12 +52,12 @@ export default {
       this.cancellation = false;
       wxPay(this.wxpayTradeNo)
         .then(() => {
-          this.$u.toast('支付成功');
+          this.$u.toast(uni.$t('common.paySuccess'));
           this.disburse = !this.disburse;
         })
         .catch((msg) => {
           this.cancellation = !this.cancellation;
-          this.$u.toast('支付失败', 1000);
+          this.$u.toast(uni.$t('common.payFailed'), 1000);
         });
     },
     async wxPayPayment() {
@@ -76,19 +76,19 @@ export default {
           this.payId = '';
           wxPay(this.wxpayTradeNo)
             .then(() => {
-              this.$u.toast('支付成功');
+              this.$u.toast(uni.$t('common.paySuccess'));
               this.disburse = !this.disburse;
             })
             .catch(() => {
               this.cancellation = !this.cancellation;
-              this.$u.toast('支付失败');
+              this.$u.toast(uni.$t('common.payFailed'));
             });
         } else {
           this.$u.toast(response.msg);
           this.cancellation = !this.cancellation;
         }
       } catch (e) {
-        this.$u.toast(e.message || '支付失败');
+        this.$u.toast(e.message || uni.$t('common.payFailed'));
         this.cancellation = !this.cancellation;
       }
     },

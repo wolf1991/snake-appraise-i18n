@@ -13,7 +13,7 @@
       <view class="flex flex-col justify-between flex-1 ml-20rpx">
         <view>
           <view class="text-26rpx">{{ curRange.name }}</view>
-          <view class="text-22rpx text-#aaaaaa mt-10rpx" style="font-family: DIN-Regular">x{{ amount }}{{ '组' }}</view>
+          <view class="text-22rpx text-#aaaaaa mt-10rpx" style="font-family: DIN-Regular">x{{ amount }}{{ $t('appraise.code.group') }}</view>
         </view>
         <view class="flex justify-between">
           <view></view>
@@ -27,35 +27,35 @@
 
     <view class="bg-white rounded-4rpx mt-20rpx mx-24rpx p-24rpx">
       <view class="flex justify-between">
-        <view class="flex-items-center font-600">鞋扣</view>
+        <view class="flex-items-center font-600">{{ $t('appraise.code.shoeBuckle') }}</view>
         <u-number-box v-model="num" :min="0"></u-number-box>
       </view>
       <view class="flex justify-between mt-30rpx">
-        <view class="flex-items-center font-600">其他扣(服/包/配饰等)</view>
-        <view>{{ amount - num }}组</view>
+        <view class="flex-items-center font-600">{{ $t('appraise.code.otherBuckle') }}</view>
+        <view>{{ amount - num }}{{ $t('appraise.code.group') }}</view>
       </view>
     </view>
     <textarea
       class="w-697rpx h-134rpx mt-20rpx mx-24rpx bg-#F6F6F6 text-24rpx py-20rpx px-24rpx box-border"
       style="border: 1px solid #e8e8e8"
-      placeholder="(必填)请注明需要多少组鞋扣或其他扣（服饰、配饰、包等）"
+      :placeholder="$t('appraise.code.remarkRequired')"
       placeholder-class="text-#b1b2c1 text-24rpx font-300 text-left"
       v-model="remark"></textarea>
 
     <view class="bg-white flex-items-center justify-between rounded-4rpx mt-20rpx mx-24rpx h-80rpx px-24rpx">
-      <view>实付金额</view>
+      <view>{{ $t('common.realPayment') }}</view>
       <view class="text-28rpx snake-font-dinmedium">¥{{ totalPrice.toFixed(2) }}</view>
     </view>
     <view class="text-#909399 text-24rpx py-18rpx px-24rpx">
-      <view class="text-26rpx mt-10rpx">购买须知：</view>
-      <view class="mt-10rpx">1. 下单付款后，SNAKE平台将联系您并寄出商品，邮费到付，请关注。</view>
-      <view class="mt-10rpx">2. 鉴别扣一经售出不退不换，请悉知。</view>
-      <view class="mt-10rpx">3. 用户使用鉴别扣下单，无需额外支付鉴别费用。</view>
+      <view class="text-26rpx mt-10rpx">{{ $t('appraise.code.purchaseNotice') }}</view>
+      <view class="mt-10rpx">{{ $t('appraise.code.purchaseNotice1') }}</view>
+      <view class="mt-10rpx">{{ $t('appraise.code.purchaseNotice2') }}</view>
+      <view class="mt-10rpx">{{ $t('appraise.code.purchaseNotice3') }}</view>
       <view class="mt-10rpx">
-        4. 在线图片鉴别可能受拍摄角度、清晰度等因素影响，请您提供满足拍摄要求的实拍图（请见新手必看）。
+        {{ $t('appraise.code.purchaseNotice4') }}
       </view>
       <view class="mt-10rpx">
-        5. 结论仅供参考，请以实物为准。另鉴别师不对商品货源的真实性、商品修复行为负责，建议用户结合多方信息综合判断。
+        {{ $t('appraise.code.purchaseNotice5') }}
       </view>
     </view>
 
@@ -64,15 +64,15 @@
     <view class="w-100% snake-fixed-bottom flex flex-col px-24rpx">
       <view class="text-24rpx bg-white pt-12rpx" @click="checkAgreement">
         <radio class="agradio" color="#2EBD7C" :checked="agreement" style="transform: scale(0.7)" @click.stop="checkAgreement" />
-        <text class="text-24rpx text-#0f1113">我已阅读并同意</text>
+        <text class="text-24rpx text-#0f1113">{{ $t('appraise.identify.agreementPrefix') }}</text>
         <text class="snake-font-medium fw-500 text-24rpx text-green" @click.stop="$u.navTo('/pages/custom/cms?pageId=886')">
-          《鉴别扣服务协议》
+          {{ $t('appraise.code.codeServiceAgreement') }}
         </text>
       </view>
 
       <view class="flex-items-center justify-between pb-12rpx">
         <view class="flex-items-center text-24rpx">
-          <text>实付金额:</text>
+          <text>{{ $t('common.realPayment') }}:</text>
           <view class="text-34rpx text-#ff3367 snake-font-dinmedium">
             <text class="text-22rpx">￥</text>
             <text>{{ totalPrice }}</text>
@@ -85,7 +85,7 @@
           :disabled="disabled"
           custom-style="width: 212rpx; height: 80rpx; margin: 0"
           @click="submitOrder">
-          提交订单
+          {{ $t('appraise.code.submitOrder') }}
         </u-button>
       </view>
     </view>

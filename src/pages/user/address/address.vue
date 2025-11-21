@@ -11,7 +11,7 @@
               <text
                 v-if="item.isDefault"
                 class="flex-center py-2rpx text-22rpx ml-20rpx px-10rpx text-white bg-#06d290 rounded-4rpx">
-                默认
+                {{ $t('common.default') }}
               </text>
             </view>
             <view class="line-clamp-2 mt-12rpx text-24rpx text-#1c1c1c">
@@ -25,13 +25,13 @@
       </view>
     </block>
 
-    <u-empty v-if="!addressList.length" mode="list" marginTop="120" text="您还没有添加收货地址"></u-empty>
+    <u-empty v-if="!addressList.length" mode="list" marginTop="120" :text="$t('common.noAddressYet')"></u-empty>
 
     <view class="h-120rpx pb-safe"></view>
     <view class="snake-fixed-bottom">
       <view class="py-12rpx px-24rpx">
         <u-button type="primary" customStyle="border-radius: 8rpx; height: 80rpx" @click="addAddressClick('add')">
-          新增收货地址
+          {{ $t('common.addAddress') }}
         </u-button>
       </view>
     </view>
