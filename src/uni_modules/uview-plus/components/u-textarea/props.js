@@ -18,7 +18,7 @@ export const props = defineMixin({
 			type: [String, Number],
 			default: () => defProps.textarea.placeholder
 		},
-		// 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
+		// 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写::v-deep
 		placeholderClass: {
 			type: String,
 			default: () => defProps.input.placeholderClass

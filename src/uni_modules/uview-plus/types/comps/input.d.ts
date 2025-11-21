@@ -40,7 +40,7 @@ declare interface InputProps {
    */
   placeholder?: string
   /**
-   * 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
+   * 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写::v-deep
    * @default "input-placeholder"
    */
   placeholderClass?: string
