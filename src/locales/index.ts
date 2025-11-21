@@ -3,13 +3,15 @@ import type { App } from 'vue';
 
 import zhCN from './zh-CN';
 import enUS from './en-US';
+import ruRU from './ru-RU';
 
-export type Locale = 'zh-CN' | 'en-US';
+export type Locale = 'zh-CN' | 'en-US' | 'ru-RU';
 export type MessageSchema = typeof zhCN;
 
 export const SUPPORTED_LOCALES: Array<{ label: string; value: Locale }> = [
   { label: '简体中文', value: 'zh-CN' },
   { label: 'English', value: 'en-US' },
+  { label: 'Русский', value: 'ru-RU' },
 ];
 
 const isSupportedLocale = (locale?: string): locale is Locale =>
@@ -52,6 +54,7 @@ const getInitialLocale = (): Locale => {
 const messages: Record<Locale, MessageSchema> = {
   'zh-CN': zhCN,
   'en-US': enUS,
+  'ru-RU': ruRU,
 };
 
 export const i18n = createI18n<[MessageSchema], Locale>({
