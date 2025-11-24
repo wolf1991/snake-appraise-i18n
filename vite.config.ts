@@ -97,6 +97,8 @@ export default ({ command, mode }) => {
           drop_debugger: true,
         },
       },
+      // 启用代码分割优化
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           // 设置chunk的文件名格式
@@ -105,6 +107,22 @@ export default ({ command, mode }) => {
           entryFileNames: 'assets/js/[name]-[hash].js',
           // 设置静态资源文件的文件名格式
           assetFileNames: 'assets/[ext]/[name].[ext]',
+          // 手动代码分割，优化加载性能
+          manualChunks(id) {
+            // 将 node_modules 中的依赖单独打包
+            if (id.includes('node_modules')) {
+              // uview-plus 单独打包
+              if (id.includes('uview-plus')) {
+                return 'uview-plus';
+              }
+              // vue 相关单独打包
+              if (id.includes('vue') || id.includes('pinia')) {
+                return 'vue-vendor';
+              }
+              // 其他第三方库
+              return 'vendor';
+            }
+          },
         },
       },
     },

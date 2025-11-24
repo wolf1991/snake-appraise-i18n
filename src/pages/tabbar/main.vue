@@ -105,13 +105,13 @@ const getAppraiseUserList = async () => {
 };
 
 onLoad(async () => {
-  await getPageData();
-  await getAppraiseUserList();
+  // 并行执行两个请求，提升加载速度
+  await Promise.all([getPageData(), getAppraiseUserList()]);
 });
 
 onPullDownRefresh(async () => {
-  await getPageData();
-  await getAppraiseUserList();
+  // 并行执行两个请求，提升刷新速度
+  await Promise.all([getPageData(), getAppraiseUserList()]);
   await uni.$u.sleep(500);
   uni.stopPullDownRefresh();
 });

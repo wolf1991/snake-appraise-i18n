@@ -110,23 +110,27 @@
 </template>
 
 <script>
-import commoditysearch from './components/commoditysearch/index.vue';
-import graphicnavigation from './components/graphicnavigation/index.vue';
-import magiccube from './components/magiccube/index.vue';
-import richtext from './components/richtext/richtext.vue';
-import coupon from './components/coupon/index.vue';
-import pagePopup from './components/page-popup/index.vue';
-import goodsList from './components/goodsList/index.vue';
-import auxiliarysegmentation from './components/auxiliarysegmentation/index.vue';
-import pictureads from './components/pictureads/index.vue';
-import custommodule from './components/custommodule/index.vue';
-import suspension from './components/suspension/index.vue';
-import follow from './components/follow/index.vue';
-import jumpApplet from './components/jumpApplet/index.vue';
-import imgaes from './components/imgaes/index.vue';
-import activitySession from './components/activity-session/index.vue';
-import filterSorts from './components/filter-sorts/index.vue';
-import float from './components/float/index.vue';
+import { defineAsyncComponent } from 'vue';
+
+// 使用异步组件懒加载，减少初始包体积，提升首屏加载速度
+const commoditysearch = defineAsyncComponent(() => import('./components/commoditysearch/index.vue'));
+const graphicnavigation = defineAsyncComponent(() => import('./components/graphicnavigation/index.vue'));
+const magiccube = defineAsyncComponent(() => import('./components/magiccube/index.vue'));
+const richtext = defineAsyncComponent(() => import('./components/richtext/richtext.vue'));
+const coupon = defineAsyncComponent(() => import('./components/coupon/index.vue'));
+const pagePopup = defineAsyncComponent(() => import('./components/page-popup/index.vue'));
+const goodsList = defineAsyncComponent(() => import('./components/goodsList/index.vue'));
+const auxiliarysegmentation = defineAsyncComponent(() => import('./components/auxiliarysegmentation/index.vue'));
+const pictureads = defineAsyncComponent(() => import('./components/pictureads/index.vue'));
+const custommodule = defineAsyncComponent(() => import('./components/custommodule/index.vue'));
+const suspension = defineAsyncComponent(() => import('./components/suspension/index.vue'));
+const follow = defineAsyncComponent(() => import('./components/follow/index.vue'));
+const jumpApplet = defineAsyncComponent(() => import('./components/jumpApplet/index.vue'));
+const imgaes = defineAsyncComponent(() => import('./components/imgaes/index.vue'));
+const activitySession = defineAsyncComponent(() => import('./components/activity-session/index.vue'));
+const filterSorts = defineAsyncComponent(() => import('./components/filter-sorts/index.vue'));
+const float = defineAsyncComponent(() => import('./components/float/index.vue'));
+
 export default {
   name: 'snake-cms',
   // 注册组件
@@ -250,9 +254,10 @@ export default {
       }
     },
     async init() {
+      // 并行执行多个请求，提升加载速度
       await uni.$u.sleep();
-      await this.getActivityList();
-      await this.getFilter();
+      // 活动列表和筛选可以并行请求，商品列表依赖筛选结果，需要等待筛选完成
+      await Promise.all([this.getActivityList(), this.getFilter()]);
       await this.getGoodsList('refresh');
     },
     // 活动场次切换

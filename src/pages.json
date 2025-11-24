@@ -259,12 +259,13 @@
   "preloadRule": {
     //当访问到该路由的页面时，会顺带预加载对应的包(可以是主包，也可以是子包)
     "pages/tabbar/main": {
-      "network": "all",
+      "network": "wifi", // 仅在 WiFi 下预加载，节省流量
       "packages": ["pages/order", "pages/appraise"]
     },
     "pages/tabbar/user": {
-      "network": "all",
-      "packages": ["pages/login", "pages/user", "pages/appraise"]
+      "network": "wifi", // 仅在 WiFi 下预加载，节省流量
+      "packages": ["pages/login", "pages/user"]
+      // 移除 pages/appraise，减少不必要的预加载
     }
   },
   "globalStyle": {
