@@ -98,6 +98,7 @@ import { getAppraiseCodeTabApi, postAppraiseCodePurchaseApi } from '@/api/apprai
 import { requestPayment } from '@/utils/payment';
 
 import { useUserStore } from '@/stores/modules/user';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default {
   data() {
@@ -114,6 +115,7 @@ export default {
     };
   },
   async onLoad(options) {
+    usePageTitle('pages.codePurchase');
     const { type, amount, totalprice } = options;
     this.type = type;
     this.amount = amount;

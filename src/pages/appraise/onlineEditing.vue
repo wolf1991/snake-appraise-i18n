@@ -10,6 +10,7 @@
 
 <script>
 import { getAppraiseUserDetailApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -19,6 +20,7 @@ export default {
     };
   },
   onLoad() {
+    usePageTitle('pages.appraiserStatus');
     this.getUserDetail();
   },
   methods: {

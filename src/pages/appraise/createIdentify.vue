@@ -91,6 +91,9 @@ import { getAppraiseCategoryListApi, getAppraiserCheckApi, getBrandListApi, getC
 import uploader from '@/utils/uploader/uploader';
 import graceChecker from '@/utils/js/graceChecker';
 import type { UploadProps } from '@/uni_modules/uview-plus/types/comps/upload';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.appraiserDetail');
 
 const brandPickerShow = ref(false);
 const catePickerShow = ref(false);

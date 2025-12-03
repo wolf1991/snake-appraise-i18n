@@ -110,6 +110,9 @@ import { computed, ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { getAppraiseRmdReasonListApi, postAppraiserDoAppraiseApi } from '@/api/appraise';
 import { Base64 } from '@/utils/js/base64';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.appraiseCheck');
 
 const requestId = ref('');
 

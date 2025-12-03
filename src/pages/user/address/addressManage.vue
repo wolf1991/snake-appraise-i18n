@@ -111,6 +111,7 @@
 <script>
 import { getAddressGet, postAddressSave } from '@/api/user';
 import graceChecker from '@/utils/js/graceChecker';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default {
   data() {
@@ -164,6 +165,7 @@ export default {
     },
   },
   async onLoad(options) {
+    usePageTitle('pages.addressManage');
     const { type, addressId } = options || {};
     this.addressId = addressId;
 

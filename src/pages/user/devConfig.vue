@@ -60,6 +60,9 @@ import { useUserStore } from '@/stores';
 import { getBaseUrl, setConfig } from '@/utils/request/util';
 import { getAllPages } from '@/utils';
 import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.devConfig');
 
 const $u = uni.$u;
 

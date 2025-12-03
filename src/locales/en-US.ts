@@ -46,6 +46,7 @@ const enUS = {
     switchSuccessOnly: 'Switched successfully',
     seconds: 'seconds',
     serviceCenter: 'Support',
+    language: 'Language',
     settings: 'Settings',
     loginOrRegister: 'Login/Register',
     cashier: 'Cashier',
@@ -96,6 +97,16 @@ const enUS = {
     shareTitle: 'Share Title',
     addImage: 'Add Image',
     publish: 'Publish',
+    startCode: 'Get Code',
+    changeCode: 'Resend in Xs',
+    endCode: 'Resend Code',
+    tip: 'Tip',
+    gotIt: 'Got it',
+    copiedToClipboard: 'Copied to clipboard',
+    loadmoreText: 'Load more',
+    loadingText: 'Loading...',
+    nomoreText: 'No more',
+    emptyList: 'No Data'
   },
   pages: {
     // App name
@@ -186,6 +197,7 @@ const enUS = {
       notificationTitle: 'Notifications',
       notificationContent: 'Notifications are disabled. Enable them in Settings to receive updates.',
       goSetting: 'Go to settings',
+      cancelText: 'Cancel'
     },
     update: {
       modalTitle: 'Update available',
@@ -264,6 +276,7 @@ const enUS = {
       risk: 'Risk',
       recheck: 'Recheck',
       processing: 'Processing',
+      appraisalResult: 'Appraisal Result',
     },
     code: {
       enterCode: 'Enter product code',

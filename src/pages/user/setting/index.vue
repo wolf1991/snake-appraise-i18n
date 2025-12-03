@@ -8,7 +8,7 @@
         mode="widthFix"></image>
       <view class="text-32rpx mt-40rpx" v-if="version">{{ $t('common.currentVersion') }} V{{ version }}</view>
       <!-- #ifndef H5 || MP -->
-      <view class="mt-16rpx">
+      <view class="mt-16rpx" v-if="uni.getLocale() === 'zh-CN'">
         <u-button
           plain
           shape="circle"
@@ -20,13 +20,25 @@
       <!-- #endif -->
     </view>
     <u-cell-group :border="false">
-      <u-cell :title="$t('common.userServiceAgreement')" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
-      <u-cell :title="$t('common.privacyAgreement')" isLink @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
-      <u-cell :title="$t('common.cancelAccount')" isLink :border="false" @click="$u.navTo('/pages/user/setting/cancelAccount')"></u-cell>
+      <u-cell
+        :title="$t('common.userServiceAgreement')"
+        isLink
+        @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 866 : 866}`)"></u-cell>
+      <u-cell
+        :title="$t('common.privacyAgreement')"
+        isLink
+        @click="$u.navTo(`/pages/custom/cms?pageId=${isProd ? 865 : 865}`)"></u-cell>
+      <u-cell
+        :title="$t('common.cancelAccount')"
+        isLink
+        :border="false"
+        @click="$u.navTo('/pages/user/setting/cancelAccount')"></u-cell>
     </u-cell-group>
     <view class="snake-fixed-bottom px-24rpx">
       <view class="py-12rpx">
-        <u-button type="primary" shape="circle" plain customStyle="height: 88rpx;" @click="logout">{{ $t('common.logout') }}</u-button>
+        <u-button type="primary" shape="circle" plain customStyle="height: 88rpx;" @click="logout">
+          {{ $t('common.logout') }}
+        </u-button>
       </view>
     </view>
   </view>
@@ -36,6 +48,7 @@
 import { postLogout } from '@/api/user';
 import { useUserStore } from '@/stores/modules/user';
 import { isProd } from '@/utils/request/util';
+import { usePageTitle } from '@/hooks/usePageTitle';
 // #ifdef APP-PLUS
 import { getCurrentNo, appUpdate } from '@/utils/js/appUpdate';
 // #endif
@@ -47,6 +60,7 @@ export default {
     };
   },
   onLoad() {
+    usePageTitle('pages.settings');
     // #ifdef MP
     const accountInfo = uni.getAccountInfoSync();
     this.version = accountInfo.miniProgram.version; // 小程序 版本号

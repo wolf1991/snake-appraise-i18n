@@ -35,6 +35,7 @@
 <script>
 import { getAppraiseDyOrderDetailApi } from '@/api/appraise';
 import { isProd } from '@/utils/request/util';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -46,6 +47,7 @@ export default {
     };
   },
   onLoad(options) {
+    usePageTitle('pages.dydetail');
     let q = options?.q || '';
     // #ifdef MP-ALIPAY
     q = my.getLaunchOptionsSync().query.qrCode;

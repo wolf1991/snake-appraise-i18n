@@ -29,14 +29,20 @@
         <view class="next-icons icon-more text-40rpx"></view>
       </view>
     </template>
-    <u-empty v-if="!examPaperList.length"></u-empty>
-    <u-loadmore v-else :status="loadingStatus"></u-loadmore>
+    <u-empty v-if="!examPaperList.length" :text="$t('common.emptyList')"></u-empty>
+    <u-loadmore
+      v-else
+      :status="loadingStatus"
+      :loadmoreText="$t('common.loadmoreText')"
+      :loadingText="$t('common.loadingText')"
+      :nomoreText="$t('common.nomoreText')"></u-loadmore>
     <view class="h-10rpx"></view>
   </view>
 </template>
 
 <script>
 import { getAppraiseExamPaperListApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -46,6 +52,7 @@ export default {
     };
   },
   onLoad() {
+    usePageTitle('pages.examPaperList');
     this.getQuestionList();
   },
   onPullDownRefresh() {

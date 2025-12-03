@@ -26,7 +26,7 @@
   <view class="pos-relative overflow-hidden">
     <u-cell-group :border="false">
       <block v-for="item in menuList" :key="item.value">
-        <u-cell isLink :border="false" @click="clickNavTo(item.hrefUrl)">
+        <u-cell isLink :border="false" @click="handleMenuClick(item)">
           <template v-slot:icon>
             <view :class="[`next-icons ${item.icon} snake-fs-48`]"></view>
           </template>
@@ -51,8 +51,10 @@ import config from '@/config/config';
 import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
 import { onLoad } from '@dcloudio/uni-app';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { updateTabBarText, SUPPORTED_LOCALES, setLocale } from '@/locales';
 
-usePageTitle('pages.user');
+usePageTitle('pages.main');
+updateTabBarText();
 
 const $u = uni.$u;
 
@@ -81,6 +83,12 @@ const getMenuList = async () => {
         icon: 'icon-kf',
       },
       {
+        label: uni.$t('common.language'),
+        value: 'language',
+        hrefUrl: '',
+        icon: 'icon-more',
+      },
+      {
         label: uni.$t('common.settings'),
         value: 'setting',
         hrefUrl: '/pages/user/setting/index',
@@ -104,6 +112,31 @@ const clickNavTo = (url: string) => {
   } else {
     uni.$u.toast(uni.$t('common.featureDeveloping'));
   }
+};
+
+const handleMenuClick = (item: any) => {
+  if (item.value === 'language') {
+    showLanguageSheet();
+  } else {
+    clickNavTo(item.hrefUrl);
+  }
+};
+
+const showLanguageSheet = () => {
+  const itemList = SUPPORTED_LOCALES.map((item) => item.label);
+  uni.showActionSheet({
+    itemList,
+    success: (res) => {
+      const selected = SUPPORTED_LOCALES[res.tapIndex];
+      if (selected) {
+        setLocale(selected.value);
+        getMenuList();
+      }
+    },
+    fail: (res) => {
+      console.log(res.errMsg);
+    },
+  });
 };
 
 // 切换接口

@@ -4,14 +4,14 @@
     {
       "path": "pages/tabbar/main",
       "style": {
-        "navigationBarTitleText": "%pages.main%",
+        "navigationBarTitleText": "",
         "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/tabbar/user",
       "style": {
-        "navigationBarTitleText": "%pages.user%"
+        "navigationBarTitleText": ""
       }
     }
   ],
@@ -22,7 +22,7 @@
         {
           "path": "oauth",
           "style": {
-            "navigationBarTitleText": "%pages.login%",
+            "navigationBarTitleText": "",
             "navigationStyle": "custom",
             "mp-alipay": {
               "transparentTitle": "always",
@@ -294,13 +294,13 @@
     "list": [
       {
         "pagePath": "pages/tabbar/main",
-        "text": "%pages.main%",
+        "text": "　",
         "iconPath": "static/tabbar/home.png",
         "selectedIconPath": "static/tabbar/home_on.png"
       },
       {
         "pagePath": "pages/tabbar/user",
-        "text": "%pages.user%",
+        "text": "　",
         "iconPath": "static/tabbar/my.png",
         "selectedIconPath": "static/tabbar/my_on.png"
       }

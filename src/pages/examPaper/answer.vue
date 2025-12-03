@@ -13,6 +13,7 @@ import {
   postAppraiseSaveExamAnswerApi,
 } from '@/api/appraise';
 import questionsList from './components/questions-list.vue';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   components: {
     questionsList,
@@ -25,6 +26,7 @@ export default {
     };
   },
   async onLoad(option) {
+    usePageTitle('pages.answer');
     this.examPaperId = option.examPaperId || '';
     if (option.status === 'pending') {
       await this.getExamQuestionStart();

@@ -10,7 +10,6 @@ import permissionListener from '@/utils/permission/permission-listener';
 import { useUserStore } from '@/stores/modules/user';
 import { onBeforeMount, watch } from 'vue';
 import { useGlobalStore } from '@/stores/modules/global';
-import { updateTabBarText } from '@/locales';
 
 const userStore = useUserStore();
 const globalStore = useGlobalStore();
@@ -32,12 +31,6 @@ watch(
 
 onLaunch((options) => {
   console.log('App Launch');
-
-  // 修改 tabBar 文字：应用启动后根据当前语言更新 tabBar 显示文字
-  // 延迟执行确保 tabBar 已经初始化完成
-  setTimeout(() => {
-    updateTabBarText();
-  }, 100);
 
   // 存储本地投放渠道
   const { query, referrerInfo } = options;
@@ -210,6 +203,7 @@ const checkNotificationAuthorized = () => {
       title: uni.$t('app.permission.notificationTitle'),
       content: uni.$t('app.permission.notificationContent'),
       confirmText: uni.$t('app.permission.goSetting'),
+      cancelText: uni.$t('app.permission.cancelText'),
       success: (res) => {
         if (res.confirm) {
           uni.openAppAuthorizeSetting();

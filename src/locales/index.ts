@@ -70,36 +70,48 @@ export const setupI18n = (app: App) => {
   // 挂载到 uni 对象上，方便在非 Vue 组件中使用
   (uni as any).$t = i18n.global.t;
   // globalInjection: true 已经启用了全局注入，模板中可以直接使用 $t
-  
+
   // 修改 tabBar 文字：应用初始化后根据当前语言更新 tabBar 显示文字
-  // 延迟执行确保 i18n 已经初始化完成
-  setTimeout(() => {
-    updateTabBarText();
-  }, 50);
-  
+  // updateTabBarText 内部已实现重试机制，无需延迟调用
+  updateTabBarText();
+
   return i18n;
 };
 
 /**
  * 更新 tabBar 文字以支持国际化
  * 修改 tabBar 文字：根据当前语言设置动态更新 tabBar 的显示文字
+ * 使用重试机制确保在实机上的可靠性
  */
-export const updateTabBarText = () => {
+export const updateTabBarText = (retryCount = 0, maxRetries = 5) => {
+  // 重试逻辑
+  const retry = () => {
+    if (retryCount < maxRetries) {
+      const delay = Math.min(1000, 100 * Math.pow(2, retryCount));
+      console.log(`Retrying tabBar update in ${delay}ms (attempt ${retryCount + 1}/${maxRetries})`);
+      setTimeout(() => updateTabBarText(retryCount + 1, maxRetries), delay);
+    }
+  };
+
   try {
-    // 修改第一个 tabBar（鉴别）
+    // 设置第一个 tabBar（鉴别）
     uni.setTabBarItem({
       index: 0,
       text: i18n.global.t('pages.main'),
-    });
-
-    // 修改第二个 tabBar（我的）
-    uni.setTabBarItem({
-      index: 1,
-      text: i18n.global.t('pages.user'),
+      success: () => {
+        // 设置第二个 tabBar（我的）
+        uni.setTabBarItem({
+          index: 1,
+          text: i18n.global.t('pages.user'),
+          success: () => console.log('TabBar text updated successfully'),
+          fail: retry,
+        });
+      },
+      fail: retry,
     });
   } catch (error) {
-    // 某些平台可能不支持动态修改 tabBar，静默失败
     console.warn('Failed to update tabBar text:', error);
+    retry();
   }
 };
 
@@ -107,17 +119,17 @@ export const setLocale = (locale: Locale) => {
   if (!SUPPORTED_LOCALES.some((item) => item.value === locale)) {
     return;
   }
-  
+
   // 如果编译时强制指定了语言（VITE_DEFAULT_LOCALE），不允许用户切换
   if (IS_ENV_LOCALE_FORCED) {
     console.warn(`Language is forced to ${ENV_DEFAULT_LOCALE} by VITE_DEFAULT_LOCALE, cannot change to ${locale}`);
     return;
   }
-  
+
   (i18n.global.locale as unknown as { value: Locale }).value = locale;
   uni.setLocale(locale);
   uni.setStorageSync(STORAGE_KEY, locale);
-  
+
   // 修改 tabBar 文字：语言切换后更新 tabBar 显示文字
   updateTabBarText();
 };

@@ -117,6 +117,10 @@ import uploader from '@/utils/uploader/uploader';
 
 import { useUserStore } from '@/stores/modules/user';
 import { requestPayment } from '@/utils/payment';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.identifyInfo');
+
 const userStore = useUserStore();
 
 const $u = uni.$u;

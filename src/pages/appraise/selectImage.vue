@@ -32,6 +32,7 @@
 
 <script>
 import { getAppraiseOrderDetailApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -43,6 +44,7 @@ export default {
     };
   },
   async onLoad(option) {
+    usePageTitle('pages.selectImage');
     this.orderId = option.orderId;
     const list = uni.getStorageSync('image_select_list') || [];
     if (list.length) {

@@ -59,7 +59,13 @@
     margin-top="160rpx"
     :text="$t('common.noData')"
     v-if="orderList.length === 0"></u-empty>
-  <u-loadmore :status="loadingStatus" customStyle="padding-bottom: 20rpx" v-if="orderList.length"></u-loadmore>
+  <u-loadmore
+    :status="loadingStatus"
+    customStyle="padding-bottom: 20rpx"
+    v-if="orderList.length"
+    :loadmoreText="$t('common.loadmoreText')"
+    :loadingText="$t('common.loadingText')"
+    :nomoreText="$t('common.nomoreText')"></u-loadmore>
 
   <view class="pos-fixed right-48rpx bottom-360rpx" @click="$u.navTo('/pages/examPaper/examPaperList')" v-if="tabCurrent === 1">
     <view class="flex-col flex-center w-120rpx h-120rpx rounded-50% text-#fff bg-black">

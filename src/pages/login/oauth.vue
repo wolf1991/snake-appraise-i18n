@@ -88,7 +88,13 @@
       </view>
     </view>
 
-    <up-code :seconds="seconds" ref="uCodeRef" @change="codeChange"></up-code>
+    <up-code
+      :seconds="seconds"
+      ref="uCodeRef"
+      @change="codeChange"
+      :start-text="$t('common.startCode')"
+      :change-text="$t('common.changeCode')"
+      :end-text="$t('common.endCode')"></up-code>
 
     <!-- #ifdef APP-PLUS -->
     <!-- <view class="w-full px-44rpx box-border">

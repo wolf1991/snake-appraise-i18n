@@ -33,6 +33,8 @@
 
 <script>
 import { getCategoryBrandListApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
 export default {
   data() {
     return {
@@ -58,6 +60,7 @@ export default {
     },
   },
   async onLoad(option) {
+    usePageTitle('pages.selectBrand');
     this.current = Number(option?.current || 0);
     this.appraiserId = option?.appraiserId || '';
     this.catId = option?.cat_id || '';

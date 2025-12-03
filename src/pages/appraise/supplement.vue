@@ -47,6 +47,9 @@ import { onLoad } from '@dcloudio/uni-app';
 import { getAppraiseOrderDetailApi, postMoreImageApi } from '@/api/appraise';
 import useUpload from '@/hooks/useUpload';
 import { previewImage } from '@/utils';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.supplement');
 
 const $u = uni.$u;
 

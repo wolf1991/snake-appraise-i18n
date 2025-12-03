@@ -25,13 +25,13 @@
           <text class="text-28rpx text-#000">{{ stateMap[item.status] }}</text>
           <template v-if="!item.orderCoupon && !item.appraiseCode">
             <text class="text-28rpx text-#000 ml-8rpx">{{ item.typePrice }}</text>
-            <text class="text-24rpx text-#000 ml-8rpx" v-if="item.status === 'fail' || item.status === 'outrange'">
+            <text class="text-16rpx text-#000 ml-4rpx" v-if="item.status === 'fail' || item.status === 'outrange'">
               ({{ $t('appraise.order.refunded') }})
             </text>
           </template>
           <template v-if="item.orderCoupon && !item.appraiseCode">
             <text class="text-28rpx text-#000 ml-8rpx">{{ '￥' + item.orderCoupon.payPrice }}</text>
-            <text class="text-24rpx text-#000 ml-8rpx">({{ $t('appraise.order.codePrice') }})</text>
+            <text class="text-24rpx text-#000 ml-4rpx">({{ $t('appraise.order.codePrice') }})</text>
           </template>
         </view>
       </view>
@@ -52,7 +52,7 @@
         </view>
       </view>
 
-      <view v-if="item.stamp" class="w-160rpx h-160rpx pos-absolute top-120rpx right-30rpx">
+      <view v-if="item.stamp && uni.getLocale() === 'zh-CN'" class="w-160rpx h-160rpx pos-absolute top-120rpx right-30rpx">
         <image
           class="w-160rpx h-160rpx"
           :src="$u.imageResize(`https://cdn.puresnake.com/xy-web/appraise/appraise_${item.stamp}.png`, 375)"
@@ -66,8 +66,13 @@
     </view>
   </view>
   <!-- 空白页 -->
-  <u-empty margin-top="120" v-if="orderList.length === 0"></u-empty>
-  <u-loadmore v-if="orderList.length" :status="loadingStatus"></u-loadmore>
+  <u-empty margin-top="120" v-if="orderList.length === 0" :text="$t('common.emptyList')"></u-empty>
+  <u-loadmore
+    v-if="orderList.length"
+    :status="loadingStatus"
+    :loadmoreText="$t('common.loadmoreText')"
+    :loadingText="$t('common.loadingText')"
+    :nomoreText="$t('common.nomoreText')"></u-loadmore>
 </template>
 
 <script setup lang="ts">
@@ -76,6 +81,9 @@ import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { getAppraiseOrderListApi } from '@/api/appraise';
 
 import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMore';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.orderList');
 
 const $u = uni.$u;
 
@@ -150,7 +158,7 @@ const getOrderList = async (type = '') => {
 
   const params = {
     page: page.value,
-    status: tabsList[tabsCurrent.value].value,
+    status: tabsList.value[tabsCurrent.value].value,
     size: 20,
   };
   const response = await getAppraiseOrderListApi(params);

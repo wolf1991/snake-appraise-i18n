@@ -46,6 +46,7 @@ const zhCN = {
     switchSuccessOnly: '切换成功',
     seconds: '秒',
     serviceCenter: '客服中心',
+    language: '语言',
     settings: '设置',
     loginOrRegister: '登录/注册',
     cashier: '收银台',
@@ -96,37 +97,36 @@ const zhCN = {
     shareTitle: '分享标题',
     addImage: '添加图片',
     publish: '发布',
+    startCode: '获取验证码',
+    changeCode: 'X秒重新获取',
+    endCode: '重新获取',
+    tip: '提示',
+    gotIt: '知道了',
+    copiedToClipboard: '已复制到剪切板',
+    loadmoreText: '加载更多',
+    loadingText: '正在加载...',
+    nomoreText: '没有更多了',
+    emptyList: '数据为空'
   },
   pages: {
-    // 应用名称
     appName: 'SNAKE鉴别',
-    // 主包页面
     main: '鉴别',
     user: '我的',
-    // 登录
     login: '登录',
-    // 用户相关
     address: '地址',
     addressManage: '编辑地址',
     settings: '设置',
     cancelAccount: '注销账号',
     devConfig: '开发配置',
-    // 自定义
     dydetail: '鉴别详情',
-    // 收银台
     cashier: '收银台',
-    // CMS 和 Webview
     cms: 'CMS',
     webview: '网页视图',
-    // 原因选择
     selectReason: '原因选择',
-    // 部位图和品牌选择
     selectImage: '部位图选择',
     selectBrand: '品牌选择',
-    // 鉴别信息
     identifyInfo: '鉴别信息',
     selectIdentify: '鉴别信息',
-    // 鉴别相关
     allAppraisers: '当前在线鉴别师',
     appraiser: '鉴定师列表',
     appraiseCheck: '鉴别',
@@ -135,11 +135,9 @@ const zhCN = {
     codePurchase: '鉴别扣购买',
     supplement: '补图',
     appraiserDetail: '鉴定详情',
-    // 试卷相关
     examPaperList: '试卷列表',
     examPaperDetail: '试卷详情',
     answer: '答题',
-    // 订单相关
     orderList: '鉴别订单列表',
     orderDetail: '鉴别订单详情',
     codeOrderList: '鉴别扣订单列表',
@@ -185,6 +183,7 @@ const zhCN = {
       notificationTitle: '通知权限',
       notificationContent: '您还没有开启通知权限，无法接收到消息通知，请前往设置！',
       goSetting: '去设置',
+      cancelText: '取消'
     },
     update: {
       modalTitle: '更新提示',
@@ -263,6 +262,7 @@ const zhCN = {
       risk: '风险',
       recheck: '复检',
       processing: '处理中',
+      appraisalResult: '鉴别结果',
     },
     code: {
       enterCode: '请输入商品编号',

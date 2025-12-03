@@ -39,6 +39,7 @@
 </template>
 <script>
 import { getAddressList } from '@/api/user';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -48,6 +49,7 @@ export default {
     };
   },
   onLoad(options) {
+    usePageTitle('pages.address');
     this.source = parseInt(options.source || 0, 10);
   },
   onShow() {

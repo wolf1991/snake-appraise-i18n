@@ -28,6 +28,7 @@
 import { postAppraisePayDoPayApi } from '@/api/appraise';
 import { wxPay } from '@/utils/payment';
 import { useUserStore } from '@/stores/modules/user';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -39,6 +40,7 @@ export default {
     };
   },
   onLoad(option) {
+    usePageTitle('pages.cashier');
     this.payId = option?.payId || '';
     this.price = option?.price || '';
   },

@@ -68,9 +68,21 @@ function generate() {
   const content = lines.join('\n');
   const bom = '\uFEFF';
   const buffer = Buffer.from(bom + content, 'utf8');
-  fs.writeFileSync(outPath, buffer);
-  // eslint-disable-next-line no-console
-  console.log(`i18n 文档已生成: ${outPath}`);
+
+  try {
+    fs.writeFileSync(outPath, buffer);
+    // eslint-disable-next-line no-console
+    console.log(`i18n 文档已生成: ${outPath}`);
+  } catch (error: any) {
+    if (error.code === 'EPERM' || error.code === 'EBUSY') {
+      console.error(`\n❌ 无法写入文件: ${outPath}`);
+      console.error('原因: 文件可能被其他程序(如 Excel)占用，或者没有写入权限。');
+      console.error('请关闭该文件后重试。\n');
+    } else {
+      console.error('写入文件时发生未知错误:', error);
+    }
+    process.exit(1);
+  }
 }
 
 generate();

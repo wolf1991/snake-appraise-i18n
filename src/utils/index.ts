@@ -292,10 +292,10 @@ export function toast(title: string, duration: number = 2000) {
   } else {
     // 文案巨长时使用的toast，改用系统弹窗
     uni.showModal({
-      title: '提示',
+      title: uni.$t('common.tip'),
       content: String(title),
       showCancel: false,
-      confirmText: '知道了',
+      confirmText: uni.$t('common.gotIt'),
     });
   }
 }
@@ -311,7 +311,7 @@ export const copy = (copyText: string = '', callback: () => void) => {
     data: String(copyText),
     success() {
       if (typeof callback === 'undefined') {
-        toast('已复制到剪切板');
+        toast(uni.$t('common.copiedToClipboard'));
       } else {
         callback();
       }

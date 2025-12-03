@@ -11,6 +11,7 @@
 
 <script>
 import { getCmsInfo } from '@/api/cms';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -31,6 +32,7 @@ export default {
     },
   },
   onLoad(options) {
+    usePageTitle('pages.cms');
     let q = options?.q || '';
     // #ifdef MP-ALIPAY
     q = my.getLaunchOptionsSync()?.query?.qrCode;

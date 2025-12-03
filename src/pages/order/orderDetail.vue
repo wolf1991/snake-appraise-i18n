@@ -6,7 +6,7 @@
       </view>
 
       <view class="text-center pos-relative">
-        <view class="text-28rpx">鉴别结果</view>
+        <view class="text-28rpx">{{ $t('appraise.order.appraisalResult') }}</view>
         <view class="text-56rpx mt-28rpx font-bold">************</view>
 
         <view class="flex-center pt-41rpx">
@@ -43,7 +43,7 @@
         </view>
 
         <view class="text-center pos-relative">
-          <view class="text-28rpx">鉴别结果</view>
+          <view class="text-28rpx">{{ $t('appraise.order.appraisalResult') }}</view>
           <view class="text-#ff3367 mt-10rpx text-26rpx" v-if="isIdentifyResult">{{ $t('appraise.order.resultExpired') }}</view>
           <view
             class="result-title"
@@ -53,7 +53,7 @@
                 'result-title--green': orderInfo.status === 'finish',
               },
             ]">
-            {{ stateMap[orderInfo.status] }}
+            {{ $t('appraise.order.' + orderInfo.status) }}
           </view>
 
           <view class="text-22rpx mt-10rpx text-#B1B2C1">
@@ -69,6 +69,7 @@
         </view>
 
         <image
+          v-if="uni.getLocale() === 'zh-CN'"
           class="pos-absolute right-20rpx bottom-257rpx w-168rpx h-168rpx z-12"
           :src="`https://cdn.puresnake.com/xy-web/appraise/appraise_${orderInfo.stamp}.png`"
           mode="widthFix"></image>
@@ -141,7 +142,8 @@
         class="flex-center flex-col mt-26rpx mx-20rpx p-14rpx pb-20rpx bg-#EEEEEE rounded-4rpx"
         v-if="orderInfo.status !== 'unpaid' && orderInfo.resultAnnouncement">
         <view class="snake-font-medium fw-500 text-24rpx text-#889099">
-          {{ orderInfo.resultBasedOnType === 'image' ? $t('common.image') : $t('common.physical') }}{{ $t('appraise.identify.imageIdentifyStatement.title') }}
+          {{ orderInfo.resultBasedOnType === 'image' ? $t('common.image') : $t('common.physical')
+          }}{{ $t('appraise.identify.imageIdentifyStatement.title') }}
         </view>
         <view class="snake-font-light mt-12rpx text-24rpx text-#889099 text-justify fw-300 line-height-40rpx">
           {{ orderInfo.resultAnnouncement }}
@@ -151,7 +153,9 @@
       <view class="h-104rpx pb-safe"></view>
       <view class="snake-fixed-bottom" v-if="orderInfo.status === 'need_img' && orderInfo.operate">
         <view class="px-24rpx py-12rpx">
-          <u-button type="primary" @click="$u.navTo(`/pages/appraise/supplement?orderId=${orderId}`)">{{ $t('pages.supplement') }}</u-button>
+          <u-button type="primary" @click="$u.navTo(`/pages/appraise/supplement?orderId=${orderId}`)">
+            {{ $t('pages.supplement') }}
+          </u-button>
         </view>
       </view>
     </view>
@@ -164,18 +168,11 @@ import { onLoad } from '@dcloudio/uni-app';
 import { getAppraiseOrderDetailApi } from '@/api/appraise';
 
 import { previewImage } from '@/utils';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.orderDetail');
 
 const $u = uni.$u;
-
-const stateMap = {
-  unpaid: uni.$t('appraise.order.unpaid'),
-  unappraised: uni.$t('appraise.order.unappraised'),
-  finish: uni.$t('appraise.order.finish'),
-  fail: uni.$t('appraise.order.fail'),
-  fake: uni.$t('appraise.order.fake'),
-  need_img: uni.$t('appraise.order.need_img'),
-  outrange: uni.$t('appraise.order.outrange'),
-};
 
 const orderId = ref();
 const orderInfo = ref(null);

@@ -43,8 +43,10 @@ import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { getCmsInfo } from '@/api/cms';
 import { getAppraiseUserListApi } from '@/api/appraise';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { updateTabBarText } from '@/locales';
 
 usePageTitle('pages.main');
+updateTabBarText();
 
 const $u = uni.$u;
 

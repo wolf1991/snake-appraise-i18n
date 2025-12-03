@@ -66,16 +66,30 @@
         </view>
         <view class="text-#666666 font-300 text-24rpx pt-8rpx">
           <template v-if="type === 'orderHall'">
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.equipmentName') }}：{{ orderInfo.productName || $t('common.none') }}</view>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}</view>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.purchaseSource') }}：{{ orderInfo.fromOrigin || $t('common.none') }}</view>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.releaseYear') }}：{{ orderInfo.releaseDate || $t('common.none') }}</view>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.purchasePrice') }}：{{ orderInfo.buyPrice || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.equipmentName') }}：{{ orderInfo.productName || $t('common.none') }}
+            </view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}
+            </view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.purchaseSource') }}：{{ orderInfo.fromOrigin || $t('common.none') }}
+            </view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.releaseYear') }}：{{ orderInfo.releaseDate || $t('common.none') }}
+            </view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.purchasePrice') }}：{{ orderInfo.buyPrice || $t('common.none') }}
+            </view>
             <view class="mt-14rpx break-all">{{ $t('appraise.order.orderId') }}：{{ orderInfo.id || $t('common.none') }}</view>
           </template>
           <template v-else>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.appraiseProduct') }}：{{ orderInfo.productName || $t('common.none') }}</view>
-            <view class="mt-14rpx break-all">{{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}</view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.appraiseProduct') }}：{{ orderInfo.productName || $t('common.none') }}
+            </view>
+            <view class="mt-14rpx break-all">
+              {{ $t('appraise.appraiserDetail.remark') }}：{{ orderInfo.description || $t('common.none') }}
+            </view>
             <view class="mt-14rpx break-all">{{ $t('appraise.order.orderId') }}：{{ orderInfo.id || $t('common.none') }}</view>
           </template>
         </view>
@@ -169,6 +183,9 @@ import {
 
 import { previewImage } from '@/utils';
 import { getAppDictValue } from '@/api/user';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.appraiserDetail');
 
 const $u = uni.$u;
 

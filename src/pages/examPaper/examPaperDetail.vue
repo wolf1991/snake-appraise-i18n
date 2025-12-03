@@ -17,9 +17,15 @@
                   {{ $t('examPaper.timeout') }}
                 </view>
               </view>
-              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.questionCount') }}：{{ questionsDetail.questionCount }}</view>
-              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.examTime') }}：{{ questionsDetail.examTime }}{{ $t('examPaper.minutes') }}</view>
-              <view class="text-28rpx mt-20rpx text-#888891">{{ $t('examPaper.deadline') }}：{{ $u.formatTime(questionsDetail.answerDate) }}</view>
+              <view class="text-28rpx mt-20rpx text-#888891">
+                {{ $t('examPaper.questionCount') }}：{{ questionsDetail.questionCount }}
+              </view>
+              <view class="text-28rpx mt-20rpx text-#888891">
+                {{ $t('examPaper.examTime') }}：{{ questionsDetail.examTime }}{{ $t('examPaper.minutes') }}
+              </view>
+              <view class="text-28rpx mt-20rpx text-#888891">
+                {{ $t('examPaper.deadline') }}：{{ $u.formatTime(questionsDetail.answerDate) }}
+              </view>
             </view>
           </view>
         </view>
@@ -30,11 +36,20 @@
         <view class="flex-center w-670rpx h-322rpx" style="border: 2px solid #9f9f9f">
           <view class="flex-center w-636rpx h-294rpx" style="border: 1px solid #cccccc">
             <view class="flex-center flex-col">
-              <view class="text-60rpx text-#06d290 snake-font-medium" v-if="questionsDetail.status === 'pass'">{{ $t('examPaper.pass') }}</view>
-              <view class="text-60rpx text-#fd5b5b snake-font-medium" v-if="questionsDetail.status === 'fail'">{{ $t('examPaper.fail') }}</view>
+              <view class="text-60rpx text-#06d290 snake-font-medium" v-if="questionsDetail.status === 'pass'">
+                {{ $t('examPaper.pass') }}
+              </view>
+              <view class="text-60rpx text-#fd5b5b snake-font-medium" v-if="questionsDetail.status === 'fail'">
+                {{ $t('examPaper.fail') }}
+              </view>
               <view class="text-36rpx snake-font-medium">{{ questionsDetail.msg || $t('examPaper.accuracy0') }}</view>
               <view class="text-28rpx pt-20rpx text-#646471 snake-font-regular">
-                {{ $t('examPaper.answerStatsDetail', { correct: questionsDetail.correctCount || 0, incorrect: questionsDetail.incorrectCount || 0 }) }}
+                {{
+                  $t('examPaper.answerStatsDetail', {
+                    correct: questionsDetail.correctCount || 0,
+                    incorrect: questionsDetail.incorrectCount || 0,
+                  })
+                }}
               </view>
             </view>
           </view>
@@ -60,12 +75,16 @@
             </scroll-view>
           </view>
           <view class="bottom flex-items-center justify-between snake-border-t">
-            <text class="snake-font-regular text-22rpx text-#888891 font-400">{{ $t('examPaper.selected') }}：{{ item.userAnswer || $t('examPaper.notAnswered') }}</text>
-            <text class="snake-font-regular text-32rpx text-#2ebd7c font-600">{{ $t('examPaper.answer') }}：{{ item.answer || '' }}</text>
+            <text class="snake-font-regular text-22rpx text-#888891 font-400">
+              {{ $t('examPaper.selected') }}：{{ item.userAnswer || $t('examPaper.notAnswered') }}
+            </text>
+            <text class="snake-font-regular text-32rpx text-#2ebd7c font-600">
+              {{ $t('examPaper.answer') }}：{{ item.answer || '' }}
+            </text>
           </view>
         </view>
       </template>
-      <u-empty marginTop="60" v-else></u-empty>
+      <u-empty marginTop="60" v-else :text="$t('common.emptyList')"></u-empty>
     </view>
     <view class="h-104rpx pb-safe"></view>
     <view
@@ -86,6 +105,7 @@
 <script>
 import { previewImage } from '@/utils';
 import { getAppraiseExamQuestionDetailApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -95,6 +115,7 @@ export default {
     };
   },
   onLoad(option) {
+    usePageTitle('pages.examPaperDetail');
     this.examPaperId = option.examPaperId;
     this.getExamQuestionList();
   },

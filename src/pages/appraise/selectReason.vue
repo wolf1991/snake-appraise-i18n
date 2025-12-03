@@ -28,6 +28,7 @@
 
 <script>
 import { getAppDictValue } from '@/api/user';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default {
   data() {
@@ -41,6 +42,7 @@ export default {
     };
   },
   onLoad(option) {
+    usePageTitle('pages.selectReason');
     this.selectedList = (option?.selectedStr && option?.selectedStr.split(',')) || [];
     this.status = option?.status || '';
     this.orderId = option?.orderId || '';

@@ -12,6 +12,7 @@ export default {
     };
   },
   onLoad(options) {
+    usePageTitle('pages.webview');
     // console.log('options', options);
     const { title = '', url = '' } = options;
     this.webviewUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(url)));

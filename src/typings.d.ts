@@ -33,6 +33,11 @@ declare global {
     expire: number;
     [key: string]: any;
   }
+
+  // 扩展 uni 对象的类型定义，添加 i18n 的 $t 方法
+  interface Uni {
+    $t: (key: string, ...args: any[]) => string;
+  }
 }
 
-export {}; // 防止模块污染
+export { }; // 防止模块污染
