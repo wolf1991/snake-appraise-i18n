@@ -2,32 +2,32 @@
   <view>
     <view class="bg-white py-20rpx px-24rpx">
       <view class="flex-items-center h-90rpx">
-        <view class="text-28rpx form_required">商品编号</view>
+        <view class="text-28rpx form_required">{{ $t('appraise.create.productCode') }}</view>
         <view class="flex-1 ml-24rpx">
-          <u-input v-model="formData.appraiseCode" placeholder="请输入商品编号">
+          <u-input v-model="formData.appraiseCode" :placeholder="$t('appraise.code.enterCode')">
             <template #suffix><u-icon name="scan" size="46rpx" @click="scanHandle"></u-icon></template>
           </u-input>
         </view>
       </view>
 
       <view class="flex-items-center h-90rpx">
-        <view class="text-28rpx form_required">商品品牌</view>
+        <view class="text-28rpx form_required">{{ $t('appraise.create.productBrand') }}</view>
         <view class="flex-1 flex justify-end text-26rpx ml-24rpx hover:opacity-[0.7]" @click="brandPickerShow = true">
-          <text class="text-info">{{ brandName || '请输入商品品牌' }}</text>
+          <text class="text-info">{{ brandName || $t('appraise.create.enterProductBrand') }}</text>
           <u-icon name="arrow-right" size="30rpx"></u-icon>
         </view>
       </view>
 
       <view class="flex-items-center h-90rpx">
-        <view class="text-28rpx form_required">商品类目</view>
+        <view class="text-28rpx form_required">{{ $t('appraise.create.productCategory') }}</view>
         <view class="flex-1 flex justify-end text-26rpx ml-24rpx hover:opacity-[0.7]" @click="catePickerShow = true">
-          <text class="text-info">{{ cateName || '请输入商品类目' }}</text>
+          <text class="text-info">{{ cateName || $t('appraise.create.enterProductCategory') }}</text>
           <u-icon name="arrow-right" size="30rpx"></u-icon>
         </view>
       </view>
 
       <view class="flex items-start mt-20rpx">
-        <view class="text-28rpx form_required">鉴定图片</view>
+        <view class="text-28rpx form_required">{{ $t('appraise.create.appraiseImages') }}</view>
         <view class="flex-1 ml-24rpx">
           <u-upload
             ref="uploadRef"
@@ -42,7 +42,7 @@
       </view>
 
       <view class="flex flex-col mt-20rpx" v-if="isAppraiser">
-        <view class="text-28rpx">鉴定结果</view>
+        <view class="text-28rpx">{{ $t('pages.appraiseCheck') }}</view>
         <view class="mt-20rpx">
           <u-radio-group v-model="formData.status" @change="radioChange" v-if="showRadio">
             <u-radio v-for="(item, index) in statusList" :key="index" :label="item.name" :name="item.value"></u-radio>
@@ -77,7 +77,7 @@
 
     <view class="snake-fixed-bottom">
       <view class="py-12rpx px-24rpx">
-        <u-button type="primary" @click="submit">提交鉴定</u-button>
+        <u-button type="primary" @click="submit">{{ $t('appraise.create.submitAppraise') }}</u-button>
       </view>
     </view>
   </view>
@@ -91,6 +91,9 @@ import { getAppraiseCategoryListApi, getAppraiserCheckApi, getBrandListApi, getC
 import uploader from '@/utils/uploader/uploader';
 import graceChecker from '@/utils/js/graceChecker';
 import type { UploadProps } from '@/uni_modules/uview-plus/types/comps/upload';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.appraiserDetail');
 
 const brandPickerShow = ref(false);
 const catePickerShow = ref(false);
@@ -141,24 +144,24 @@ const rule = [
     name: 'appraiseCode',
     checkType: 'string',
     checkRule: '1,',
-    errorMsg: '请输入商品编号',
+    errorMsg: uni.$t('appraise.code.enterCode'),
   },
   {
     name: 'brandId',
     checkType: 'string',
     checkRule: '1,',
-    errorMsg: '请选择商品品牌',
+    errorMsg: uni.$t('appraise.create.selectProductBrand'),
   },
   {
     name: 'categoryId',
     checkType: 'string',
     checkRule: '1,',
-    errorMsg: '请选择商品类目',
+    errorMsg: uni.$t('appraise.create.selectProductCategory'),
   },
   {
     name: 'imageList',
     checkType: 'notnull',
-    errorMsg: '请上传图片',
+    errorMsg: uni.$t('appraise.create.uploadImages'),
   },
 ];
 
@@ -237,7 +240,7 @@ const afterRead = async (event) => {
     formData.value.imageList.push({
       ...item,
       status: 'uploading',
-      message: '上传中',
+      message: uni.$t('common.uploadInProgress'),
     });
   });
 
@@ -288,7 +291,7 @@ const catePickerConfirm = (e) => {
 
 const submit = async () => {
   if (uploadling.value) {
-    uni.$u.toast('正在上传图片，请稍后提交');
+    uni.$u.toast(uni.$t('appraise.create.uploadingPleaseWait'));
     return;
   }
 
@@ -300,7 +303,7 @@ const submit = async () => {
     };
 
     uni.showLoading({
-      title: '提交中...',
+      title: uni.$t('appraise.create.submitting'),
       mask: true,
     });
 
@@ -319,8 +322,8 @@ const submit = async () => {
       uni.hideLoading();
 
       uni.showModal({
-        title: '提示',
-        content: (response.data as string) || '提交成功',
+        title: uni.$t('appraise.create.tip'),
+        content: (response.data as string) || uni.$t('common.submitSuccess'),
         showCancel: false,
       });
     } else {

@@ -25,11 +25,13 @@
           <text class="text-28rpx text-#000">{{ stateMap[item.status] }}</text>
           <template v-if="!item.orderCoupon && !item.appraiseCode">
             <text class="text-28rpx text-#000 ml-8rpx">{{ item.typePrice }}</text>
-            <text class="text-24rpx text-#000 ml-8rpx" v-if="item.status === 'fail' || item.status === 'outrange'">(已退)</text>
+            <text class="text-16rpx text-#000 ml-4rpx" v-if="item.status === 'fail' || item.status === 'outrange'">
+              ({{ $t('appraise.order.refunded') }})
+            </text>
           </template>
           <template v-if="item.orderCoupon && !item.appraiseCode">
             <text class="text-28rpx text-#000 ml-8rpx">{{ '￥' + item.orderCoupon.payPrice }}</text>
-            <text class="text-24rpx text-#000 ml-8rpx">(鉴别码)</text>
+            <text class="text-24rpx text-#000 ml-4rpx">({{ $t('appraise.order.codePrice') }})</text>
           </template>
         </view>
       </view>
@@ -40,17 +42,17 @@
         </view>
         <view class="pl-20rpx">
           <view class="text-28rpx line-clamp-3">{{ item.productName }}</view>
-          <view class="mt-10rpx text-24rpx" style="color: #acacb7">鉴定单ID: {{ item.id }}</view>
+          <view class="mt-10rpx text-24rpx" style="color: #acacb7">{{ $t('appraise.order.orderId') }}: {{ item.id }}</view>
           <view class="flex-items-center" v-if="item.appraiseCode">
             <view class="w-38rpx h-38rpx text-center bg-#f6f6f6 rounded-20rpx">
               <text class="next-icons icon-qrbelt"></text>
             </view>
-            <text class="text-24rpx text-#26273a">鉴别扣码: {{ item.appraiseCode }}</text>
+            <text class="text-24rpx text-#26273a">{{ $t('appraise.order.codeDeduction') }}: {{ item.appraiseCode }}</text>
           </view>
         </view>
       </view>
 
-      <view v-if="item.stamp" class="w-160rpx h-160rpx pos-absolute top-120rpx right-30rpx">
+      <view v-if="item.stamp && uni.getLocale() === 'zh-CN'" class="w-160rpx h-160rpx pos-absolute top-120rpx right-30rpx">
         <image
           class="w-160rpx h-160rpx"
           :src="$u.imageResize(`https://cdn.puresnake.com/xy-web/appraise/appraise_${item.stamp}.png`, 375)"
@@ -64,53 +66,61 @@
     </view>
   </view>
   <!-- 空白页 -->
-  <u-empty margin-top="120" v-if="orderList.length === 0"></u-empty>
-  <u-loadmore v-if="orderList.length" :status="loadingStatus"></u-loadmore>
+  <u-empty margin-top="120" v-if="orderList.length === 0" :text="$t('common.emptyList')"></u-empty>
+  <u-loadmore
+    v-if="orderList.length"
+    :status="loadingStatus"
+    :loadmoreText="$t('common.loadmoreText')"
+    :loadingText="$t('common.loadingText')"
+    :nomoreText="$t('common.nomoreText')"></u-loadmore>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { getAppraiseOrderListApi } from '@/api/appraise';
 
 import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMore';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.orderList');
 
 const $u = uni.$u;
 
 const tabsCurrent = ref(0);
 
-const stateMap = {
-  unpaid: '未付款(关闭)',
-  unappraised: '待鉴别',
-  finish: '符合正品工艺', // 鉴别为真
-  fail: '无法鉴别',
-  fake: '不符合正品工艺', // 鉴别为假
-  need_img: '待补图',
-  outrange: '无法鉴别', // 非鉴别范围
-};
+const stateMap = computed(() => ({
+  unpaid: uni.$t('appraise.order.unpaid'),
+  unappraised: uni.$t('appraise.order.unappraised'),
+  finish: uni.$t('appraise.order.finish'), // 鉴别为真
+  fail: uni.$t('appraise.order.fail'),
+  fake: uni.$t('appraise.order.fake'), // 鉴别为假
+  need_img: uni.$t('appraise.order.need_img'),
+  outrange: uni.$t('appraise.order.outrange'), // 非鉴别范围
+}));
 
-const tabsList = [
+const tabsList = computed(() => [
   {
-    label: '全部鉴别',
+    label: uni.$t('appraise.order.all'),
     value: 'all',
   },
   {
-    label: '鉴别通过',
+    label: uni.$t('appraise.order.pass'),
     value: 'pass',
   },
   {
-    label: '待鉴别',
+    label: uni.$t('appraise.order.wait'),
     value: 'wait',
   },
   {
-    label: '待补图',
+    label: uni.$t('appraise.order.needImage'),
     value: 'needImage',
   },
   {
-    label: '鉴别不通过',
+    label: uni.$t('appraise.order.notPass'),
     value: 'notPass',
   },
-];
+]);
 
 const page = ref(1);
 const orderList = ref([]);
@@ -148,7 +158,7 @@ const getOrderList = async (type = '') => {
 
   const params = {
     page: page.value,
-    status: tabsList[tabsCurrent.value].value,
+    status: tabsList.value[tabsCurrent.value].value,
     size: 20,
   };
   const response = await getAppraiseOrderListApi(params);

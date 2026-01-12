@@ -22,6 +22,7 @@
       "@uni-helper/uni-types",
       "@mini-types/alipay",
       "@types/wechat-miniprogram",
+      "@types/node",
       "./src/uni_modules/uview-plus/types",
       "./src/typings.d.ts"
     ]
@@ -30,5 +31,5 @@
     "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.vue", "src/**/*.json"]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.vue", "src/**/*.json", "scripts/**/*.ts"]
 }

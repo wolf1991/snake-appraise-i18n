@@ -40,7 +40,7 @@
               <view class="next-icons icon-file snake-f20"></view>
               <view>{{ index + 1 }} / {{ totalNum }}</view>
             </view>
-            <view class="ftbtn2" @click="submit">去交卷</view>
+            <view class="ftbtn2" @click="submit">{{ $t('examPaper.submitPaper') }}</view>
           </view>
         </swiper-item>
       </block>
@@ -168,9 +168,9 @@ export default {
       const result = this.formSubmitData.findIndex((item) => !item.userAnswer);
       if (result !== -1) {
         uni.showModal({
-          title: '提示',
+          title: uni.$t('appraise.create.tip'),
           showCancel: false,
-          content: `当前未完成第${result + 1}题！`,
+          content: uni.$t('examPaper.incompleteQuestion', { num: result + 1 }),
         });
         return;
       }

@@ -83,7 +83,13 @@
           :list-type="item.setStyle.listType"
           @item-click="handlerItemClick"
           @handlerOffer="handlerOffer" />
-        <u-loadmore v-if="goodsList.length" :status="goodsStatus" :bgColor="item.setStyle.backgroundColor" />
+        <u-loadmore
+          v-if="goodsList.length"
+          :status="goodsStatus"
+          :bgColor="item.setStyle.backgroundColor"
+          :loadmoreText="$t('common.loadmoreText')"
+          :loadingText="$t('common.loadingText')"
+          :nomoreText="$t('common.nomoreText')" />
         <u-empty
           v-else
           :src="item.setStyle.emptySrc"

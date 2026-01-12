@@ -1,20 +1,20 @@
 <template>
   <view class="p-20rpx text-28rpx">
     <view class="flex-items-center">
-      <text class="pr-10rpx">开发域名</text>
-      <u-input v-model="baseUrl" placeholder="请输入开发域名" clearable></u-input>
+      <text class="pr-10rpx">{{ $t('common.devDomain') }}</text>
+      <u-input v-model="baseUrl" :placeholder="$t('common.enterDevDomain')" clearable></u-input>
       <u-button
         type="primary"
         color="#007aff"
         custom-style="width: 120rpx; height: 74rpx; margin-left: 10rpx;"
         @click="setBaseUrl">
-        保存
+        {{ $t('common.save') }}
       </u-button>
     </view>
 
     <view class="flex-items-center mt-20rpx">
-      <text class="pr-10rpx">页面路径</text>
-      <u-textarea v-model="pageUrl" placeholder="请输入页面路径" clearable></u-textarea>
+      <text class="pr-10rpx">{{ $t('common.pagePath') }}</text>
+      <u-textarea v-model="pageUrl" :placeholder="$t('common.enterPagePath')" clearable></u-textarea>
     </view>
     <view class="flex-items-center mt-20rpx">
       <u-button
@@ -23,24 +23,24 @@
         color="#007aff"
         custom-style="height: 74rpx; margin-left: 10rpx;"
         @click="openSelectRoute('pageUrl')">
-        选择
+        {{ $t('common.pleaseSelect') }}
       </u-button>
       <u-button type="primary" color="#007aff" custom-style="height: 74rpx; margin-left: 10rpx;" @click="$u.navTo(pageUrl)">
-        跳转
+        {{ $t('common.jump') }}
       </u-button>
     </view>
 
     <view class="mt-20rpx">
-      <view class="mb-20rpx">页面分享参数</view>
-      <u-input v-model="shareParams.title" placeholder="请输入分享名称" clearable></u-input>
+      <view class="mb-20rpx">{{ $t('common.shareParams') }}</view>
+      <u-input v-model="shareParams.title" :placeholder="$t('common.enterShareName')" clearable></u-input>
       <view class="mt-20rpx"></view>
-      <u-input v-model="shareParams.imageUrl" placeholder="请输入图片地址" clearable></u-input>
+      <u-input v-model="shareParams.imageUrl" :placeholder="$t('common.enterImageUrl')" clearable></u-input>
       <view class="mt-20rpx"></view>
-      <u-textarea v-model="shareParams.path" placeholder="请输入分享路径，不填默认首页" clearable></u-textarea>
+      <u-textarea v-model="shareParams.path" :placeholder="$t('common.enterSharePath')" clearable></u-textarea>
     </view>
     <view class="mt-20rpx">
       <u-button type="primary" plain color="#007aff" custom-style="height: 74rpx;" @click="openSelectRoute('shareParams.path')">
-        选择
+        {{ $t('common.pleaseSelect') }}
       </u-button>
     </view>
 
@@ -60,6 +60,9 @@ import { useUserStore } from '@/stores';
 import { getBaseUrl, setConfig } from '@/utils/request/util';
 import { getAllPages } from '@/utils';
 import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.devConfig');
 
 const $u = uni.$u;
 
@@ -73,7 +76,7 @@ const routeShow = ref(false);
 const routeColumns = ref([]);
 
 const shareParams = ref({
-  title: '分享标题',
+  title: uni.$t('common.shareTitle'),
   imageUrl: '',
   path: '/pages/tabbar/main',
 });

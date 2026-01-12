@@ -5,9 +5,9 @@
     <snake-cms :pageInfo="pageInfo" :pageComponents="pageComponents" :scrollTop="scrollTop"></snake-cms>
     <view class="flex flex-col items-center px-24rpx py-20rpx bg-white">
       <view class="flex items-center justify-between w-100% pb-32rpx">
-        <view class="text-32rpx font-600">当前在线鉴别师</view>
-        <view class="flex items-center text-#b2b2b2 text-24rpx" @click="navTo('/pages/appraise/allAppraisers')">
-          全部
+        <view class="text-32rpx font-600">{{ $t('pages.allAppraisers') }}</view>
+        <view class="flex items-center text-#b2b2b2 text-24rpx" @click="$u.navTo('/pages/appraise/allAppraisers')">
+          {{ $t('appraise.order.all') }}
           <u-icon color="#b2b2b2" name="arrow-right" size="14" />
         </view>
       </view>
@@ -22,12 +22,12 @@
             <view class="flex items-center justify-between px-8rpx pb-20rpx fw-300 text-#111">
               <view class="flex-1 w-80rpx">
                 <text class="text-26rpx font-700 snake-font-dinBold">{{ item.appraiseCount }}</text>
-                <view class="text-18rpx text-#aaaaaa">排队人数</view>
+                <view class="text-18rpx text-#aaaaaa">{{ $t('appraise.overview.queueCount') }}</view>
               </view>
               <view class="w-1rpx h-48rpx bg-#e7e7e7"></view>
               <view class="flex-1 w-80rpx">
-                <text class="text-26rpx font-700 snake-font-dinBold">{{ numFormat(item.total) }}</text>
-                <view class="text-18rpx text-#aaaaaa">累计战绩</view>
+                <text class="text-26rpx font-700 snake-font-dinBold">{{ $u.numFormat(item.total) }}</text>
+                <view class="text-18rpx text-#aaaaaa">{{ $t('appraise.overview.totalRecord') }}</view>
               </view>
             </view>
           </view>
@@ -42,6 +42,11 @@ import { ref } from 'vue';
 import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { getCmsInfo } from '@/api/cms';
 import { getAppraiseUserListApi } from '@/api/appraise';
+import { usePageTitle } from '@/hooks/usePageTitle';
+import { updateTabBarText } from '@/locales';
+
+usePageTitle('pages.main');
+updateTabBarText();
 
 const $u = uni.$u;
 

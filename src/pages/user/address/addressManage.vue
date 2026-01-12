@@ -3,19 +3,19 @@
     <form class="snake-form">
       <view class="bg-white px-28rpx box-border">
         <view class="snake-form-item snake-border-b flex-items-center">
-          <text class="snake-form-label snake-black">收货人</text>
+          <text class="snake-form-label snake-black">{{ $t('common.consignee') }}</text>
           <view class="snake-form-body">
             <input
               type="text"
               class="snake-form-input"
               name="name"
               v-model="addressData.name"
-              placeholder="请使用真实姓名"
+              :placeholder="$t('common.useRealName')"
               placeholder-class="placeholder" />
           </view>
         </view>
         <view class="snake-form-item snake-border-b">
-          <text class="snake-form-label snake-black">手机号码</text>
+          <text class="snake-form-label snake-black">{{ $t('common.phoneNumber') }}</text>
           <view class="snake-form-body">
             <input
               type="number"
@@ -23,32 +23,32 @@
               name="phone"
               v-model="addressData.phone"
               :maxlength="11"
-              placeholder="请输入手机号码"
+              :placeholder="$t('common.enterPhoneNumber')"
               placeholder-class="placeholder" />
           </view>
         </view>
         <view class="snake-form-item snake-border-b">
-          <text class="snake-form-label snake-black">所在地区</text>
+          <text class="snake-form-label snake-black">{{ $t('common.region') }}</text>
           <view class="snake-form-body flex-center" @tap="openPicker">
             <view
               type="text"
               class="snake-form-input snake-gray7 py-4rpx"
               name="area"
               :class="{ placeholder: addressData.area === '' }">
-              {{ addressData.area || '点击选择' }}
+              {{ addressData.area || $t('common.clickToSelect') }}
             </view>
             <text class="next-icons icon-arrow-right text-32rpx snake-gray7"></text>
           </view>
         </view>
         <view class="snake-form-item !items-start">
-          <text class="snake-form-label snake-black">详细地址</text>
+          <text class="snake-form-label snake-black">{{ $t('common.detailAddress') }}</text>
           <view class="snake-form-body">
             <textarea
               type="text"
               class="address-manager-textarea"
               name="detail"
               v-model="addressData.detail"
-              placeholder="请输入详细地址(最少5个字)"
+              :placeholder="$t('common.enterDetailAddress')"
               placeholder-class="placeholder"></textarea>
           </view>
         </view>
@@ -56,8 +56,8 @@
       <view class="bg-white mt-20rpx px-28rpx box-border">
         <view class="snake-form-item h-100rpx">
           <view style="flex-shrink: 0">
-            <text class="text-28rpx snake-black">设置为默认地址</text>
-            <text class="text-22rpx snake-gray ml-6rpx">(每次下单时默认使用)</text>
+            <text class="text-28rpx snake-black">{{ $t('common.setAsDefaultAddress') }}</text>
+            <text class="text-22rpx snake-gray ml-6rpx">({{ $t('common.defaultAddressHint') }})</text>
           </view>
           <view class="snake-form-body flex justify-end">
             <switch
@@ -77,7 +77,7 @@
           :throttleTime="600"
           customStyle="height: 88rpx; font-size: 32rpx"
           @click="formSubmit">
-          保存
+          {{ $t('common.save') }}
         </u-button>
         <!-- <u-button
           v-if="addressData.id"
@@ -95,7 +95,7 @@
           shape="circle"
           customStyle="height: 88rpx; font-size: 32rpx; margin-top: 28rpx"
           @click="importAddress">
-          导入微信地址
+          {{ $t('common.importWechatAddress') }}
         </u-button>
         <!-- #endif -->
       </view>
@@ -111,6 +111,7 @@
 <script>
 import { getAddressGet, postAddressSave } from '@/api/user';
 import graceChecker from '@/utils/js/graceChecker';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default {
   data() {
@@ -135,25 +136,25 @@ export default {
           name: 'name',
           checkType: 'string',
           checkRule: '1,10',
-          errorMsg: '收货人应为1-20个字符',
+          errorMsg: uni.$t('common.consigneeLengthError'),
         },
         {
           name: 'phone',
           checkType: 'phoneno',
           checkRule: '',
-          errorMsg: '请正确填写手机号',
+          errorMsg: uni.$t('common.enterCorrectPhone'),
         },
         {
           name: 'area',
           checkType: 'string',
           checkRule: '1,100',
-          errorMsg: '请选择所在地区',
+          errorMsg: uni.$t('common.selectRegion'),
         },
         {
           name: 'detail',
           checkType: 'string',
           checkRule: '5,100',
-          errorMsg: '详情地址最少输入5个字',
+          errorMsg: uni.$t('common.detailAddressMinLength'),
         },
       ],
     };
@@ -164,6 +165,7 @@ export default {
     },
   },
   async onLoad(options) {
+    usePageTitle('pages.addressManage');
     const { type, addressId } = options || {};
     this.addressId = addressId;
 
@@ -178,7 +180,7 @@ export default {
         this.addressData.area = `${this.addressData.province} ${this.addressData.city} ${this.addressData.county}`;
       }
     }
-    uni.setNavigationBarTitle({ title: type === 'edit' ? '编辑收货地址' : '新增收货地址' });
+    uni.setNavigationBarTitle({ title: type === 'edit' ? uni.$t('pages.addressManage') : uni.$t('common.addAddress') });
   },
   methods: {
     switchChange(e) {
@@ -212,7 +214,7 @@ export default {
     // 删除
     deleteAddress() {
       uni.showModal({
-        content: '确定删除吗？',
+        content: uni.$t('common.confirmDelete'),
         success: (res) => {
           if (res.confirm) {
             this.addressData.deleted = 1;
@@ -238,7 +240,7 @@ export default {
           isDefault: Number(this.addressData.defaulted),
         });
         if (response.success) {
-          uni.$u.toast(e.ops === 'del' ? '删除地址成功' : '保存成功');
+          uni.$u.toast(e.ops === 'del' ? uni.$t('common.deleteAddressSuccess') : uni.$t('common.saveSuccess'));
           await uni.$u.sleep(500);
           uni.navigateBack();
         } else {

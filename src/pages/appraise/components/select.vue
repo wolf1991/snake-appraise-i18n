@@ -7,7 +7,7 @@
           {{ currentLabel }}
         </text>
         <text class="u-select__text" v-else>
-          {{ label }}
+          {{ label || $t('common.pleaseSelect') }}
         </text>
         <!-- </slot> -->
         <!-- <slot name="icon"> -->
@@ -80,7 +80,7 @@ export default {
     },
     label: {
       type: String,
-      default: '选项',
+      default: '',
     },
     options: {
       type: Array,

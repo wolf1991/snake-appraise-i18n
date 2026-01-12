@@ -14,7 +14,7 @@
       </view>
       <view class="pl-20rpx flex flex-col justify-between flex-1">
         <view class="font-500 text-28rpx">{{ item.productName || '' }}</view>
-        <view class="text-#707184 text-24rpx">来源：{{ item.fromOrigin || '无' }}</view>
+        <view class="text-#707184 text-24rpx">{{ $t('appraise.order.source') }}：{{ item.fromOrigin || $t('common.none') }}</view>
       </view>
     </view>
     <view class="flex justify-end py-12rpx">
@@ -23,7 +23,7 @@
         :throttle-time="600"
         custom-style="width: 154rpx; height: 60rpx; margin: 0"
         @click.stop="emit('click-operate', item, index)">
-        马上抢单
+        {{ $t('appraise.appraiser.grabOrderNow') }}
       </u-button>
     </view>
   </view>

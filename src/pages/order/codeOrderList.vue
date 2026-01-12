@@ -20,7 +20,7 @@
             <view class="mt-10rpx text-22rpx text-#aaaaaa">{{ item.amountStr }}</view>
           </view>
           <view class="flex-items-center justify-between">
-            <view class="text-#06d290">物流单号：{{ item.expressNo || '暂无' }}</view>
+            <view class="text-#06d290">{{ $t('order.expressNo') }}：{{ item.expressNo || $t('common.noData') }}</view>
             <view class="text-28rpx snake-font-dinmedium">
               <text class="text-18rpx">￥</text>
               <text>{{ item.totalPriceStr }}</text>
@@ -33,8 +33,13 @@
     </view>
   </view>
   <!-- 空白页 -->
-  <u-empty v-if="orderList.length === 0"></u-empty>
-  <u-loadmore v-if="orderList.length" :status="loadingStatus"></u-loadmore>
+  <u-empty v-if="orderList.length === 0" :text="$t('common.noData')"></u-empty>
+  <u-loadmore
+    v-if="orderList.length"
+    :status="loadingStatus"
+    :loadmoreText="$t('common.loadmoreText')"
+    :loadingText="$t('common.loadingText')"
+    :nomoreText="$t('common.nomoreText')"></u-loadmore>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +48,9 @@ import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { getAppraiseCodeOrderListApi } from '@/api/appraise';
 
 import type { LoadMoreProps } from '@/uni_modules/uview-plus/types/comps/loadMore';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.codeOrderList');
 
 const $u = uni.$u;
 

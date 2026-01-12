@@ -4,14 +4,14 @@
     {
       "path": "pages/tabbar/main",
       "style": {
-        "navigationBarTitleText": "鉴别",
+        "navigationBarTitleText": "",
         "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/tabbar/user",
       "style": {
-        "navigationBarTitleText": "我的"
+        "navigationBarTitleText": ""
       }
     }
   ],
@@ -22,7 +22,7 @@
         {
           "path": "oauth",
           "style": {
-            "navigationBarTitleText": "登录",
+            "navigationBarTitleText": "",
             "navigationStyle": "custom",
             "mp-alipay": {
               "transparentTitle": "always",
@@ -39,32 +39,32 @@
           "path": "address/address",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "地址"
+            "navigationBarTitleText": "%pages.address%"
           }
         },
         {
           "path": "address/addressManage",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "编辑地址"
+            "navigationBarTitleText": "%pages.addressManage%"
           }
         },
         {
           "path": "setting/index",
           "style": {
-            "navigationBarTitleText": "设置"
+            "navigationBarTitleText": "%pages.settings%"
           }
         },
         {
           "path": "setting/cancelAccount",
           "style": {
-            "navigationBarTitleText": "注销账号"
+            "navigationBarTitleText": "%pages.cancelAccount%"
           }
         },
         {
           "path": "devConfig",
           "style": {
-            "navigationBarTitleText": "开发配置"
+            "navigationBarTitleText": "%pages.devConfig%"
           }
         }
       ]
@@ -75,26 +75,26 @@
         {
           "path": "dydetail",
           "style": {
-            "navigationBarTitleText": "鉴别详情"
+            "navigationBarTitleText": "%pages.dydetail%"
           }
         },
         {
           "path": "cms",
           "style": {
              "enablePullDownRefresh": true,
-            "navigationBarTitleText": "cms"
+            "navigationBarTitleText": "%pages.cms%"
           }
         },
         {
           "path": "webview",
           "style": {
-            "navigationBarTitleText": "webview"
+            "navigationBarTitleText": "%pages.webview%"
           }
         },
         {
           "path": "cashier",
           "style": {
-            "navigationBarTitleText": "收银台"
+            "navigationBarTitleText": "%pages.cashier%"
           }
         }
       ]
@@ -105,7 +105,7 @@
         {
           "path": "cashier",
           "style": {
-            "navigationBarTitleText": "收银台"
+            "navigationBarTitleText": "%pages.cashier%"
           }
         }
       ]
@@ -117,7 +117,7 @@
           "path": "allAppraisers",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "当前在线鉴别师",
+            "navigationBarTitleText": "%pages.allAppraisers%",
             "enablePullDownRefresh": true
           }
         },
@@ -125,7 +125,7 @@
           "path": "appraiser",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴定师列表",
+            "navigationBarTitleText": "%pages.appraiser%",
             "enablePullDownRefresh": true
           }
         },
@@ -133,7 +133,7 @@
           "path": "appraiserDetail",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴定详情",
+            "navigationBarTitleText": "%pages.appraiserDetail%",
             "enablePullDownRefresh": false
           }
         },
@@ -141,60 +141,60 @@
           "path": "appraiseCheck",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴别",
+            "navigationBarTitleText": "%pages.appraiseCheck%",
             "enablePullDownRefresh": false
           }
         },
         {
           "path": "selectReason",
           "style": {
-            "navigationBarTitleText": "原因选择"
+            "navigationBarTitleText": "%pages.selectReason%"
           }
         },
         {
           "path": "selectImage",
           "style": {
-            "navigationBarTitleText": "部位图选择"
+            "navigationBarTitleText": "%pages.selectImage%"
           }
         },
         {
           "path": "selectBrand",
           "style": {
-            "navigationBarTitleText": "品牌选择"
+            "navigationBarTitleText": "%pages.selectBrand%"
           }
         },
         {
           "path": "identify",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴别信息"
+            "navigationBarTitleText": "%pages.identifyInfo%"
           }
         },
         {
           "path": "supplement",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "补图"
+            "navigationBarTitleText": "%pages.supplement%"
           }
         },
         {
           "path": "onlineEditing",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴定师状态"
+            "navigationBarTitleText": "%pages.appraiserStatus%"
           }
         },
         {
           "path": "codePurchase",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴别扣购买"
+            "navigationBarTitleText": "%pages.codePurchase%"
           }
         },
         {
           "path": "createIdentify",
           "style": {
-            "navigationBarTitleText": "鉴定详情"
+            "navigationBarTitleText": "%pages.appraiserDetail%"
           }
         }
       ]
@@ -206,7 +206,7 @@
           "path": "examPaperList",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "试卷列表",
+            "navigationBarTitleText": "%pages.examPaperList%",
             "enablePullDownRefresh": true
           }
         },
@@ -214,7 +214,7 @@
           "path": "examPaperDetail",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "试卷详情",
+            "navigationBarTitleText": "%pages.examPaperDetail%",
             "enablePullDownRefresh": false
           }
         },
@@ -222,7 +222,7 @@
           "path": "answer",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "答题",
+            "navigationBarTitleText": "%pages.answer%",
             "enablePullDownRefresh": false
           }
         }
@@ -235,21 +235,21 @@
           "path": "orderList",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴别订单列表"
+            "navigationBarTitleText": "%pages.orderList%"
           }
         },
         {
           "path": "orderDetail",
           "needLogin": false,
           "style": {
-            "navigationBarTitleText": "鉴别订单详情"
+            "navigationBarTitleText": "%pages.orderDetail%"
           }
         },
         {
           "path": "codeOrderList",
           "needLogin": true,
           "style": {
-            "navigationBarTitleText": "鉴别扣订单列表"
+            "navigationBarTitleText": "%pages.codeOrderList%"
           }
         }
       ]
@@ -269,7 +269,7 @@
   },
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "SNAKE鉴别",
+    "navigationBarTitleText": "%pages.appName%",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
@@ -294,13 +294,13 @@
     "list": [
       {
         "pagePath": "pages/tabbar/main",
-        "text": "鉴别",
+        "text": "　",
         "iconPath": "static/tabbar/home.png",
         "selectedIconPath": "static/tabbar/home_on.png"
       },
       {
         "pagePath": "pages/tabbar/user",
-        "text": "我的",
+        "text": "　",
         "iconPath": "static/tabbar/my.png",
         "selectedIconPath": "static/tabbar/my_on.png"
       }

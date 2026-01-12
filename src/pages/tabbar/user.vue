@@ -1,21 +1,22 @@
 <template>
   <view class="header-bg">
     <view class="flex-center flex-col pos-absolute top-124rpx left-50%" style="transform: translateX(-50%)" @tap="loginHandle">
-      <view class="w-150rpx h-150rpx rounded-50%" style="border: 2px solid #ffffff">
+      <view class="mb-28rpx rounded-50%" style="border: 2px solid #ffffff">
         <u-image
-          width="100%"
-          height="100%"
+          width="150rpx"
+          height="150rpx"
           :radius="100"
           :fade="false"
           :src="userInfo.logo || 'https://s.qiuxietang.com/swan-home/user/default-profile.png'"
           mode="widthFix"></u-image>
       </view>
-      <view class="flex-center flex-col mt-28rpx">
+      <view class="flex-center flex-col">
         <template v-if="isLogined">
+          <!-- <view class="fw-500 mb-10rpx snake-ellipse-2">{{ userInfo.nickname || '' }}</view> -->
           <u-text color="#000" size="36rpx" format="encrypt" mode="phone" bold :text="userInfo.mobile"></u-text>
         </template>
         <template v-else>
-          <text class="fs-36rpx fw-bold snake-black">登录/注册</text>
+          <text class="fs-30rpx fw-bold snake-black">{{ $t('common.loginOrRegister') }}</text>
         </template>
       </view>
     </view>
@@ -25,9 +26,9 @@
   <view class="pos-relative overflow-hidden">
     <u-cell-group :border="false">
       <block v-for="item in menuList" :key="item.value">
-        <u-cell isLink :border="false" @click="clickNavTo(item.hrefUrl)">
+        <u-cell isLink :border="false" @click="handleMenuClick(item)">
           <template v-slot:icon>
-            <view :class="[`next-icons ${item.icon} text-38rpx`]"></view>
+            <view :class="[`next-icons ${item.icon} snake-fs-48`]"></view>
           </template>
           <template v-slot:title>
             <view class="fs-36rpx snake-font-din">{{ item.label }}</view>
@@ -44,19 +45,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { onLoad } from '@dcloudio/uni-app';
 import { useUserStore } from '@/stores/modules/user';
 import { getMenuListApi } from '@/api/appraise';
 import config from '@/config/config';
 import { isProd, getBaseUrl, setConfig } from '@/utils/request/util';
-import { useLogin } from '@/hooks/useLogin';
+import { onLoad } from '@dcloudio/uni-app';
+import { usePageTitle } from '@/hooks/usePageTitle';
+import { updateTabBarText, SUPPORTED_LOCALES, setLocale } from '@/locales';
+
+usePageTitle('pages.main');
+updateTabBarText();
 
 const $u = uni.$u;
 
 const userStore = useUserStore();
-const { userInfo, isLogined } = storeToRefs(userStore);
 
-const { univerifyLogin } = useLogin();
+const { userInfo, isLogined } = storeToRefs(userStore);
 
 const menuList = ref();
 
@@ -73,13 +77,19 @@ const getMenuList = async () => {
     menuList.value = [
       ...newList.filter((item) => !black.includes(item.value)),
       {
-        label: '客服中心',
+        label: uni.$t('common.serviceCenter'),
         value: 'kf',
         hrefUrl: `https://m.puresnake.com/2nd/pages/custom/cms?pageId=${isProd ? 824 : 783}&isNavbar=false`,
         icon: 'icon-kf',
       },
       {
-        label: '设置',
+        label: uni.$t('common.language'),
+        value: 'language',
+        hrefUrl: '',
+        icon: 'icon-more',
+      },
+      {
+        label: uni.$t('common.settings'),
         value: 'setting',
         hrefUrl: '/pages/user/setting/index',
         icon: 'icon-setting',
@@ -90,34 +100,53 @@ const getMenuList = async () => {
   }
 };
 
-const loginHandle = async () => {
-  // #ifdef APP-PLUS
-  await univerifyLogin();
-  // #endif
-
-  // #ifndef APP-PLUS
+const loginHandle = () => {
   if (!isLogined.value) {
     uni.$u.navTo('/pages/login/oauth');
   }
-  // #endif
 };
 
 const clickNavTo = (url: string) => {
   if (url) {
     uni.$u.navTo(url);
   } else {
-    uni.$u.toast('功能开发中~');
+    uni.$u.toast(uni.$t('common.featureDeveloping'));
   }
+};
+
+const handleMenuClick = (item: any) => {
+  if (item.value === 'language') {
+    showLanguageSheet();
+  } else {
+    clickNavTo(item.hrefUrl);
+  }
+};
+
+const showLanguageSheet = () => {
+  const itemList = SUPPORTED_LOCALES.map((item) => item.label);
+  uni.showActionSheet({
+    itemList,
+    success: (res) => {
+      const selected = SUPPORTED_LOCALES[res.tapIndex];
+      if (selected) {
+        setLocale(selected.value);
+        getMenuList();
+      }
+    },
+    fail: (res) => {
+      console.log(res.errMsg);
+    },
+  });
 };
 
 // 切换接口
 const changeBaseUrl = () => {
   uni.showModal({
-    title: '切换接口地址',
-    content: `当前是${isProd ? '正式' : '测试'}地址：${getBaseUrl()}`,
-    success: (modalRes) => {
-      if (modalRes.confirm) {
-        const itemList = ['获取用户信息', '手机号登录', '开发配置', ...config.baseUrlList];
+    title: uni.$t('common.switchApi'),
+    content: uni.$t('common.currentEnv', { env: isProd ? uni.$t('common.prod') : uni.$t('common.test'), url: getBaseUrl() }),
+      success: (modalRes) => {
+        if (modalRes.confirm) {
+          const itemList = [uni.$t('common.getUserInfo'), uni.$t('common.phoneLogin'), uni.$t('common.devConfig'), ...config.baseUrlList];
 
         uni.showActionSheet({
           itemList,
@@ -127,7 +156,7 @@ const changeBaseUrl = () => {
             }
             if (sheetRes.tapIndex === 0) {
               uni.showModal({
-                title: '用户信息',
+                title: uni.$t('common.userInfo'),
                 content: JSON.stringify(userInfo.value),
                 success: (res) => {
                   if (res.confirm) {
@@ -160,22 +189,21 @@ const changeBaseUrl = () => {
             // 设置环境地址
             uni.setStorageSync('BASE_URL', baseUrl);
             setConfig();
-            userStore.clearUserInfo();
 
             // #ifdef H5
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             location.reload();
             // #endif
 
             // #ifdef APP-PLUS
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             plus.runtime.restart();
             // #endif
 
             // #ifdef MP-WEIXIN
-            uni.$u.toast('切换成功2秒后重启', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccess', { delay: '2' + uni.$t('common.seconds') }), 3000);
             await uni.$u.sleep(2000);
             wx.restartMiniProgram({
               path: '/pages/tabbar/main',
@@ -183,10 +211,10 @@ const changeBaseUrl = () => {
             // #endif
 
             // #ifdef MP-ALIPAY
-            uni.$u.toast('切换成功', 3000);
+            uni.$u.toast(uni.$t('common.switchSuccessOnly'), 3000);
             uni.showModal({
-              title: '确认重启',
-              content: '确定要重启小程序吗？',
+              title: uni.$t('common.confirmRestart'),
+              content: uni.$t('common.confirmRestartContent'),
               success: (res) => {
                 if (res.confirm) {
                   my.restartMiniProgram({

@@ -9,7 +9,7 @@
       </view>
       <view class="flex-center">
         <view class="text-48rpx text-#06d290 decoration-underline snake-font-din-Bold">
-          {{ appraiseDetail.appraiseCode || '未找到鉴别信息' }}
+          {{ appraiseDetail.appraiseCode || $t('appraise.dydetail.notFound') }}
         </view>
         <text
           class="next-icons icon-copy text-40rpx ml-8rpx"
@@ -24,7 +24,7 @@
           :throttle-time="500"
           custom-style="height: 94rpx; font-size: 32rpx; font-weight: 600"
           @click="goIdentify">
-          去鉴别
+          {{ $t('payment.goIdentify') }}
         </u-button>
       </view>
     </view>
@@ -35,6 +35,7 @@
 <script>
 import { getAppraiseDyOrderDetailApi } from '@/api/appraise';
 import { isProd } from '@/utils/request/util';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -46,6 +47,7 @@ export default {
     };
   },
   onLoad(options) {
+    usePageTitle('pages.dydetail');
     let q = options?.q || '';
     // #ifdef MP-ALIPAY
     q = my.getLaunchOptionsSync().query.qrCode;
@@ -92,14 +94,14 @@ export default {
     },
     async clickPage() {
       if (!this.appraiseDetail.appraiseCode) {
-        return uni.$u.toast('鉴别扣码不存在');
+        return uni.$u.toast(uni.$t('appraise.dydetail.codeNotExist'));
       }
       uni.setStorageSync('appraiseCode', this.appraiseDetail.appraiseCode);
       uni.$u.navTo(`/pages/custom/cms?pageId=${isProd ? 981 : 838}`);
     },
     async getDetail() {
       uni.showLoading({
-        title: '加载中',
+        title: uni.$t('common.loading'),
         mask: true,
       });
       const response = await getAppraiseDyOrderDetailApi({

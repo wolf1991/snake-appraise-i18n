@@ -6,23 +6,23 @@
       </view>
 
       <view class="text-center pos-relative">
-        <view class="text-28rpx">鉴别结果</view>
+        <view class="text-28rpx">{{ $t('appraise.order.appraisalResult') }}</view>
         <view class="text-56rpx mt-28rpx font-bold">************</view>
 
         <view class="flex-center pt-41rpx">
           <u-button color="#06D290" custom-style="width: 599rpx; height: 90rpx; border-radius: 2rpx" @click="loginShow = true">
-            点击登录查看结果
+            {{ $t('common.clickLoginToView') }}
           </u-button>
         </view>
       </view>
 
       <view class="w-100% pos-absolute bottom-42rpx flex-items-center justify-between px-34rpx box-border">
         <view class="flex flex-col">
-          <text class="text-#ACACB7 text-22rpx">鉴别师</text>
+          <text class="text-#ACACB7 text-22rpx">{{ $t('common.appraiser') }}</text>
           <text class="text-28rpx font-bold mt-6rpx">******</text>
         </view>
         <view class="flex flex-col">
-          <text class="text-#ACACB7 text-22rpx">鉴别单号</text>
+          <text class="text-#ACACB7 text-22rpx">{{ $t('appraise.order.orderId') }}</text>
           <text class="text-28rpx font-bold mt-6rpx">********</text>
         </view>
       </view>
@@ -30,7 +30,7 @@
       <snake-login-popup :show="loginShow" @close="loginShow = false" @refresh="getDetail"></snake-login-popup>
     </view>
 
-    <u-empty text="鉴别详情为空" margin-top="60" v-else-if="$u.test.empty(orderInfo)"></u-empty>
+    <u-empty :text="$t('pages.dyDetail') + $t('common.noData')" margin-top="60" v-else-if="$u.test.empty(orderInfo)"></u-empty>
 
     <view class="pb-50rpx" v-else>
       <view class="flex-center">
@@ -43,8 +43,8 @@
         </view>
 
         <view class="text-center pos-relative">
-          <view class="text-28rpx">鉴别结果</view>
-          <view class="text-#ff3367 mt-10rpx text-26rpx" v-if="isIdentifyResult">鉴别结果已失效：建议重新提交鉴别</view>
+          <view class="text-28rpx">{{ $t('appraise.order.appraisalResult') }}</view>
+          <view class="text-#ff3367 mt-10rpx text-26rpx" v-if="isIdentifyResult">{{ $t('appraise.order.resultExpired') }}</view>
           <view
             class="result-title"
             :class="[
@@ -53,15 +53,15 @@
                 'result-title--green': orderInfo.status === 'finish',
               },
             ]">
-            {{ stateMap[orderInfo.status] }}
+            {{ $t('appraise.order.' + orderInfo.status) }}
           </view>
 
           <view class="text-22rpx mt-10rpx text-#B1B2C1">
-            {{ orderInfo.status === 'unpaid' ? '当前订单已关闭' : orderInfo.resultBasedOnDesc || '' }}
+            {{ orderInfo.status === 'unpaid' ? $t('appraise.order.orderClosed') : orderInfo.resultBasedOnDesc || '' }}
           </view>
 
           <view v-if="orderInfo.appraisetype">
-            <view class="text-24rpx mt-30rpx font-500 snake-font-medium">鉴别扣</view>
+            <view class="text-24rpx mt-30rpx font-500 snake-font-medium">{{ $t('appraise.code.shoeBuckle') }}</view>
             <view class="text-24rpx mt-8rpx font-bold snake-font-dinBold text-#888891">
               {{ orderInfo.appraisetype }}
             </view>
@@ -69,12 +69,13 @@
         </view>
 
         <image
+          v-if="uni.getLocale() === 'zh-CN'"
           class="pos-absolute right-20rpx bottom-257rpx w-168rpx h-168rpx z-12"
           :src="`https://cdn.puresnake.com/xy-web/appraise/appraise_${orderInfo.stamp}.png`"
           mode="widthFix"></image>
 
         <view class="flex-center flex-col mt-10rpx" v-if="orderInfo.status === 'need_img' && orderInfo.extraImageRmd">
-          <view class="text-28rpx snake-font-medium">补图意见</view>
+          <view class="text-28rpx snake-font-medium">{{ $t('appraise.check.remarkPlaceholder') }}</view>
           <view class="text-24rpx mt-4rpx px-50rpx" style="color: rgba(136, 136, 145, 1)">
             {{ orderInfo.extraImageRmd }}
           </view>
@@ -84,11 +85,11 @@
           class="w-100% pos-absolute bottom-42rpx flex-items-center justify-between px-34rpx box-border"
           v-if="orderInfo.appraiserName && orderInfo.id">
           <view class="flex flex-col">
-            <text class="text-#ACACB7 text-22rpx">鉴别师</text>
+            <text class="text-#ACACB7 text-22rpx">{{ $t('common.appraiser') }}</text>
             <text class="text-28rpx font-bold mt-6rpx">{{ hideCharacters(orderInfo.appraiserName) }}</text>
           </view>
           <view class="flex flex-col">
-            <text class="text-#ACACB7 text-22rpx">鉴别单号</text>
+            <text class="text-#ACACB7 text-22rpx">{{ $t('appraise.order.orderId') }}</text>
             <text class="text-28rpx font-bold mt-6rpx">{{ orderInfo.id }}</text>
           </view>
         </view>
@@ -97,7 +98,7 @@
       <view class="bg-white mt-64rpx">
         <view class="flex-items-center pt-30rpx">
           <view class="flex-1 text-center text-24rpx">
-            <text class="text-#ACACB7">发布时间</text>
+            <text class="text-#ACACB7">{{ $t('common.publishTime') }}</text>
             <view class="mt-12rpx">{{ $u.formatTime(orderInfo.gmtCreate) }}</view>
           </view>
         </view>
@@ -123,17 +124,17 @@
       </view>
       <view class="mt-20rpx ml-44rpx">
         <view class="flex-items-center text-24rpx">
-          <view class="snake-font-regular text-24rpx w-200rpx text-#acacb7">备注</view>
+          <view class="snake-font-regular text-24rpx w-200rpx text-#acacb7">{{ $t('common.remark') }}</view>
           <view class="snake-font-medium font-500">{{ orderInfo.remark || '' }}</view>
         </view>
         <view class="flex-items-center mt-12rpx text-24rpx">
-          <view class="snake-font-regular w-200rpx text-#acacb7">鉴别单号</view>
+          <view class="snake-font-regular w-200rpx text-#acacb7">{{ $t('appraise.order.orderId') }}</view>
           <view class="snake-font-medium font-500">{{ orderInfo.id || '' }}</view>
           <button
             class="m-0 p-0 !px-16rpx !ml-20rpx text-24rpx text-#707184 rounded-20rpx h-34rpx line-height-34rpx"
             style="border: 1px solid #707184"
             @click="$u.copy(orderInfo.id)">
-            复制
+            {{ $t('common.copy') }}
           </button>
         </view>
       </view>
@@ -141,7 +142,8 @@
         class="flex-center flex-col mt-26rpx mx-20rpx p-14rpx pb-20rpx bg-#EEEEEE rounded-4rpx"
         v-if="orderInfo.status !== 'unpaid' && orderInfo.resultAnnouncement">
         <view class="snake-font-medium fw-500 text-24rpx text-#889099">
-          {{ orderInfo.resultBasedOnType === 'image' ? '图片' : '实物' }}鉴别声明
+          {{ orderInfo.resultBasedOnType === 'image' ? $t('common.image') : $t('common.physical')
+          }}{{ $t('appraise.identify.imageIdentifyStatement.title') }}
         </view>
         <view class="snake-font-light mt-12rpx text-24rpx text-#889099 text-justify fw-300 line-height-40rpx">
           {{ orderInfo.resultAnnouncement }}
@@ -151,7 +153,9 @@
       <view class="h-104rpx pb-safe"></view>
       <view class="snake-fixed-bottom" v-if="orderInfo.status === 'need_img' && orderInfo.operate">
         <view class="px-24rpx py-12rpx">
-          <u-button type="primary" @click="$u.navTo(`/pages/appraise/supplement?orderId=${orderId}`)">去补图</u-button>
+          <u-button type="primary" @click="$u.navTo(`/pages/appraise/supplement?orderId=${orderId}`)">
+            {{ $t('pages.supplement') }}
+          </u-button>
         </view>
       </view>
     </view>
@@ -164,18 +168,11 @@ import { onLoad } from '@dcloudio/uni-app';
 import { getAppraiseOrderDetailApi } from '@/api/appraise';
 
 import { previewImage } from '@/utils';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+usePageTitle('pages.orderDetail');
 
 const $u = uni.$u;
-
-const stateMap = {
-  unpaid: '未付款',
-  unappraised: '待鉴别',
-  finish: '符合正品工艺', // 鉴别为真
-  fail: '无法鉴别',
-  fake: '不符合正品工艺', // 鉴别为假
-  need_img: '待补图',
-  outrange: '无法鉴别', // 非鉴别范围
-};
 
 const orderId = ref();
 const orderInfo = ref(null);

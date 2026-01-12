@@ -11,6 +11,7 @@
 
 <script>
 import { getCmsInfo } from '@/api/cms';
+import { usePageTitle } from '@/hooks/usePageTitle';
 export default {
   data() {
     return {
@@ -31,6 +32,7 @@ export default {
     },
   },
   onLoad(options) {
+    usePageTitle('pages.cms');
     let q = options?.q || '';
     // #ifdef MP-ALIPAY
     q = my.getLaunchOptionsSync()?.query?.qrCode;
@@ -42,7 +44,7 @@ export default {
     if (this.pageId) {
       this.getPageData();
     } else {
-      this.$u.toast('pageId不存在');
+      this.$u.toast(uni.$t('cms.pageIdNotExist'));
     }
   },
   onPageScroll(e) {
@@ -85,7 +87,7 @@ export default {
     // 获取cms组件数据
     async getPageData() {
       uni.showLoading({
-        title: '加载中...',
+        title: uni.$t('common.loading'),
         mask: true,
       });
       const response = await getCmsInfo({ id: this.pageId });
